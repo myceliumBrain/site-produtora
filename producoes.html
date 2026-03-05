@@ -1,0 +1,122 @@
+<html lang="pt">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> 000 filmes</title>
+           
+        <link rel="stylesheet" href="style.css">
+           
+<!-- TRANSLATION -->
+        <script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script> 
+    </head>
+    <body>
+
+<!-- HEADER -->
+    <header>
+        <button class="logo-btn" id="menuBtn" aria-label="Open menu">
+            <div 
+                class="hamburger">
+                  <span></span><span></span><span></span>
+            </div>
+        000 filmes
+        </button>
+     <div class="header-right">
+
+        <a href=http://www.000filmes.com.br/membros class="header-link">
+            <span data-i18n="nav.portfolio">Portfólio</span>
+        </a>
+
+        <a href="http://www.000filmes.com.br/loja" class="header-link">
+            <span data-i18n="nav.shop">Loja</span>
+        </a>
+
+        <button class="header-link" id="langBtn">EN</button>
+    </div>
+    
+</div>
+</header>
+
+
+<!-- HTML DO PORTFÓLIO -->
+
+<main class="page">
+
+<!-- cabeçalho da seção -->
+    <div class="section-header">
+        <span class="section-title" data-i18n="section.title">Produções</span>
+        <div class="section-sort">
+            <button class="sort-btn active" data-i18n="sort.recent">Recentes</button>
+            <button class="sort-btn" data-i18n="sort.az">A–Z</button>
+        </div>
+    </div>
+
+<!-- GRID -->
+    <div class="films-grid"></div>
+
+</main>
+
+
+<!-- MENU OVERLAY (LEFT NAVIGATION)-->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-body">
+
+    <nav class="menu-primary">
+      <ul class="menu-primary-list">
+
+        <li>
+          <a href="#">
+            <span class="menu-item-title" data-i18n="menu.productions">Produções</span>
+            <span class="menu-item-count" data-i18n="menu.productions.count">10+</span>
+          </a>
+        </li>
+       
+        <li>
+          <a href="#">
+            <span class="menu-item-title" data-i18n="menu.upcoming">Vem aí</span>
+            <span class="menu-item-count" data-i18n="menu.upcoming.count">Em produção</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <span class="menu-item-title" data-i18n="menu.history">Nossa história</span>
+            <span class="menu-item-count" data-i18n="menu.history.count">Sobre</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="#">
+            <span class="menu-item-title" data-i18n="menu.contact">Contato</span>
+            <span class="menu-item-count" data-i18n="menu.contact.count">fale com a gente</span>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+
+    <div class="menu-secondary">
+      <a href="#">App</a>
+      <a href="#">Jobs</a>
+      <a href="#">Press</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+
+    <div class="menu-tertiary">
+      <div class="menu-social">
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+        <a href="#">YouTube</a>
+        <a href="#">Facebook</a>
+      </div>
+      <div class="menu-copy" data-i18n="footer.copy">© 2025 - 000 FILMES</div>
+    </div>
+
+    </div>
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

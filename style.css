@@ -12,6 +12,7 @@
 
             html, body { 
                 height: 100%; 
+                margin: 0;
             }
 
             body {
@@ -168,7 +169,7 @@
             .menu-primary {
                 flex: 1;
                 display: flex;
-               align-items: flex-start;
+                align-items: center;
                 padding: 0 var(--pad-desk);
                 overflow: hidden;
             }
@@ -176,7 +177,7 @@
             @media (max-width: 767px) {
                 .menu-primary {
                     padding: 0 var(--pad-mob);
-                    align-items: flex-start;    /* cola a lista no topo no mobile */
+                    align-items: center;    /* cola a lista no topo no mobile */
                     padding-top: 32px;          /* respiro mínimo acima */
                 }
             }
@@ -231,15 +232,19 @@
 
             .menu-item-title {
                 font-family: 'Bebas Neue', sans-serif;
-                font-size: 38px;
+                font-size: 48px;
                 letter-spacing: 0.04em;
-                line-height: 1;
+                line-height: 1.5;
                 color: var(--white);
                 transition: color 0.2s, letter-spacing 0.3s;
             }
 
-            @media (min-width: 768px)  { .menu-item-title { font-size: 52px; } }
-            @media (min-width: 1200px) { .menu-item-title { font-size: 64px; } }
+            @media (min-width: 768px)  { 
+                .menu-item-title { 
+                    font-size: 52px; 
+                    line-height: 1;
+                } 
+            }
 
             .menu-primary-list a:hover .menu-item-title {
               letter-spacing: 0.08em;
@@ -591,3 +596,12 @@
                   color: var(--dim);
                   line-height: 1.4;
               }
+
+/*translation button*/
+
+                #langBtn {
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    padding: 0;
+                }

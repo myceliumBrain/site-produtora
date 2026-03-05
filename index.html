@@ -1,335 +1,1348 @@
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> 000 filmes</title>
-           
-        <link rel="stylesheet" href="style.css">
-           
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>000 filmes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>
+
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black:   #0a0a0a;
+    --white:   #f0ece4;
+    --cream:   #e8e0d0;
+    --gold:    #c9a84c;
+    --red:     #8b1a1a;
+    --grey:    #3a3a3a;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-ui:      'Syne', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-ui);
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--white);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(240,236,228,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+  }
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring { width: 60px; height: 60px; }
+
+  /* ── HEADER ── */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 48px;
+    mix-blend-mode: difference;
+  }
+
+  .logo-btn {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: none;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 22px;
+  }
+  .hamburger span {
+    display: block;
+    height: 1px;
+    background: var(--white);
+    transition: all 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+    transform-origin: center;
+  }
+  .logo-btn.open .hamburger span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .logo-btn.open .hamburger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .logo-btn.open .hamburger span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .header-link {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: none;
+    border: none;
+    cursor: none;
+    transition: opacity 0.3s;
+  }
+  .header-link:hover { opacity: 0.5; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .hero-slides {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.4s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .hero-slide.active { opacity: 1; }
+
+  .hero-slide__bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.05);
+    transition: transform 8s ease;
+  }
+  .hero-slide.active .hero-slide__bg { transform: scale(1); }
+
+  .hero-slide__color {
+    width: 100%;
+    height: 100%;
+  }
+
+  .slide-1 .hero-slide__color { background: linear-gradient(135deg, #1a0e2e 0%, #0d1a2e 50%, #0a0a0a 100%); }
+  .slide-2 .hero-slide__color { background: linear-gradient(135deg, #1a0a0a 0%, #2e1a0a 50%, #0a0a0a 100%); }
+  .slide-3 .hero-slide__color { background: linear-gradient(135deg, #0a1a0a 0%, #0e2e1a 50%, #0a0a0a 100%); }
+
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .hero-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(10,10,10,0.7) 100%);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .hero-bottom-fade {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, transparent, var(--black));
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 5;
+    padding: 0 48px 56px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .hero-film-info { max-width: 520px; }
+
+  .hero-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .hero-meta {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(240,236,228,0.5);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards;
+  }
+
+  .hero-cta {
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.2s forwards;
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid rgba(240,236,228,0.3);
+    padding: 14px 28px;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    background: none;
+    cursor: none;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .btn-outline:hover {
+    border-color: var(--white);
+    background: rgba(240,236,228,0.05);
+  }
+  .btn-outline svg { transition: transform 0.3s; }
+  .btn-outline:hover svg { transform: translateX(4px); }
+
+  .hero-nav {
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: rgba(240,236,228,0.3);
+    cursor: none;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .hero-dot.active {
+    background: var(--white);
+    transform: scale(1.5);
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 56px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.6s forwards;
+  }
+  .hero-scroll-hint span {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.4);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(240,236,228,0.4), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── SCROLL SECTIONS ── */
+
+  /* Section: Featured Film */
+  .section-featured {
+    background: var(--black);
+    padding: 120px 0 0;
+    overflow: hidden;
+  }
+
+  .featured-eyebrow {
+    padding: 0 48px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 64px;
+  }
+
+  .featured-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    align-items: center;
+  }
+
+  .featured-img-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+
+  .featured-img-wrap img,
+  .featured-img-wrap .img-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .img-placeholder {
+    background: var(--grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .featured-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent 60%, var(--black));
+  }
+
+  .featured-text {
+    padding: 80px 80px 80px 64px;
+  }
+
+  .featured-number {
+    font-family: var(--font-display);
+    font-size: 120px;
+    font-weight: 300;
+    color: rgba(240,236,228,0.06);
+    line-height: 1;
+    margin-bottom: -30px;
+    margin-left: -8px;
+  }
+
+  .featured-title {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 5vw, 72px);
+    font-weight: 300;
+    line-height: 0.95;
+    margin-bottom: 28px;
+  }
+  .featured-title em { font-style: italic; }
+
+  .featured-dir {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(240,236,228,0.4);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .featured-synopsis {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(240,236,228,0.7);
+    margin-bottom: 48px;
+  }
+
+  .featured-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .tag {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: 1px solid rgba(240,236,228,0.2);
+    padding: 6px 12px;
+    color: rgba(240,236,228,0.5);
+  }
+
+  /* Section: Manifesto */
+  .section-manifesto {
+    padding: 160px 48px;
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .manifesto-line {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    margin-bottom: 48px;
+  }
+
+  .manifesto-text {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4.5vw, 64px);
+    font-weight: 300;
+    line-height: 1.15;
+    max-width: 900px;
+    color: var(--white);
+  }
+
+  .manifesto-text em {
+    font-style: italic;
+    color: rgba(240,236,228,0.4);
+  }
+
+  .manifesto-sub {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.3);
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .manifesto-sub::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  /* Section: Grid Filmes */
+  .section-grid {
+    background: var(--black);
+    padding: 0 0 120px;
+  }
+
+  .section-grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 48px 64px;
+    border-top: 1px solid rgba(240,236,228,0.08);
+    padding-top: 80px;
+  }
+
+  .section-grid-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+  }
+
+  .section-grid-link {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.4);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s;
+  }
+  .section-grid-link:hover { color: var(--white); }
+
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    padding: 0 48px;
+  }
+
+  .preview-card {
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+    aspect-ratio: 2/3;
+  }
+
+  .preview-card__bg {
+    width: 100%;
+    height: 100%;
+    background: var(--grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .preview-card:hover .preview-card__bg { transform: scale(1.06); }
+
+  .preview-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 50%);
+    transition: opacity 0.4s;
+  }
+
+  .preview-card__info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 24px 20px;
+    transform: translateY(8px);
+    transition: transform 0.4s ease;
+  }
+  .preview-card:hover .preview-card__info { transform: translateY(0); }
+
+  .preview-card__year {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .preview-card__title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.1;
+  }
+
+  .preview-card__dir {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(240,236,228,0.4);
+    margin-top: 4px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s 0.05s, transform 0.4s 0.05s;
+  }
+  .preview-card:hover .preview-card__dir { opacity: 1; transform: translateY(0); }
+
+  /* Section: Stripe */
+  .section-stripe {
+    overflow: hidden;
+    border-top: 1px solid rgba(240,236,228,0.08);
+    border-bottom: 1px solid rgba(240,236,228,0.08);
+    padding: 20px 0;
+    background: var(--black);
+  }
+
+  .stripe-track {
+    display: flex;
+    gap: 64px;
+    width: max-content;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+
+  .stripe-item {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    color: rgba(240,236,228,0.25);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .stripe-item::before {
+    content: '◆';
+    font-size: 6px;
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  /* Section: Upcoming */
+  .section-upcoming {
+    background: var(--cream);
+    color: var(--black);
+    padding: 120px 48px;
+  }
+
+  .upcoming-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 80px;
+  }
+
+  .upcoming-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 300;
+    color: var(--black);
+  }
+
+  .upcoming-list { list-style: none; }
+
+  .upcoming-item {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 0;
+    border-top: 1px solid rgba(10,10,10,0.1);
+    cursor: none;
+    transition: gap 0.4s ease;
+  }
+  .upcoming-item:last-child { border-bottom: 1px solid rgba(10,10,10,0.1); }
+  .upcoming-item:hover { gap: 48px; }
+
+  .upcoming-item__num {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(10,10,10,0.3);
+  }
+
+  .upcoming-item__title {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 300;
+  }
+
+  .upcoming-item__meta {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(10,10,10,0.35);
+    text-align: right;
+  }
+  .upcoming-item__status {
+    color: var(--red);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* Section: Footer */
+  footer {
+    background: var(--black);
+    padding: 80px 48px 40px;
+    border-top: 1px solid rgba(240,236,228,0.08);
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 80px;
+  }
+
+  .footer-logo {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 48px;
+  }
+
+  .footer-col h4 {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.3);
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    color: rgba(240,236,228,0.6);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--white); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 40px;
+    border-top: 1px solid rgba(240,236,228,0.08);
+  }
+
+  .footer-copy {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: rgba(240,236,228,0.2);
+    text-transform: uppercase;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 24px;
+  }
+  .footer-social a {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.3);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-social a:hover { color: var(--white); }
+
+  /* ── MENU OVERLAY ── */
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: var(--black);
+    transform: translateX(-100%);
+    transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 48px;
+  }
+  .menu-overlay.open { transform: translateX(0); }
+
+  .menu-body { max-width: 640px; }
+
+  .menu-primary-list { list-style: none; }
+
+  .menu-primary-list li {
+    border-top: 1px solid rgba(240,236,228,0.08);
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .menu-primary-list li:last-child { border-bottom: 1px solid rgba(240,236,228,0.08); }
+  .menu-overlay.open .menu-primary-list li { opacity: 1; transform: translateX(0); }
+  .menu-overlay.open .menu-primary-list li:nth-child(1) { transition-delay: 0.15s; }
+  .menu-overlay.open .menu-primary-list li:nth-child(2) { transition-delay: 0.22s; }
+  .menu-overlay.open .menu-primary-list li:nth-child(3) { transition-delay: 0.29s; }
+  .menu-overlay.open .menu-primary-list li:nth-child(4) { transition-delay: 0.36s; }
+
+  .menu-primary-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 0;
+    text-decoration: none;
+    color: var(--white);
+    transition: padding 0.3s;
+  }
+  .menu-primary-list a:hover { padding-left: 16px; }
+
+  .menu-item-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 300;
+  }
+
+  .menu-item-count {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.3);
+  }
+
+  .menu-secondary {
+    display: flex;
+    gap: 32px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+  }
+  .menu-secondary a {
+    color: rgba(240,236,228,0.35);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .menu-secondary a:hover { color: var(--white); }
+
+  .menu-tertiary {
+    position: absolute;
+    bottom: 48px;
+    left: 48px; right: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .menu-social {
+    display: flex;
+    gap: 24px;
+  }
+  .menu-social a {
+    color: rgba(240,236,228,0.3);
+    text-decoration: none;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .menu-social a:hover { color: var(--white); }
+
+  .menu-copy {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: rgba(240,236,228,0.15);
+    text-transform: uppercase;
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ── KEYFRAMES ── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(0.7); }
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    header { padding: 24px; }
+    .hero-content { padding: 0 24px 48px; }
+    .hero-nav { display: none; }
+    .hero-scroll-hint { display: none; }
+    .featured-layout { grid-template-columns: 1fr; }
+    .featured-img-wrap { aspect-ratio: 16/9; }
+    .featured-img-wrap::after { background: linear-gradient(to top, var(--black) 0%, transparent 50%); }
+    .featured-text { padding: 40px 24px; }
+    .featured-number { font-size: 72px; }
+    .section-manifesto { padding: 80px 24px; }
+    .preview-grid { grid-template-columns: 1fr 1fr; padding: 0 24px; gap: 1px; }
+    .section-grid-header { padding: 60px 24px 40px; }
+    .section-upcoming { padding: 80px 24px; }
+    .upcoming-item { grid-template-columns: 40px 1fr auto; gap: 16px; }
+    footer { padding: 60px 24px 32px; }
+    .footer-top { flex-direction: column; gap: 40px; }
+    .footer-links { flex-wrap: wrap; gap: 32px; }
+    .menu-tertiary { position: static; margin-top: 40px; flex-direction: column; gap: 20px; align-items: flex-start; }
+    .menu-overlay { padding: 80px 24px 40px; }
+    .section-featured { padding: 80px 0 0; }
+    .featured-eyebrow { padding: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- HEADER -->
-    <header>
-        <button class="logo-btn" id="menuBtn" aria-label="Open menu">
-            <div 
-                class="hamburger">
-                  <span></span><span></span><span></span>
-            </div>
-        000 filmes
-        </button>
-     <div class="header-right">
-    <a href=http://www.000filmes.com.br/membros class="header-link">Portfólio</a>
-    <a href="http://www.000filmes.com.br/loja" class="header-link">Loja</a>
+<header>
+  <button class="logo-btn" id="menuBtn" aria-label="Abrir menu">
+    <div class="hamburger"><span></span><span></span><span></span></div>
+    000 filmes
+  </button>
+  <div class="header-right">
+    <a href="portfolio.html" class="header-link"><span data-i18n="nav.portfolio">Portfólio</span></a>
+    <a href="#" class="header-link"><span data-i18n="nav.shop">Loja</span></a>
+    <button class="header-link" id="langBtn">EN</button>
   </div>
 </header>
 
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-slides">
 
-<!-- HTML DO PORTFÓLIO -->
-
-<main class="page">
-
-<!-- cabeçalho da seção -->
-    <div class="section-header">
-        <span class="section-title">Todos os Filmes</span>
-        <div class="section-sort">
-            <button class="sort-btn active">Recentes</button>
-            <button class="sort-btn">A–Z</button>
-        </div>
+    <div class="hero-slide slide-1 active">
+      <div class="hero-slide__color"></div>
+    </div>
+    <div class="hero-slide slide-2">
+      <div class="hero-slide__color"></div>
+    </div>
+    <div class="hero-slide slide-3">
+      <div class="hero-slide__color"></div>
     </div>
 
-<!-- grid -->
-    <div class="films-grid">
+  </div>
+  <div class="hero-grain"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-bottom-fade"></div>
 
-<!-- ── LINHA 1: wide portrait + portrait ── -->
+  <nav class="hero-nav" id="heroNav">
+    <div class="hero-dot active" data-index="0"></div>
+    <div class="hero-dot" data-index="1"></div>
+    <div class="hero-dot" data-index="2"></div>
+  </nav>
 
-        <div class="film-card card--wide card--p">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white">
-                        <rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/>
-                        <circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/>
-                        <path d="M21 15l-5-5L5 21" stroke-width="0.8"/>
-                    </svg>
-                </div>
-                <img class="img-portrait"  src="https://http.cat/images/100.jpg" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="https://http.cat/images/101.jpg" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2025</span>
-                <div class="film-card__title">A Última Fronteira</div>
-                <div class="film-card__dir">Dir. Ana Luiza Morais</div>
-            </div>
-        </div>
+  <div class="hero-content">
+    <div class="hero-film-info">
+      <div class="hero-label" data-i18n="hero.label">Em destaque · 2025</div>
+      <h1 class="hero-title"><em>A Última</em><br>Fronteira</h1>
+      <div class="hero-meta">Dir. Ana Luiza Morais &nbsp;·&nbsp; Drama &nbsp;·&nbsp; 2025</div>
+    </div>
+    <div class="hero-cta">
+      <a href="portfolio.html" class="btn-outline">
+        <span data-i18n="hero.cta">Ver portfólio</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </a>
+    </div>
+  </div>
 
-        <div class="film-card card--p">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2025</span>
-                <div class="film-card__title">Sombra Branca</div>
-                <div class="film-card__dir">Dir. Felipe Drummond</div>
-            </div>
-        </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span data-i18n="hero.scroll">Scroll</span>
+  </div>
+</section>
 
-        <div class="film-card card--p">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2024</span>
-                <div class="film-card__title">Vento Cru</div>
-                <div class="film-card__dir">Dir. Carla Menezes</div>
-            </div>
-        </div>
+<!-- FEATURED FILM -->
+<section class="section-featured">
+  <p class="featured-eyebrow reveal" data-i18n="featured.eyebrow">Último lançamento</p>
 
-<!-- ── LINHA 2: landscape + portrait + landscape ── -->
+  <div class="featured-layout">
+    <div class="featured-img-wrap reveal">
+      <div class="img-placeholder">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(240,236,228,0.15)">
+          <rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.6"/>
+          <circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.6"/>
+          <path d="M21 15l-5-5L5 21" stroke-width="0.6"/>
+        </svg>
+      </div>
+    </div>
+    <div class="featured-text">
+      <div class="featured-number reveal">01</div>
+      <h2 class="featured-title reveal reveal-delay-1"><em>A Última</em><br>Fronteira</h2>
+      <p class="featured-dir reveal reveal-delay-1">Dir. Ana Luiza Morais &nbsp;·&nbsp; 2025</p>
+      <p class="featured-synopsis reveal reveal-delay-2" data-i18n="featured.synopsis">
+        Em um vilarejo isolado do sertão, uma mulher confronta o passado de sua família enquanto as fronteiras entre memória e esquecimento começam a se dissolver.
+      </p>
+      <div class="featured-tags reveal reveal-delay-2">
+        <span class="tag">Drama</span>
+        <span class="tag">Sertão</span>
+        <span class="tag">87 min</span>
+      </div>
+      <a href="#" class="btn-outline reveal reveal-delay-3">
+        <span data-i18n="featured.more">Saiba mais</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
 
-        <div class="film-card card--l">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2024</span>
-                <div class="film-card__title">Mar de Dentro</div>
-                <div class="film-card__dir">Dir. Bruno Tavares</div>
-            </div>
-        </div>
+<!-- MARQUEE STRIPE -->
+<div class="section-stripe">
+  <div class="stripe-track" id="stripeTrack">
+    <span class="stripe-item">Cinema Brasileiro Independente</span>
+    <span class="stripe-item">000 Filmes</span>
+    <span class="stripe-item">Produções desde 2018</span>
+    <span class="stripe-item">Rio de Janeiro</span>
+    <span class="stripe-item">Histórias que importam</span>
+    <span class="stripe-item">Cinema Brasileiro Independente</span>
+    <span class="stripe-item">000 Filmes</span>
+    <span class="stripe-item">Produções desde 2018</span>
+    <span class="stripe-item">Rio de Janeiro</span>
+    <span class="stripe-item">Histórias que importam</span>
+    <span class="stripe-item">Cinema Brasileiro Independente</span>
+    <span class="stripe-item">000 Filmes</span>
+    <span class="stripe-item">Produções desde 2018</span>
+    <span class="stripe-item">Rio de Janeiro</span>
+    <span class="stripe-item">Histórias que importam</span>
+  </div>
+</div>
 
-        <div class="film-card card--p">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2024</span>
-                <div class="film-card__title">O Peso do Nome</div>
-                <div class="film-card__dir">Dir. Renata Pires</div>
-            </div>
-        </div>
+<!-- MANIFESTO -->
+<section class="section-manifesto">
+  <div class="manifesto-line reveal"></div>
+  <p class="manifesto-text reveal">
+    Fazemos filmes que <em>recusam o esquecimento.</em><br>
+    Cada história é um ato de resistência,<br>
+    cada imagem, uma declaração.
+  </p>
+  <p class="manifesto-sub reveal reveal-delay-1" data-i18n="manifesto.sub">Fundada em 2018 · Rio de Janeiro</p>
+</section>
 
-        <div class="film-card card--l">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2024</span>
-                <div class="film-card__title">Noite Alta</div>
-                <div class="film-card__dir">Dir. Lucas Fonseca</div>
-            </div>
-        </div>
+<!-- PREVIEW GRID -->
+<section class="section-grid">
+  <div class="section-grid-header">
+    <h2 class="section-grid-title reveal" data-i18n="grid.title">Produções recentes</h2>
+    <a href="portfolio.html" class="section-grid-link reveal">
+      <span data-i18n="grid.all">Ver todas</span>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1"/>
+      </svg>
+    </a>
+  </div>
 
-        <div class="film-card card--l">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2023</span>
-                <div class="film-card__title">Cerrado</div>
-                <div class="film-card__dir">Dir. Mariana Luz</div>
-            </div>
-        </div>
+  <div class="preview-grid" id="previewGrid">
+    <!-- filled by JS -->
+  </div>
+</section>
 
-<!-- ── LINHA 3: portrait + portrait + wide landscape ── -->
+<!-- UPCOMING -->
+<section class="section-upcoming">
+  <div class="upcoming-header">
+    <h2 class="upcoming-title reveal" data-i18n="upcoming.title">Vem aí</h2>
+    <span style="font-family:var(--font-display);font-size:13px;font-style:italic;color:rgba(10,10,10,0.3)" class="reveal" data-i18n="upcoming.sub">Em produção</span>
+  </div>
 
-        <div class="film-card card--p">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2023</span>
-                <div class="film-card__title">Silêncio Fundo</div>
-                <div class="film-card__dir">Dir. Paulo Salave'a</div>
-            </div>
-        </div>
+  <ul class="upcoming-list" id="upcomingList">
+    <li class="upcoming-item reveal">
+      <span class="upcoming-item__num">01</span>
+      <span class="upcoming-item__title">Bruma</span>
+      <div class="upcoming-item__meta">
+        <div>Dir. Carla Menezes</div>
+        <div class="upcoming-item__status" data-i18n="status.filming">Filmando</div>
+      </div>
+    </li>
+    <li class="upcoming-item reveal reveal-delay-1">
+      <span class="upcoming-item__num">02</span>
+      <span class="upcoming-item__title">O Intervalo</span>
+      <div class="upcoming-item__meta">
+        <div>Dir. Renata Pires</div>
+        <div class="upcoming-item__status" data-i18n="status.dev">Desenvolvimento</div>
+      </div>
+    </li>
+    <li class="upcoming-item reveal reveal-delay-2">
+      <span class="upcoming-item__num">03</span>
+      <span class="upcoming-item__title">Corpo Fechado</span>
+      <div class="upcoming-item__meta">
+        <div>Dir. Eduardo Braga</div>
+        <div class="upcoming-item__status" data-i18n="status.post">Pós-produção</div>
+      </div>
+    </li>
+  </ul>
+</section>
 
-        <div class="film-card card--p">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2023</span>
-                <div class="film-card__title">Estrada Torta</div>
-                <div class="film-card__dir">Dir. Isabela Cardoso</div>
-            </div>
-        </div>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">000 filmes</div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4 data-i18n="footer.col1">Navegação</h4>
+        <ul>
+          <li><a href="portfolio.html" data-i18n="nav.portfolio">Portfólio</a></li>
+          <li><a href="#" data-i18n="menu.upcoming">Vem aí</a></li>
+          <li><a href="#" data-i18n="menu.history">Nossa história</a></li>
+          <li><a href="#" data-i18n="menu.contact">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.col2">Mais</h4>
+        <ul>
+          <li><a href="#" data-i18n="nav.shop">Loja</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Jobs</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy" data-i18n="footer.copy">© 2025 - 000 FILMES</span>
+    <div class="footer-social">
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="#">Twitter</a>
+    </div>
+  </div>
+</footer>
 
-        <div class="film-card card--wide card--l">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2022</span>
-                <div class="film-card__title">Terra sem Sombra</div>
-                <div class="film-card__dir">Dir. Eduardo Braga</div>
-            </div>
-        </div>
-
-<!-- ── LINHA 4: quatro portraits ── -->
-
-        <div class="film-card card--p">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2022</span>
-                <div class="film-card__title">Dobra</div>
-                <div class="film-card__dir">Dir. Sofia Meireles</div>
-            </div>
-        </div>
-
-        <div class="film-card card--p">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2022</span>
-                <div class="film-card__title">Raiz Nua</div>
-                <div class="film-card__dir">Dir. Thiago Monteiro</div>
-            </div>
-        </div>
-
-        <div class="film-card card--p">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2021</span>
-                <div class="film-card__title">Fogo Baixo</div>
-                <div class="film-card__dir">Dir. Camila Reis</div>
-            </div>
-        </div>
-
-        <div class="film-card card--p">
-            <div class="film-card__img">
-                <div class="film-card__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke-width="0.8"/></svg>
-                </div>
-                <img class="img-portrait"  src="" alt="" onerror="this.style.display='none'">
-                <img class="img-landscape" src="" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="film-card__info">
-                <span class="film-card__year">2021</span>
-                <div class="film-card__title">Deriva</div>
-                <div class="film-card__dir">Dir. André Castilho</div>
-            </div>
-        </div>
-
-    </div><!-- /films-grid -->
-
-</main>
-
-
-<!-- MENU OVERLAY (LEFT NAVIGATION)-->
+<!-- MENU OVERLAY -->
 <div class="menu-overlay" id="menuOverlay">
   <div class="menu-body">
-
     <nav class="menu-primary">
       <ul class="menu-primary-list">
-        <li>
-          <a href="#">
-            <span class="menu-item-title">Filmes</span>
-            <span class="menu-item-count">10+</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span class="menu-item-title">Tv</span>
-            <span class="menu-item-count">Séries &amp; Especiais</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span class="menu-item-title">Docs</span>
-            <span class="menu-item-count">Documentários</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span class="menu-item-title">História</span>
-            <span class="menu-item-count">Ensaios</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span class="menu-item-title">Loja</span>
-            <span class="menu-item-count">Produtos</span>
-          </a>
-        </li>
+        <li><a href="producoes.html">
+          <span class="menu-item-title" data-i18n="menu.productions">Produções</span>
+          <span class="menu-item-count" data-i18n="menu.productions.count">10+</span>
+        </a></li>
+        <li><a href="#">
+          <span class="menu-item-title" data-i18n="menu.upcoming">Vem aí</span>
+          <span class="menu-item-count" data-i18n="menu.upcoming.count">Em produção</span>
+        </a></li>
+        <li><a href="#">
+          <span class="menu-item-title" data-i18n="menu.history">Nossa história</span>
+          <span class="menu-item-count" data-i18n="menu.history.count">Sobre</span>
+        </a></li>
+        <li><a href="#">
+          <span class="menu-item-title" data-i18n="menu.contact">Contato</span>
+          <span class="menu-item-count" data-i18n="menu.contact.count">fale com a gente</span>
+        </a></li>
       </ul>
     </nav>
-
     <div class="menu-secondary">
       <a href="#">App</a>
       <a href="#">Jobs</a>
       <a href="#">Press</a>
       <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Use</a>
     </div>
-
-    <div class="menu-tertiary">
-      <div class="menu-social">
-        <a href="#">Instagram</a>
-        <a href="#">Twitter</a>
-        <a href="#">YouTube</a>
-        <a href="#">Facebook</a>
-      </div>
-      <div class="menu-copy">© 2025 - 000 FILMES</div>
+  </div>
+  <div class="menu-tertiary">
+    <div class="menu-social">
+      <a href="#">Instagram</a>
+      <a href="#">Twitter</a>
+      <a href="#">YouTube</a>
     </div>
-
-    </div>
+    <div class="menu-copy" data-i18n="footer.copy">© 2025 - 000 FILMES</div>
+  </div>
 </div>
 
+<script>
+/* ── CURSOR ── */
+const cursor     = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 
-<script src="script.js"></script>
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top  = mouseY + 'px';
+});
 
+(function animRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  cursorRing.style.left = ringX + 'px';
+  cursorRing.style.top  = ringY + 'px';
+  requestAnimationFrame(animRing);
+})();
+
+/* ── MENU TOGGLE ── */
+const menuBtn     = document.getElementById('menuBtn');
+const menuOverlay = document.getElementById('menuOverlay');
+let menuOpen = false;
+
+function openMenu()  { menuOpen = true;  menuOverlay.classList.add('open');    menuBtn.classList.add('open');    document.body.style.overflow = 'hidden'; }
+function closeMenu() { menuOpen = false; menuOverlay.classList.remove('open'); menuBtn.classList.remove('open'); document.body.style.overflow = ''; }
+
+menuBtn.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+menuOverlay.addEventListener('click', e => { if (e.target === menuOverlay) closeMenu(); });
+
+/* ── HERO SLIDESHOW ── */
+const slides  = document.querySelectorAll('.hero-slide');
+const dots    = document.querySelectorAll('.hero-dot');
+const heroFilms = [
+  { titlePt: '<em>A Última</em><br>Fronteira', titleEn: '<em>The Last</em><br>Frontier', dir: 'Ana Luiza Morais', year: '2025' },
+  { titlePt: 'Terra sem<br><em>Sombra</em>',   titleEn: 'Land without<br><em>Shadow</em>', dir: 'Eduardo Braga', year: '2022' },
+  { titlePt: '<em>Mar</em><br>de Dentro',       titleEn: '<em>Sea</em><br>Within', dir: 'Bruno Tavares', year: '2024' }
+];
+let currentSlide = 0;
+
+function goToSlide(n) {
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+  currentSlide = n;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+
+  const f = heroFilms[n];
+  const lang = typeof i18next !== 'undefined' ? i18next.language : 'pt';
+  document.querySelector('.hero-title').innerHTML = lang === 'en' ? f.titleEn : f.titlePt;
+  document.querySelector('.hero-meta').textContent = `Dir. ${f.dir} · Drama · ${f.year}`;
+}
+
+dots.forEach(d => d.addEventListener('click', () => goToSlide(+d.dataset.index)));
+setInterval(() => goToSlide((currentSlide + 1) % slides.length), 5000);
+
+/* ── PREVIEW GRID ── */
+const previewFilms = [
+  { title: 'Sombra Branca',  titleEn: 'White Shadow',    dir: 'Felipe Drummond', year: '2025' },
+  { title: 'Vento Cru',      titleEn: 'Raw Wind',        dir: 'Carla Menezes',   year: '2024' },
+  { title: 'Noite Alta',     titleEn: 'High Night',      dir: 'Lucas Fonseca',   year: '2024' },
+  { title: 'Cerrado',        titleEn: 'Cerrado',         dir: 'Mariana Luz',     year: '2023' },
+];
+
+function renderPreview() {
+  const lang = typeof i18next !== 'undefined' ? i18next.language : 'pt';
+  document.getElementById('previewGrid').innerHTML = previewFilms.map(f => `
+    <div class="preview-card reveal">
+      <div class="preview-card__bg">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(240,236,228,0.1)">
+          <rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.6"/>
+          <circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.6"/>
+          <path d="M21 15l-5-5L5 21" stroke-width="0.6"/>
+        </svg>
+      </div>
+      <div class="preview-card__overlay"></div>
+      <div class="preview-card__info">
+        <div class="preview-card__year">${f.year}</div>
+        <div class="preview-card__title">${lang === 'en' ? f.titleEn : f.title}</div>
+        <div class="preview-card__dir">Dir. ${f.dir}</div>
+      </div>
+    </div>
+  `).join('');
+  observeReveal();
+}
+
+/* ── SCROLL REVEAL ── */
+function observeReveal() {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
+}
+
+/* ── i18next ── */
+i18next.init({
+  lng: 'pt',
+  resources: {
+    pt: {
+      translation: {
+        'nav.portfolio':          'Portfólio',
+        'nav.shop':               'Loja',
+        'hero.label':             'Em destaque · 2025',
+        'hero.cta':               'Ver portfólio',
+        'hero.scroll':            'Scroll',
+        'featured.eyebrow':       'Último lançamento',
+        'featured.synopsis':      'Em um vilarejo isolado do sertão, uma mulher confronta o passado de sua família enquanto as fronteiras entre memória e esquecimento começam a se dissolver.',
+        'featured.more':          'Saiba mais',
+        'manifesto.sub':          'Fundada em 2018 · Rio de Janeiro',
+        'grid.title':             'Produções recentes',
+        'grid.all':               'Ver todas',
+        'upcoming.title':         'Vem aí',
+        'upcoming.sub':           'Em produção',
+        'status.filming':         'Filmando',
+        'status.dev':             'Desenvolvimento',
+        'status.post':            'Pós-produção',
+        'footer.col1':            'Navegação',
+        'footer.col2':            'Mais',
+        'footer.copy':            '© 2025 - 000 FILMES',
+        'menu.productions':       'Produções',
+        'menu.productions.count': '10+',
+        'menu.upcoming':          'Vem aí',
+        'menu.upcoming.count':    'Em produção',
+        'menu.history':           'Nossa história',
+        'menu.history.count':     'Sobre',
+        'menu.contact':           'Contato',
+        'menu.contact.count':     'fale com a gente',
+      }
+    },
+    en: {
+      translation: {
+        'nav.portfolio':          'Portfolio',
+        'nav.shop':               'Shop',
+        'hero.label':             'Featured · 2025',
+        'hero.cta':               'View portfolio',
+        'hero.scroll':            'Scroll',
+        'featured.eyebrow':       'Latest release',
+        'featured.synopsis':      'In an isolated village in the sertão, a woman confronts her family\'s past as the boundaries between memory and forgetting begin to dissolve.',
+        'featured.more':          'Learn more',
+        'manifesto.sub':          'Founded in 2018 · Rio de Janeiro',
+        'grid.title':             'Recent productions',
+        'grid.all':               'View all',
+        'upcoming.title':         'Coming soon',
+        'upcoming.sub':           'In production',
+        'status.filming':         'Filming',
+        'status.dev':             'Development',
+        'status.post':            'Post-production',
+        'footer.col1':            'Navigation',
+        'footer.col2':            'More',
+        'footer.copy':            '© 2025 - 000 FILMES',
+        'menu.productions':       'Productions',
+        'menu.productions.count': '10+',
+        'menu.upcoming':          'Coming Soon',
+        'menu.upcoming.count':    'In Production',
+        'menu.history':           'Our Story',
+        'menu.history.count':     'About',
+        'menu.contact':           'Contact',
+        'menu.contact.count':     'get in touch',
+      }
+    }
+  }
+}, () => {
+  renderPreview();
+  observeReveal();
+});
+
+function updateDOM() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = i18next.t(el.getAttribute('data-i18n'));
+  });
+  renderPreview();
+  goToSlide(currentSlide);
+}
+
+document.getElementById('langBtn').addEventListener('click', () => {
+  const next = i18next.language === 'pt' ? 'en' : 'pt';
+  i18next.changeLanguage(next, () => {
+    updateDOM();
+    document.getElementById('langBtn').textContent = next === 'pt' ? 'EN' : 'PT';
+  });
+});
+</script>
 </body>
 </html>
