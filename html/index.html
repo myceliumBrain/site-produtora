@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>000 filmes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style/style-base.css">
+  <link rel="stylesheet" href="../style/style-index.css">
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <header>
+    <button class="logo-btn" id="menuBtn" aria-label="Abrir menu">
+      <div class="hamburger"><span></span><span></span><span></span></div>
+      000 filmes
+    </button>
+    <div class="header-right">
+      <a href="producoes.html" class="header-link"><span data-i18n="nav.portfolio">Portfólio</span></a>
+      <a href="#" class="header-link"><span data-i18n="nav.shop">Loja</span></a>
+      <button class="header-link" id="langBtn">EN</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-slides">
+      <div class="hero-slide slide-1 active"></div>
+      <div class="hero-slide slide-2"></div>
+      <div class="hero-slide slide-3"></div>
+    </div>
+    <div class="hero-grain"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-bottom-fade"></div>
+    <nav class="hero-nav" id="heroNav">
+      <div class="hero-dot active" data-index="0"></div>
+      <div class="hero-dot" data-index="1"></div>
+      <div class="hero-dot" data-index="2"></div>
+    </nav>
+    <div class="hero-content">
+      <div class="hero-film-info">
+        <div class="hero-label" data-i18n="hero.label">Em destaque · 2025</div>
+        <h1 class="hero-title"></h1>
+        <div class="hero-meta"></div>
+      </div>
+      <div class="hero-cta">
+        <a href="producoes.html" class="btn-outline">
+          <span data-i18n="hero.cta">Ver portfólio</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      <span data-i18n="hero.scroll">Scroll</span>
+    </div>
+  </section>
+
+  <section class="section-featured">
+    <p class="featured-eyebrow reveal" data-i18n="featured.eyebrow">Último lançamento</p>
+    <div class="featured-layout">
+      <div class="featured-img-wrap reveal"></div>
+      <div class="featured-text">
+        <div class="featured-number reveal">01</div>
+        <h2 class="featured-title reveal reveal-delay-1"></h2>
+        <p class="featured-dir reveal reveal-delay-1"></p>
+        <p class="featured-synopsis reveal reveal-delay-2"></p>
+        <div class="featured-tags reveal reveal-delay-2"></div>
+        <a href="#" class="btn-outline reveal reveal-delay-3">
+          <span data-i18n="featured.more">Saiba mais</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-stripe">
+    <div class="stripe-track" id="stripeTrack">
+      <span class="stripe-item">Cinema Brasileiro Independente</span>
+      <span class="stripe-item">000 Filmes</span>
+      <span class="stripe-item">Produções desde 2018</span>
+      <span class="stripe-item">Rio de Janeiro</span>
+      <span class="stripe-item">Histórias que importam</span>
+      <span class="stripe-item">Cinema Brasileiro Independente</span>
+      <span class="stripe-item">000 Filmes</span>
+      <span class="stripe-item">Produções desde 2018</span>
+      <span class="stripe-item">Rio de Janeiro</span>
+      <span class="stripe-item">Histórias que importam</span>
+      <span class="stripe-item">Cinema Brasileiro Independente</span>
+      <span class="stripe-item">000 Filmes</span>
+      <span class="stripe-item">Produções desde 2018</span>
+      <span class="stripe-item">Rio de Janeiro</span>
+      <span class="stripe-item">Histórias que importam</span>
+    </div>
+  </div>
+
+  <section class="section-manifesto">
+    <div class="manifesto-line reveal"></div>
+    <p class="manifesto-text reveal">
+      Fazemos filmes que <em>recusam o esquecimento.</em><br>
+      Cada história é um ato de resistência,<br>
+      cada imagem, uma declaração.
+    </p>
+    <p class="manifesto-sub reveal reveal-delay-1" data-i18n="manifesto.sub">Fundada em 2018 · Rio de Janeiro</p>
+  </section>
+
+  <section class="section-grid">
+    <div class="section-grid-header">
+      <h2 class="section-grid-title reveal" data-i18n="grid.title">Produções recentes</h2>
+      <a href="producoes.html" class="section-grid-link reveal">
+        <span data-i18n="grid.all">Ver todas</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </a>
+    </div>
+    <div class="preview-grid" id="previewGrid"></div>
+  </section>
+
+  <section class="section-upcoming">
+    <div class="upcoming-header">
+      <h2 class="upcoming-title reveal" data-i18n="upcoming.title">Vem aí</h2>
+      <span style="font-family:var(--font-display);font-size:13px;font-style:italic;color:rgba(10,10,10,0.3)" class="reveal" data-i18n="upcoming.sub">Em produção</span>
+    </div>
+    <ul class="upcoming-list" id="upcomingList">
+      <li class="upcoming-item reveal">
+        <span class="upcoming-item__num">01</span>
+        <span class="upcoming-item__title">Bruma</span>
+        <div class="upcoming-item__meta">
+          <div>Dir. Carla Menezes</div>
+          <div class="upcoming-item__status" data-i18n="status.filming">Filmando</div>
+        </div>
+      </li>
+      <li class="upcoming-item reveal reveal-delay-1">
+        <span class="upcoming-item__num">02</span>
+        <span class="upcoming-item__title">O Intervalo</span>
+        <div class="upcoming-item__meta">
+          <div>Dir. Renata Pires</div>
+          <div class="upcoming-item__status" data-i18n="status.dev">Desenvolvimento</div>
+        </div>
+      </li>
+      <li class="upcoming-item reveal reveal-delay-2">
+        <span class="upcoming-item__num">03</span>
+        <span class="upcoming-item__title">Corpo Fechado</span>
+        <div class="upcoming-item__meta">
+          <div>Dir. Eduardo Braga</div>
+          <div class="upcoming-item__status" data-i18n="status.post">Pós-produção</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">000 filmes</div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4 data-i18n="footer.col1">Navegação</h4>
+          <ul>
+            <li><a href="producoes.html" data-i18n="nav.portfolio">Portfólio</a></li>
+            <li><a href="#" data-i18n="menu.upcoming">Vem aí</a></li>
+            <li><a href="#" data-i18n="menu.history">Nossa história</a></li>
+            <li><a href="#" data-i18n="menu.contact">Contato</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.col2">Mais</h4>
+          <ul>
+            <li><a href="#" data-i18n="nav.shop">Loja</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Jobs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy" data-i18n="footer.copy">© 2025 - 000 FILMES</span>
+      <div class="footer-social">
+        <a href="#">Instagram</a>
+        <a href="#">X</a>
+        <a href="#">Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MENU OVERLAY -->
+ <div class="menu-overlay" id="menuOverlay">
+  <div class="menu-body">
+    <nav class="menu-primary">
+      <ul class="menu-primary-list">
+        <li><a href="producoes.html">
+          <span class="menu-item-title" data-i18n="menu.productions">Produções</span>
+          <span class="menu-item-count" data-i18n="menu.productions.count">10+</span>
+        </a></li>
+        <li><a href="#">
+          <span class="menu-item-title" data-i18n="menu.upcoming">Vem aí</span>
+          <span class="menu-item-count" data-i18n="menu.upcoming.count">Em produção</span>
+        </a></li>
+        <li><a href="#">
+          <span class="menu-item-title" data-i18n="menu.history">Nossa história</span>
+          <span class="menu-item-count" data-i18n="menu.history.count">Sobre</span>
+        </a></li>
+        <li><a href="#">
+          <span class="menu-item-title" data-i18n="menu.contact">Contato</span>
+          <span class="menu-item-count" data-i18n="menu.contact.count">fale com a gente</span>
+        </a></li>
+      </ul>
+    </nav>
+
+
+    <div class="menu-secondary">
+      <div class="menu-social">
+        <a href="#">Instagram</a>
+        <a href="#">X</a>
+        <a href="#">YouTube</a>
+      </div>
+      <div class="menu-copy">© 2026 - 000 FILMES</div>
+    </div>
+
+  </div>
+
+</div>
+
+  <script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>
+  <script src="../scripts/script-shared.js"></script>
+  <script src="../scripts/script-index.js"></script>
+
+</body>
+</html>
