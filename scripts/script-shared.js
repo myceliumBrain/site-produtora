@@ -228,6 +228,51 @@ const films = [
   },
 ];
 
+/* ── BANCO DE FILMES EM PRODUÇÃO ──
+   Fonte única de dados para todas as páginas.
+   Usado em: index.html (section-upcoming), vemai.html
+   ── */
+const upcomingFilms = [
+  {
+    title:       'Bruma',
+    titleEn:     'Bruma',
+    director:    'Carla Menezes',
+    status:      'filming',        // 'filming' | 'dev' | 'post'
+    genre:       'Ficção',
+    genreEn:     'Fiction',
+    year:        '2026',
+    synopsis:    'Em uma cidade costeira encoberta por névoa permanente, dois irmãos redescobrem uma língua que acreditavam perdida. Um filme sobre memória, pertencimento e as palavras que nos sobrevivem.',
+    synopsisEn:  'In a coastal city shrouded in permanent mist, two siblings rediscover a language they believed lost. A film about memory, belonging and the words that outlive us.',
+    imgPortrait:  '',
+    imgLandscape: '',
+  },
+  {
+    title:       'O Intervalo',
+    titleEn:     'The Interval',
+    director:    'Renata Pires',
+    status:      'dev',
+    genre:       'Drama',
+    genreEn:     'Drama',
+    year:        '2027',
+    synopsis:    'Entre o fim de um relacionamento e o começo de outro, existe um tempo que ninguém nomeia. O Intervalo vive exatamente ali — no espaço entre o que foi e o que ainda não é.',
+    synopsisEn:  'Between the end of one relationship and the beginning of another, there is a time no one names. The Interval lives exactly there — in the space between what was and what is not yet.',
+    imgPortrait:  '',
+    imgLandscape: '',
+  },
+  {
+    title:       'Corpo Fechado',
+    titleEn:     'Corpo Fechado',
+    director:    'Eduardo Braga',
+    status:      'post',
+    genre:       'Thriller',
+    genreEn:     'Thriller',
+    year:        '2025',
+    synopsis:    'Um homem descobre que seu corpo guarda memórias que sua mente recusa. Thriller psicológico sobre identidade, trauma e os limites da carne.',
+    synopsisEn:  'A man discovers his body holds memories his mind refuses. A psychological thriller about identity, trauma and the limits of flesh.',
+    imgPortrait:  '',
+    imgLandscape: '',
+  },
+];
 
 /* ── BOTÃO DE IDIOMA ──
    Cada página define sua própria updateDOM().

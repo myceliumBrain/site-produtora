@@ -114,6 +114,35 @@ function renderPreview() {
   observeReveal();
 }
 
+/* ── UPCOMING (lê upcomingFilms do script-shared.js) ── */
+const statusKey = {
+  filming: 'status.filming',
+  dev:     'status.dev',
+  post:    'status.post',
+};
+
+function renderUpcoming() {
+  const lang = i18next.language;
+
+  document.getElementById('upcomingList').innerHTML = upcomingFilms.map((f, i) => {
+    const title  = lang === 'en' ? f.titleEn : f.title;
+    const status = i18next.t(statusKey[f.status]);
+    const num    = String(i + 1).padStart(2, '0');
+    const delay  = i > 0 ? `reveal-delay-${i}` : '';
+
+    return `
+      <li class="upcoming-item reveal ${delay}">
+        <span class="upcoming-item__num">${num}</span>
+        <span class="upcoming-item__title">${title}</span>
+        <div class="upcoming-item__meta">
+          <div>Dir. ${f.director}</div>
+          <div class="upcoming-item__status">${status}</div>
+        </div>
+      </li>`;
+  }).join('');
+
+  observeReveal();
+}
 
 /* ── SCROLL REVEAL ── */
 function observeReveal() {
@@ -136,6 +165,7 @@ function updateDOM() {
     el.textContent = i18next.t(el.getAttribute('data-i18n'));
   });
   renderPreview();
+  renderUpcoming();
   goToSlide(currentSlide);
 }
 
@@ -215,5 +245,6 @@ i18next.init({
   goToSlide(0);      // inicializa hero com imagem e texto
   renderFeatured();  // renderiza featured
   renderPreview();
+  renderUpcoming();
   observeReveal();
 });
