@@ -77,7 +77,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
 
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
-  function updateDOM() {
+  window.updateDOM = function() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       const val = i18next.t(key);

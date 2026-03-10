@@ -15,29 +15,6 @@ let data    = {};
 /* ══════════════════════════════════════════════════════════
    LOGIN
 ══════════════════════════════════════════════════════════ */
-// async function doLogin() {
-//   TOKEN = document.getElementById('tokenInput').value.trim();
-//   if (!TOKEN) return;
-
-//   const btn = document.getElementById('loginBtn');
-//   btn.disabled = true;
-//   btn.innerHTML = '<span class="spinner"></span> verificando…';
-
-//   try {
-//     await loadData();
-//     document.getElementById('loginScreen').style.display = 'none';
-//     document.getElementById('app').style.display = 'block';
-//     renderAll();
-//     setStatus('dados carregados ✓', 'ok');
-//   } catch (e) {
-//     const err = document.getElementById('loginErr');
-//     err.textContent = 'Token inválido ou repositório não encontrado.';
-//     btn.disabled = false;
-//     btn.innerHTML = 'Entrar →';
-//   }
-// }
-
-//TEMPORARIO
 async function doLogin() {
   TOKEN = document.getElementById('tokenInput').value.trim();
   if (!TOKEN) return;
@@ -47,40 +24,17 @@ async function doLogin() {
   btn.innerHTML = '<span class="spinner"></span> verificando…';
 
   try {
-    const res = await fetch(
-      `https://api.github.com/repos/${REPO}/contents/${FILE}?ref=${BRANCH}`,
-      { headers: { Authorization: `token ${TOKEN}`, Accept: 'application/vnd.github.v3+json' } }
-    );
-    console.log('STATUS:', res.status);
-    const json = await res.json();
-    console.log('RESPOSTA:', json);
-
-    if (!res.ok) throw new Error(json.message);
-
-    fileSHA = json.sha;
-    data = JSON.parse(decodeURIComponent(escape(atob(json.content.replace(/\n/g, '')))));
+    await loadData();
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     renderAll();
     setStatus('dados carregados ✓', 'ok');
   } catch (e) {
-    console.error('ERRO:', e);
-    document.getElementById('loginErr').textContent = e.message;
+    const err = document.getElementById('loginErr');
+    err.textContent = 'Token inválido ou repositório não encontrado.';
     btn.disabled = false;
     btn.innerHTML = 'Entrar →';
   }
-}
-
-document.getElementById('tokenInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') doLogin();
-});
-
-function doLogout() {
-  TOKEN = ''; fileSHA = ''; data = {};
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('tokenInput').value = '';
-  document.getElementById('loginErr').textContent = '';
 }
 
 /* ══════════════════════════════════════════════════════════

@@ -60,10 +60,20 @@ menuOverlay.addEventListener('click', e => {
    Cada página define sua própria updateDOM().
    Este handler chama updateDOM() após a troca de idioma,
    então basta cada script-[página].js declarar essa função. ── */
+function initLangBtn() {
+  document.getElementById('langBtn').addEventListener('click', () => {
+    const next = i18next.language === 'pt' ? 'en' : 'pt';
+    i18next.changeLanguage(next, () => {
+      if (typeof window.updateDOM === 'function') window.updateDOM();
+      document.getElementById('langBtn').textContent = next === 'pt' ? 'EN' : 'PT';
+    });
+  });
+}
+
 document.getElementById('langBtn').addEventListener('click', () => {
   const next = i18next.language === 'pt' ? 'en' : 'pt';
   i18next.changeLanguage(next, () => {
-    updateDOM(); // definida no script específico de cada página
+    updateDOM();
     document.getElementById('langBtn').textContent = next === 'pt' ? 'EN' : 'PT';
   });
 });

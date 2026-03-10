@@ -69,7 +69,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
   }
 
-  function updateDOM() {
+  window.updateDOM = function() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       el.textContent = i18next.t(el.getAttribute('data-i18n'));
     });
