@@ -87,30 +87,33 @@ function renderFeatured() {
 function renderPreview() {
   const lang = i18next.language;
 
-  // Pega até 4 filmes normais (sem wide) para o preview da home
-  const previewFilms = films.filter(f => f.size !== 'wide').slice(0, 4);
+  // Pega até 4 filmes normais para o preview da home
+const previewFilms = films.slice(0, 4);
 
-  document.getElementById('previewGrid').innerHTML = previewFilms.map(f => `
-    <div class="preview-card reveal">
-      <div class="preview-card__bg">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(240,236,228,0.1)">
-          <rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.6"/>
-          <circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.6"/>
-          <path d="M21 15l-5-5L5 21" stroke-width="0.6"/>
-        </svg>
-        <img class="preview-card__img-portrait"
-             src="${f.imgPortrait}"
-             alt="${lang === 'en' ? f.titleEn : f.title}"
-             onerror="this.style.display='none'">
-      </div>
-      <div class="preview-card__overlay"></div>
-      <div class="preview-card__info">
-        <div class="preview-card__year">${f.year}</div>
-        <div class="preview-card__title">${lang === 'en' ? f.titleEn : f.title}</div>
-        <div class="preview-card__dir">Dir. ${f.director}</div>
-      </div>
-    </div>
-  `).join('');
+  document.getElementById('previewGrid').innerHTML = previewFilms.map(f => {
+    const originalIndex = films.indexOf(f);
+    return `
+      <a href="filme.html?i=${originalIndex}" class="preview-card reveal">
+        <div class="preview-card__bg">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(240,236,228,0.1)">
+            <rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.6"/>
+            <circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.6"/>
+            <path d="M21 15l-5-5L5 21" stroke-width="0.6"/>
+          </svg>
+          <img class="preview-card__img-portrait"
+               src="${f.imgPortrait}"
+               alt="${lang === 'en' ? f.titleEn : f.title}"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="preview-card__overlay"></div>
+        <div class="preview-card__info">
+          <div class="preview-card__year">${f.year}</div>
+          <div class="preview-card__title">${lang === 'en' ? f.titleEn : f.title}</div>
+          <div class="preview-card__dir">Dir. ${f.director}</div>
+        </div>
+      </a>`;
+  }).join('');
+
   observeReveal();
 }
 
@@ -132,12 +135,14 @@ function renderUpcoming() {
 
     return `
       <li class="upcoming-item reveal ${delay}">
-        <span class="upcoming-item__num">${num}</span>
-        <span class="upcoming-item__title">${title}</span>
-        <div class="upcoming-item__meta">
-          <div>Dir. ${f.director}</div>
-          <div class="upcoming-item__status">${status}</div>
-        </div>
+        <a href="filme.html?src=upcoming&i=${i}" class="upcoming-item__link">
+          <span class="upcoming-item__num">${num}</span>
+          <span class="upcoming-item__title">${title}</span>
+          <div class="upcoming-item__meta">
+            <div>Dir. ${f.director}</div>
+            <div class="upcoming-item__status">${status}</div>
+          </div>
+        </a>
       </li>`;
   }).join('');
 
@@ -164,6 +169,7 @@ function updateDOM() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     el.textContent = i18next.t(el.getAttribute('data-i18n'));
   });
+  renderFeatured();
   renderPreview();
   renderUpcoming();
   goToSlide(currentSlide);
@@ -177,12 +183,10 @@ i18next.init({
     pt: {
       translation: {
         'nav.portfolio':          'Portfólio',
-        'nav.shop':               'Loja',
         'hero.label':             'Em destaque · 2025',
         'hero.cta':               'Ver portfólio',
         'hero.scroll':            'Scroll',
         'featured.eyebrow':       'Último lançamento',
-        'featured.synopsis':      'Em um vilarejo isolado do sertão, uma mulher confronta o passado de sua família enquanto as fronteiras entre memória e esquecimento começam a se dissolver.',
         'featured.more':          'Saiba mais',
         'manifesto.sub':          'Fundada em 2018 · Rio de Janeiro',
         'grid.title':             'Produções recentes',
@@ -193,7 +197,6 @@ i18next.init({
         'status.dev':             'Desenvolvimento',
         'status.post':            'Pós-produção',
         'footer.col1':            'Navegação',
-        'footer.col2':            'Mais',
         'footer.copy':            '© 2025 - 000 FILMES',
         'menu.home':              'Início',
         'menu.home.count':        '',
@@ -210,12 +213,10 @@ i18next.init({
     en: {
       translation: {
         'nav.portfolio':          'Portfolio',
-        'nav.shop':               'Shop',
         'hero.label':             'Featured · 2025',
         'hero.cta':               'View portfolio',
         'hero.scroll':            'Scroll',
         'featured.eyebrow':       'Latest release',
-        'featured.synopsis':      'In an isolated village in the sertão, a woman confronts her family\'s past as the boundaries between memory and forgetting begin to dissolve.',
         'featured.more':          'Learn more',
         'manifesto.sub':          'Founded in 2018 · Rio de Janeiro',
         'grid.title':             'Recent productions',
@@ -226,7 +227,6 @@ i18next.init({
         'status.dev':             'Development',
         'status.post':            'Post-production',
         'footer.col1':            'Navigation',
-        'footer.col2':            'More',
         'footer.copy':            '© 2025 - 000 FILMES',
         'menu.home':              'Home',
         'menu.home.count': '',

@@ -65,8 +65,8 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1px;
-  background: var(--border);
-  border-top: 1px solid var(--border);
+  background: var(--black);
+  border-top: 1px solid var(--black);
 }
 
 @media (max-width: 1024px) { .films-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -74,7 +74,7 @@
 @media (max-width: 400px)  { .films-grid { grid-template-columns: 1fr; } }
 
 .card--wide { grid-column: span 2; }
-
+.card--tall { grid-row: span 2; }
 
 /* ── FILM CARD ── */
 
@@ -98,8 +98,8 @@
 
 .card--p .film-card__img            { aspect-ratio: 8 / 10; }
 .card--l .film-card__img            { aspect-ratio: 4 / 3;  }
-.card--wide.card--p .film-card__img { aspect-ratio: 8 / 10; }
-.card--wide.card--l .film-card__img { aspect-ratio: 16 / 9; }
+.card--wide.card--p .film-card__img { aspect-ratio: 4 / 10; }
+.card--wide.card--l .film-card__img { aspect-ratio: 8 / 5;  }
 
 .film-card__img img {
   position: absolute;

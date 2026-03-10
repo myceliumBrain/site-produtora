@@ -27,13 +27,13 @@ const placeholder = `
 
 
 /* ── CRIA CARD ── */
-function createCard(film) {
-  const wide  = film.size === 'wide' ? 'card--wide' : '';
+function createCard(film, index) {
+  const wide = film.size === 'wide' ? 'card--wide' : '';
+  const tall = film.rows === 2      ? 'card--tall' : '';
   const title = i18next.language === 'en' && film.titleEn ? film.titleEn : film.title;
 
   return `
-    <div class="film-card ${wide} card--${film.ratio}">
-      <div class="film-card__img">
+    <a href="filme.html?i=${index}" class="film-card ${wide} ${tall} card--${film.ratio}">      <div class="film-card__img">
         ${placeholder}
         <img class="img-portrait"
              src="${film.imgPortrait}"
@@ -52,8 +52,8 @@ function createCard(film) {
     </div>`;
 }
 
-
 /* ── RENDERIZA GRID (com ordenação) ── */
+
 function renderGrid(sortMode = 'recent') {
   let sorted = [...films];
 
@@ -65,10 +65,24 @@ function renderGrid(sortMode = 'recent') {
       return titleA.localeCompare(titleB, lang, { sensitivity: 'base' });
     });
   }
-  // 'recent' mantém a ordem original (já ordenada por ano no array)
 
-  document.querySelector('.films-grid').innerHTML = sorted.map(createCard).join('');
+  const patterns = [
+    { size: 'wide', ratio: 'l', rows: 1 },
+    { size: '',     ratio: 'p', rows: 1 },
+    { size: '',     ratio: 'p', rows: 1 },
+    { size: '',     ratio: 'l', rows: 1 },
+    { size: '',     ratio: 'p', rows: 1 },
+  ];
+
+  document.querySelector('.films-grid').innerHTML = sorted.map((film, index) => {
+    const pattern       = patterns[index % patterns.length];
+    const originalIndex = films.indexOf(film);
+    return createCard({ ...film, ...pattern }, originalIndex);
+  }).join('');
 }
+
+
+
 
 
 /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
@@ -91,12 +105,10 @@ i18next.init({
     pt: {
       translation: {
         'nav.home':               'Início',
-        'nav.shop':               'Loja',
         'section.title':          'Produções',
         'sort.recent':            'Recentes',
         'sort.az':                'A–Z',
         'footer.col1':            'Navegação',
-        'footer.col2':            'Mais',
         'footer.copy':            '© 2025 - 000 FILMES',
         'menu.home':              'Início',
         'menu.home.count':        'Pag. inicial',
@@ -113,12 +125,10 @@ i18next.init({
     en: {
       translation: {
         'nav.home':               'Home',
-        'nav.shop':               'Shop',
         'section.title':          'Productions',
         'sort.recent':            'Latest',
         'sort.az':                'A–Z',
         'footer.col1':            'Navigation',
-        'footer.col2':            'More',
         'footer.copy':            '© 2025 - 000 FILMES',
         'menu.home':              'Home',
         'menu.home.count':        'Beggining',

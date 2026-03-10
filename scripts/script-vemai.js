@@ -13,6 +13,7 @@ const statusKey = {
 
 
 /* ── RENDERIZA FILMES ── */
+
 function renderFilmes() {
   const lang = i18next.language;
 
@@ -21,11 +22,9 @@ function renderFilmes() {
     const synopsis = lang === 'en' ? f.synopsisEn : f.synopsis;
     const genre    = lang === 'en' ? f.genreEn    : f.genre;
     const status   = i18next.t(statusKey[f.status]);
-    const num      = String(i + 1).padStart(2, '0');
 
     return `
-      <div class="vemai-filme reveal">
-
+      <a href="filme.html?src=upcoming&i=${i}" class="vemai-filme reveal">
         <div class="vemai-filme__img-wrap">
           <div class="vemai-filme__img-bg"></div>
           <div class="vemai-filme__placeholder">
@@ -39,7 +38,6 @@ function renderFilmes() {
             ? `<img class="vemai-filme__img" src="${f.imgPortrait}" alt="${title}" onerror="this.style.display='none'">`
             : ''}
         </div>
-
         <div class="vemai-filme__info">
           <div class="vemai-filme__status">${status}</div>
           <h2 class="vemai-filme__title">${title}</h2>
@@ -53,14 +51,12 @@ function renderFilmes() {
             <span class="vemai-filme__tag">${status}</span>
           </div>
         </div>
-
-      </div>`;
+      </a>`;
   }).join('');
 
   document.getElementById('vemai-filmes').innerHTML = html;
   observeReveal();
 }
-
 
 /* ── SCROLL REVEAL ── */
 function observeReveal() {

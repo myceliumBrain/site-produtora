@@ -20,11 +20,8 @@
       000 filmes
     </button>
     <div class="header-right">
-      <a href="../html/index.html" class="header-link">
+      <a href="index.html" class="header-link">
         <span data-i18n="nav.home">Início</span>
-      </a>
-      <a href="http://www.000filmes.com.br/loja" class="header-link">
-        <span data-i18n="nav.shop">Loja</span>
       </a>
       <button class="header-link" id="langBtn">EN</button>
     </div>
@@ -56,7 +53,7 @@
             <span class="menu-item-title" data-i18n="menu.home">Início</span>
             <span class="menu-item-count" data-i18n="menu.home.count">Página inicial</span>
           </a></li>
-          <li><a href="#">
+          <li><a href="vemai.html">
             <span class="menu-item-title" data-i18n="menu.upcoming">Vem aí</span>
             <span class="menu-item-count" data-i18n="menu.upcoming.count">Em produção</span>
           </a></li>
@@ -95,14 +92,6 @@
             <li><a href="#" data-i18n="menu.contact">Contato</a></li>
           </ul>
         </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer.col2">Mais</h4>
-          <ul>
-            <li><a href="#" data-i18n="nav.shop">Loja</a></li>
-            <li><a href="#">Press</a></li>
-            <li><a href="#">Jobs</a></li>
-          </ul>
-        </div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -122,6 +111,8 @@
 
   <!-- script da página primeiro (define updateDOM), shared depois -->
   <!-- shared primeiro: declara `films` antes dos scripts de página -->
+  
+  <script src="scripts/data.js"></script>
   <script src="scripts/script-shared.js"></script>
   <script src="scripts/script-producoes.js"></script>
 
