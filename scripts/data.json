@@ -1,25 +1,6 @@
 {
   "films": [
     {
-      "title": "Última Fronteira perdida",
-      "titleEn": "The Last Frontier",
-      "director": "Ana Luiza Morais",
-      "year": "2025",
-      "genre": "Drama",
-      "ratio": "p",
-      "size": "wide",
-      "hero": true,
-      "synopsis": "Em um vilarejo isolado do sertão, uma mulher confronta o passado de sua família enquanto as fronteiras entre memória e esquecimento começam a se dissolver.",
-      "synopsisEn": "In an isolated village in the sertão, a woman confronts her family's past as the boundaries between memory and forgetting begin to dissolve.",
-      "tags": [
-        "Drama",
-        "Sertão",
-        "87 min"
-      ],
-      "imgPortrait": "https://http.cat/images/100.jpg",
-      "imgLandscape": "https://http.cat/images/101.jpg"
-    },
-    {
       "title": "Sombra Branca",
       "titleEn": "White Shadow",
       "director": "Felipe Drummond",
@@ -37,6 +18,25 @@
       ],
       "imgPortrait": "https://http.cat/images/102.jpg",
       "imgLandscape": "https://http.cat/images/103.jpg"
+    },
+    {
+      "title": "Última Fronteira perdida",
+      "titleEn": "The Last Frontier",
+      "director": "Ana Luiza Morais",
+      "year": "2025",
+      "genre": "Drama",
+      "ratio": "p",
+      "size": "wide",
+      "hero": true,
+      "synopsis": "Em um vilarejo isolado do sertão, uma mulher confronta o passado de sua família enquanto as fronteiras entre memória e esquecimento começam a se dissolver.",
+      "synopsisEn": "In an isolated village in the sertão, a woman confronts her family's past as the boundaries between memory and forgetting begin to dissolve.",
+      "tags": [
+        "Drama",
+        "Sertão",
+        "87 min"
+      ],
+      "imgPortrait": "https://http.cat/images/100.jpg",
+      "imgLandscape": "https://http.cat/images/101.jpg"
     },
     {
       "title": "Vento Cru",
