@@ -6,7 +6,7 @@
       "director": "Lucas Fonseca",
       "year": "2024",
       "genre": "Thriller",
-      "hero": false,
+      "hero": true,
       "synopsis": "",
       "synopsisEn": "",
       "tags": [],
