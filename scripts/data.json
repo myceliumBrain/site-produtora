@@ -1,25 +1,6 @@
 {
   "films": [
     {
-      "title": "Sombra Branca",
-      "titleEn": "White Shadow",
-      "director": "Felipe Drummond",
-      "year": "2025",
-      "genre": "Drama",
-      "ratio": "p",
-      "size": "",
-      "hero": true,
-      "synopsis": "Um fotógrafo retorna à cidade natal e descobre que as memórias que guardou nunca foram suas.",
-      "synopsisEn": "A photographer returns to his hometown and discovers that the memories he kept were never his own.",
-      "tags": [
-        "Drama",
-        "Fotografia",
-        "94 min"
-      ],
-      "imgPortrait": "https://http.cat/images/102.jpg",
-      "imgLandscape": "https://http.cat/images/103.jpg"
-    },
-    {
       "title": "Última Fronteira perdida",
       "titleEn": "The Last Frontier",
       "director": "Ana Luiza Morais",
@@ -37,6 +18,25 @@
       ],
       "imgPortrait": "https://http.cat/images/100.jpg",
       "imgLandscape": "https://http.cat/images/101.jpg"
+    },
+    {
+      "title": "Sombra Branca",
+      "titleEn": "White Shadow",
+      "director": "Felipe Drummond",
+      "year": "2025",
+      "genre": "Drama",
+      "ratio": "p",
+      "size": "",
+      "hero": true,
+      "synopsis": "Um fotógrafo retorna à cidade natal e descobre que as memórias que guardou nunca foram suas.",
+      "synopsisEn": "A photographer returns to his hometown and discovers that the memories he kept were never his own.",
+      "tags": [
+        "Drama",
+        "Fotografia",
+        "94 min"
+      ],
+      "imgPortrait": "https://http.cat/images/102.jpg",
+      "imgLandscape": "https://http.cat/images/103.jpg"
     },
     {
       "title": "Vento Cru",
