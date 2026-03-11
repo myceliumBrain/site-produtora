@@ -28,17 +28,13 @@
 
   <section class="hero">
     <div class="hero-slides">
-      <div class="hero-slide slide-1 active"></div>
-      <div class="hero-slide slide-2"></div>
-      <div class="hero-slide slide-3"></div>
+      <!-- slides gerados pelo JS -->
     </div>
     <div class="hero-grain"></div>
     <div class="hero-vignette"></div>
     <div class="hero-bottom-fade"></div>
     <nav class="hero-nav" id="heroNav">
-      <div class="hero-dot active" data-index="0"></div>
-      <div class="hero-dot" data-index="1"></div>
-      <div class="hero-dot" data-index="2"></div>
+      <!-- dots gerados pelo JS -->
     </nav>
     <div class="hero-content">
       <div class="hero-film-info">
@@ -101,8 +97,6 @@
     </div>
   </div>
 
- 
-
   <section class="section-grid">
     <div class="section-grid-header">
       <h2 class="section-grid-title reveal" data-i18n="grid.title">Produções recentes</h2>
@@ -117,12 +111,12 @@
   </section>
 
   <section class="section-upcoming">
-  <div class="upcoming-header">
-    <h2 class="upcoming-title reveal" data-i18n="upcoming.title">Vem aí</h2>
-    <span style="font-family:var(--font-display);font-size:13px;font-style:italic;color:rgba(10,10,10,0.3)" class="reveal" data-i18n="upcoming.sub">Em produção</span>
-  </div>
-  <ul class="upcoming-list" id="upcomingList"></ul>
-</section>
+    <div class="upcoming-header">
+      <h2 class="upcoming-title reveal" data-i18n="upcoming.title">Vem aí</h2>
+      <span style="font-family:var(--font-display);font-size:13px;font-style:italic;color:rgba(10,10,10,0.3)" class="reveal" data-i18n="upcoming.sub">Em produção</span>
+    </div>
+    <ul class="upcoming-list" id="upcomingList"></ul>
+  </section>
 
   <footer>
     <div class="footer-top">
@@ -150,45 +144,40 @@
   </footer>
 
   <!-- MENU OVERLAY -->
- <div class="menu-overlay" id="menuOverlay">
-  <div class="menu-body">
-    <nav class="menu-primary">
-      <ul class="menu-primary-list">
-        <li><a href="producoes.html">
-          <span class="menu-item-title" data-i18n="menu.productions">Produções</span>
-          <span class="menu-item-count" data-i18n="menu.productions.count">10+</span>
-        </a></li>
-        <li><a href="vemai.html">
-          <span class="menu-item-title" data-i18n="menu.upcoming">Vem aí</span>
-          <span class="menu-item-count" data-i18n="menu.upcoming.count">Em produção</span>
-        </a></li>
-        <li><a href="historia.html">
-          <span class="menu-item-title" data-i18n="menu.history">Nossa história</span>
-          <span class="menu-item-count" data-i18n="menu.history.count">Sobre</span>
-        </a></li>
-        <li><a href="contato.html">
-          <span class="menu-item-title" data-i18n="menu.contact">Contato</span>
-          <span class="menu-item-count" data-i18n="menu.contact.count">fale com a gente</span>
-        </a></li>
-      </ul>
-    </nav>
-
-
-    <div class="menu-secondary">
-      <div class="menu-social">
-        <a href="#">Instagram</a>
-        <a href="#">X</a>
-        <a href="#">YouTube</a>
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-body">
+      <nav class="menu-primary">
+        <ul class="menu-primary-list">
+          <li><a href="producoes.html">
+            <span class="menu-item-title" data-i18n="menu.productions">Produções</span>
+            <span class="menu-item-count" data-i18n="menu.productions.count">10+</span>
+          </a></li>
+          <li><a href="vemai.html">
+            <span class="menu-item-title" data-i18n="menu.upcoming">Vem aí</span>
+            <span class="menu-item-count" data-i18n="menu.upcoming.count">Em produção</span>
+          </a></li>
+          <li><a href="historia.html">
+            <span class="menu-item-title" data-i18n="menu.history">Nossa história</span>
+            <span class="menu-item-count" data-i18n="menu.history.count">Sobre</span>
+          </a></li>
+          <li><a href="contato.html">
+            <span class="menu-item-title" data-i18n="menu.contact">Contato</span>
+            <span class="menu-item-count" data-i18n="menu.contact.count">fale com a gente</span>
+          </a></li>
+        </ul>
+      </nav>
+      <div class="menu-secondary">
+        <div class="menu-social">
+          <a href="#">Instagram</a>
+          <a href="#">X</a>
+          <a href="#">YouTube</a>
+        </div>
+        <div class="menu-copy">© 2026 - 000 FILMES</div>
       </div>
-      <div class="menu-copy">© 2026 - 000 FILMES</div>
     </div>
-
   </div>
 
-</div>
-
   <script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>
-  
   <script src="scripts/data.js"></script>
   <script src="scripts/script-shared.js"></script>
   <script src="scripts/script-index.js"></script>

@@ -8,12 +8,24 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
 /* ── HERO SLIDESHOW ──
    Filmes marcados com hero:true no array films ── */
-   
+
   const heroFilms = films.filter(f => f.hero);
+  let currentSlide = 0;
+
+  // Gera slides e dots dinamicamente — funciona com qualquer quantidade de heroFilms
+  const slidesContainer = document.querySelector('.hero-slides');
+  const dotsContainer   = document.getElementById('heroNav');
+
+  slidesContainer.innerHTML = heroFilms.map((_, i) =>
+    `<div class="hero-slide${i === 0 ? ' active' : ''}"></div>`
+  ).join('');
+
+  dotsContainer.innerHTML = heroFilms.map((_, i) =>
+    `<div class="hero-dot${i === 0 ? ' active' : ''}" data-index="${i}"></div>`
+  ).join('');
 
   const slides = document.querySelectorAll('.hero-slide');
   const dots   = document.querySelectorAll('.hero-dot');
-  let currentSlide = 0;
 
   function goToSlide(n) {
     slides[currentSlide].classList.remove('active');
@@ -27,11 +39,12 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     const title = lang === 'en' ? f.titleEn : f.title;
 
     // Atualiza imagem de fundo do slide
-    const slideEl = slides[n];
     if (f.imgLandscape) {
-      slideEl.style.backgroundImage = `url('${f.imgLandscape}')`;
-      slideEl.style.backgroundSize  = 'cover';
-      slideEl.style.backgroundPosition = 'center';
+      slides[n].style.backgroundImage    = `url('${f.imgLandscape}')`;
+      slides[n].style.backgroundSize     = 'cover';
+      slides[n].style.backgroundPosition = 'center';
+    } else {
+      slides[n].style.backgroundImage = '';
     }
 
     // Atualiza texto do hero
