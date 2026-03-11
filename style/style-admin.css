@@ -139,7 +139,7 @@ a, button { cursor: pointer !important; }
   border-left: 2px solid var(--accent);
 }
 
-── SETUP SCREEN ──
+/* ── SETUP SCREEN ── */
 #setupScreen {
   display: none;
   align-items: center;
