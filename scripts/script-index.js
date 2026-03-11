@@ -45,13 +45,17 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
 
   /* ── FEATURED FILM ──
-    Sempre o primeiro filme com hero:true ── */
+    Sempre o primeiro filme do array films ── */
   function renderFeatured() {
-    const f    = heroFilms[0];
+    const f    = films[0];
     const lang = i18next.language;
     const title    = lang === 'en' ? f.titleEn  : f.title;
     const synopsis = lang === 'en' ? f.synopsisEn : f.synopsis;
     const tags     = (f.tags || [f.genre, f.year]).map(t => `<span class="tag">${t}</span>`).join('');
+
+    // Link do botão "Saiba mais" — aponta sempre para films[0]
+    const featuredLink = document.querySelector('.section-featured .btn-outline');
+    if (featuredLink) featuredLink.href = 'filme.html?i=0';
 
     // Imagem
     const imgWrap = document.querySelector('.featured-img-wrap');

@@ -408,13 +408,16 @@ a, button { cursor: pointer !important; }
   padding: 0.75rem 1.25rem;
   border-radius: 3px;
   transform: translateY(120%);
-  transition: transform 0.3s;
+  visibility: hidden;
+  transition: transform 0.3s, visibility 0.3s;
   z-index: 9999;
 }
-#toast.show { transform: translateY(0); }
+#toast.show {
+  transform: translateY(0);
+  visibility: visible;
+}
 #toast.ok  { border-color: var(--accent); color: var(--accent); }
 #toast.err { border-color: var(--danger); color: var(--danger); }
-
 /* ── SPINNER ── */
 .spinner {
   display: inline-block;
@@ -432,4 +435,40 @@ a, button { cursor: pointer !important; }
   .adm-sidebar { display: none; }
   .fields-grid { grid-template-columns: 1fr; }
   .adm-content { padding: 1.25rem; }
+}
+
+/* ── REORDER BUTTONS ── */
+.reorder-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-right: 4px;
+}
+
+.reorder-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid var(--border-f);
+  color: var(--muted);
+  font-size: 0.55rem;
+  width: 20px;
+  height: 18px;
+  border-radius: 2px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: all 0.15s;
+}
+
+.reorder-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(232, 255, 71, 0.06);
+}
+
+.reorder-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
 }

@@ -124,13 +124,10 @@ async function doLogin() {
   document.getElementById('loginErr').textContent = '';
 
   try {
-    // 1. Carrega o JSON publicamente (sem token)
     await loadData();
 
-    // 2. Verifica se existe _auth configurado
     const tokens = data._auth?.tokens || [];
     if (tokens.length === 0) {
-      // Nenhuma senha cadastrada ainda — mostra tela de setup
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('setupScreen').style.display = 'flex';
       btn.disabled = false;
@@ -138,7 +135,6 @@ async function doLogin() {
       return;
     }
 
-    // 3. Tenta descriptografar com a senha digitada
     let decryptedToken = null;
     for (const entry of tokens) {
       decryptedToken = await decryptToken(entry, password);
@@ -196,7 +192,6 @@ async function doSetup() {
 
   try {
     TOKEN = token;
-    // Recarrega com o token para garantir SHA atualizado
     await loadData(token);
 
     const encrypted = await encryptToken(token, password);
@@ -320,6 +315,85 @@ async function saveAll() {
 }
 
 /* ══════════════════════════════════════════════════════════
+   SAVE CARD — salva um item individual e re-renderiza o header
+══════════════════════════════════════════════════════════ */
+
+/**
+ * Coleta os campos de um card, atualiza `data` em memória
+ * e re-renderiza o painel. NÃO faz commit no GitHub.
+ *
+ * @param {string} type  'film' | 'upcoming' | 'marco' | 'team'
+ * @param {number} i     Índice do item no array
+ */
+function saveCard(type, i) {
+  // Coleta todos os campos do formulário para `data` em memória (sem commit)
+  collectAll();
+
+  // Re-renderiza o painel para refletir mudanças no header (título, ano, etc.)
+  const renderMap = { film: renderFilms, upcoming: renderUpcoming, marco: renderMarcos, team: renderTeam };
+  if (renderMap[type]) renderMap[type]();
+
+  // Reabre o card que estava sendo editado após a re-renderização
+  const card = document.getElementById(`${type}-card-${i}`);
+  if (card) card.classList.add('open');
+
+  toast('Visual atualizado — clique em “Salvar no GitHub” para confirmar.', 'ok');
+}
+
+/* ══════════════════════════════════════════════════════════
+   REORDER — ferramenta genérica de reordenação
+   Usada por: films, upcomingFilms, marcos, team
+══════════════════════════════════════════════════════════ */
+
+/**
+ * Move um item do array na posição `fromIdx` para `toIdx`.
+ * Após mover, re-renderiza a lista e salva automaticamente no GitHub.
+ *
+ * @param {Array}    arr        Referência ao array em `data`
+ * @param {number}   fromIdx    Índice atual do item
+ * @param {number}   toIdx      Índice de destino
+ * @param {Function} renderFn   Função que re-renderiza o painel (ex: renderFilms)
+ * @param {string}   commitMsg  Mensagem do commit no GitHub
+ */
+function moveItem(arr, fromIdx, toIdx, renderFn) {
+  if (toIdx < 0 || toIdx >= arr.length) return;
+
+  // Coleta os valores dos campos abertos antes de reorganizar
+  collectAll();
+
+  // Troca os elementos
+  const [removed] = arr.splice(fromIdx, 1);
+  arr.splice(toIdx, 0, removed);
+
+  // Re-renderiza visualmente (sem commit — aguarda "Salvar no GitHub")
+  renderFn();
+
+  toast('Ordem atualizada — clique em “Salvar no GitHub” para confirmar.', 'ok');
+}
+
+/**
+ * Gera o HTML dos botões de seta para reordenação.
+ * A seta para cima é desabilitada no primeiro item;
+ * a seta para baixo é desabilitada no último.
+ *
+ * @param {number} idx       Índice atual do item
+ * @param {number} total     Total de itens no array
+ * @param {string} moveUpFn  String com a chamada JS para mover para cima
+ * @param {string} moveDnFn  String com a chamada JS para mover para baixo
+ */
+function reorderBtns(idx, total, moveUpFn, moveDnFn) {
+  return `
+    <div class="reorder-btns">
+      <button class="reorder-btn" title="Mover para cima"
+        ${idx === 0 ? 'disabled' : ''}
+        onclick="${moveUpFn}">▲</button>
+      <button class="reorder-btn" title="Mover para baixo"
+        ${idx === total - 1 ? 'disabled' : ''}
+        onclick="${moveDnFn}">▼</button>
+    </div>`;
+}
+
+/* ══════════════════════════════════════════════════════════
    FILMS
 ══════════════════════════════════════════════════════════ */
 function renderFilms() {
@@ -330,6 +404,10 @@ function renderFilms() {
     <div class="card" id="film-card-${i}">
       <div class="card-header" onclick="toggleCard('film-card-${i}')">
         <div class="card-header-left">
+          ${reorderBtns(i, films.length,
+            `event.stopPropagation(); moveFilm(${i}, ${i-1})`,
+            `event.stopPropagation(); moveFilm(${i}, ${i+1})`
+          )}
           <span class="card-num">${String(i+1).padStart(2,'0')}</span>
           <span class="card-name">${f.title || '(sem título)'}</span>
           <span class="card-meta">${f.year||''} · ${f.genre||''}</span>
@@ -343,18 +421,6 @@ function renderFilms() {
           <div class="field"><label>Diretor</label><input data-film="${i}" data-key="director" value="${esc(f.director)}"></div>
           <div class="field"><label>Ano</label><input data-film="${i}" data-key="year" value="${esc(f.year)}"></div>
           <div class="field"><label>Gênero</label><input data-film="${i}" data-key="genre" value="${esc(f.genre)}"></div>
-          <div class="field"><label>Proporção</label>
-            <select data-film="${i}" data-key="ratio">
-              <option value="p" ${f.ratio==='p'?'selected':''}>Retrato (p)</option>
-              <option value="l" ${f.ratio==='l'?'selected':''}>Paisagem (l)</option>
-            </select>
-          </div>
-          <div class="field"><label>Tamanho</label>
-            <select data-film="${i}" data-key="size">
-              <option value=""     ${!f.size?'selected':''}>Normal</option>
-              <option value="wide" ${f.size==='wide'?'selected':''}>Wide</option>
-            </select>
-          </div>
           <div class="field" style="display:flex;align-items:center;padding-top:1.5rem;">
             <label class="checkbox-row">
               <input type="checkbox" data-film="${i}" data-key="hero" ${f.hero?'checked':''}>
@@ -377,14 +443,19 @@ function renderFilms() {
         </div>
         <div class="card-actions">
           <button class="btn btn-danger btn-small" onclick="removeFilm(${i})">Remover filme</button>
+          <button class="btn btn-primary btn-small" onclick="saveCard('film',${i})">Salvar</button>
         </div>
       </div>
     </div>`).join('');
 }
 
+function moveFilm(fromIdx, toIdx) {
+  moveItem(data.films, fromIdx, toIdx, renderFilms);
+}
+
 function addFilm() {
   data.films.push({ title:'', titleEn:'', director:'', year:'', genre:'Drama',
-    ratio:'p', size:'', hero:false, synopsis:'', synopsisEn:'', tags:[], imgPortrait:'', imgLandscape:'' });
+    hero:false, synopsis:'', synopsisEn:'', tags:[], imgPortrait:'', imgLandscape:'' });
   renderFilms();
   const idx = data.films.length - 1;
   toggleCard(`film-card-${idx}`);
@@ -408,6 +479,10 @@ function renderUpcoming() {
     <div class="card" id="upcoming-card-${i}">
       <div class="card-header" onclick="toggleCard('upcoming-card-${i}')">
         <div class="card-header-left">
+          ${reorderBtns(i, films.length,
+            `event.stopPropagation(); moveUpcoming(${i}, ${i-1})`,
+            `event.stopPropagation(); moveUpcoming(${i}, ${i+1})`
+          )}
           <span class="card-num">${String(i+1).padStart(2,'0')}</span>
           <span class="card-name">${f.title||'(sem título)'}</span>
           <span class="status-chip status-${f.status}">${f.status||''}</span>
@@ -436,9 +511,14 @@ function renderUpcoming() {
         </div>
         <div class="card-actions">
           <button class="btn btn-danger btn-small" onclick="removeUpcoming(${i})">Remover</button>
+          <button class="btn btn-primary btn-small" onclick="saveCard('upcoming',${i})">Salvar</button>
         </div>
       </div>
     </div>`).join('');
+}
+
+function moveUpcoming(fromIdx, toIdx) {
+  moveItem(data.upcomingFilms, fromIdx, toIdx, renderUpcoming);
 }
 
 function addUpcoming() {
@@ -483,6 +563,10 @@ function renderMarcos() {
     <div class="card" id="marco-card-${i}">
       <div class="card-header" onclick="toggleCard('marco-card-${i}')">
         <div class="card-header-left">
+          ${reorderBtns(i, marcos.length,
+            `event.stopPropagation(); moveMarco(${i}, ${i-1})`,
+            `event.stopPropagation(); moveMarco(${i}, ${i+1})`
+          )}
           <span class="card-num">${m.year||'----'}</span>
           <span class="card-name">${m.title||'(sem título)'}</span>
         </div>
@@ -499,9 +583,14 @@ function renderMarcos() {
         </div>
         <div class="card-actions">
           <button class="btn btn-danger btn-small" onclick="removeMarco(${i})">Remover</button>
+          <button class="btn btn-primary btn-small" onclick="saveCard('marco',${i})">Salvar</button>
         </div>
       </div>
     </div>`).join('');
+}
+
+function moveMarco(fromIdx, toIdx) {
+  moveItem(data.historiaData.marcos, fromIdx, toIdx, renderMarcos);
 }
 
 function addMarco() {
@@ -525,6 +614,10 @@ function renderTeam() {
     <div class="card" id="team-card-${i}">
       <div class="card-header" onclick="toggleCard('team-card-${i}')">
         <div class="card-header-left">
+          ${reorderBtns(i, team.length,
+            `event.stopPropagation(); moveTeam(${i}, ${i-1})`,
+            `event.stopPropagation(); moveTeam(${i}, ${i+1})`
+          )}
           <span class="card-num">${String(i+1).padStart(2,'0')}</span>
           <span class="card-name">${m.name||'(sem nome)'}</span>
           <span class="card-meta">${m.role||''}</span>
@@ -549,9 +642,14 @@ function renderTeam() {
         </div>
         <div class="card-actions">
           <button class="btn btn-danger btn-small" onclick="removeTeamMember(${i})">Remover</button>
+          <button class="btn btn-primary btn-small" onclick="saveCard('team',${i})">Salvar</button>
         </div>
       </div>
     </div>`).join('');
+}
+
+function moveTeam(fromIdx, toIdx) {
+  moveItem(data.historiaData.team, fromIdx, toIdx, renderTeam);
 }
 
 function addTeamMember() {
