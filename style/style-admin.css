@@ -1,6 +1,6 @@
 /* ============================================================
-   style-formulario.css
-   Estilos exclusivos da página admin (formulario.html)
+   style-admin.css
+   Estilos exclusivos da página admin (admin.html)
    Depende de: style-base.css (variáveis --black, --white, etc.)
    ============================================================ */
 
@@ -134,6 +134,28 @@
   background: var(--surface);
   border-left: 2px solid var(--accent);
 }
+
+── SETUP SCREEN ──
+#setupScreen {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+#setupErr {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--danger);
+  margin-top: 1rem;
+  min-height: 1.2em;
+}
+
+/* card-body aberto via toggleCard */
+.card-body.open,
+#card-add-access.open { display: block !important; }
+
 
 /* ── CONTENT ── */
 .adm-content {

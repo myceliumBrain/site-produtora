@@ -18,11 +18,34 @@
       <h1 class="login-title">Admin<br>Panel</h1>
       <p class="login-sub">// acesso restrito à equipe</p>
       <div class="field">
-        <label>GitHub Token</label>
-        <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        <label>Senha</label>
+        <input type="password" id="passwordInput" placeholder="••••••••••••">
       </div>
       <button class="btn btn-primary" id="loginBtn" onclick="doLogin()">Entrar →</button>
       <p id="loginErr"></p>
+    </div>
+  </div>
+
+  <!-- ══ SETUP (primeira vez — nenhuma senha cadastrada) ════ -->
+  <div id="setupScreen">
+    <div class="login-box">
+      <div class="login-logo">000 filmes</div>
+      <h1 class="login-title">Primeiro<br>acesso</h1>
+      <p class="login-sub">// configure sua senha de acesso</p>
+      <div class="field">
+        <label>Seu nome</label>
+        <input type="text" id="setupLabel" placeholder="ex: Pedro">
+      </div>
+      <div class="field">
+        <label>GitHub Token</label>
+        <input type="password" id="setupToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+      </div>
+      <div class="field">
+        <label>Senha que deseja usar</label>
+        <input type="password" id="setupPassword" placeholder="escolha uma senha forte">
+      </div>
+      <button class="btn btn-primary" id="setupBtn" onclick="doSetup()">Salvar e entrar →</button>
+      <p id="setupErr"></p>
     </div>
   </div>
 
@@ -52,6 +75,8 @@
         <button class="nav-btn" onclick="showPanel('marcos')">Marcos</button>
         <button class="nav-btn" onclick="showPanel('team')">Equipe</button>
         <button class="nav-btn" onclick="showPanel('parceiros')">Parceiros</button>
+        <span class="sidebar-section">Sistema</span>
+        <button class="nav-btn" onclick="showPanel('acessos')">Acessos</button>
       </aside>
 
       <!-- CONTENT -->
@@ -97,14 +122,41 @@
           <div id="parceirosForm"></div>
         </div>
 
+        <!-- ── ACESSOS ── -->
+        <div class="section-panel" id="panel-acessos">
+          <div class="panel-header"><span class="panel-title">Gerenciar acessos</span></div>
+
+          <div id="acessosList" style="margin-bottom:2rem"></div>
+
+          <div class="card">
+            <div class="card-header" onclick="toggleCard('card-add-access')">
+              <div class="card-header-left">
+                <span class="card-name">Adicionar novo acesso</span>
+              </div>
+              <span class="card-chevron">▼</span>
+            </div>
+            <div class="card-body" id="card-add-access" style="display:none">
+              <div class="fields-grid">
+                <div class="field"><label>Nome do usuário</label><input id="newLabel" placeholder="ex: Ana"></div>
+                <div class="field"></div>
+                <div class="field full"><label>GitHub Token</label><input type="password" id="newToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"></div>
+                <div class="field full"><label>Senha</label><input type="password" id="newPassword" placeholder="senha que o usuário vai usar"></div>
+              </div>
+              <div class="card-actions">
+                <button class="btn btn-primary" id="addAccessBtn" onclick="addAccess()">+ adicionar acesso</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
       </main>
     </div>
   </div>
 
-  <!-- TOAST -->
   <div id="toast"></div>
 
-  <script src="scripts/script-shared.js"></script>
+  <script src="scripts/data.js"></script>
   <script src="scripts/script-admin.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 /* ============================================================
-   script-formulario.js
-   Lógica exclusiva da página formulario.html (admin)
-   Depende de: GitHub API (fetch direto, sem data.js)
+   script-admin.js
+   Admin com autenticação por senha criptografada (AES-GCM)
+   O token GitHub fica criptografado no data.json (_auth.tokens)
    ============================================================ */
 
 const REPO   = 'myceliumBrain/site-produtora';
@@ -13,37 +13,65 @@ let fileSHA = '';
 let data    = {};
 
 /* ══════════════════════════════════════════════════════════
-   LOGIN
+   CRYPTO — Web Crypto API (nativa no browser)
 ══════════════════════════════════════════════════════════ */
-async function doLogin() {
-  TOKEN = document.getElementById('tokenInput').value.trim();
-  if (!TOKEN) return;
+const enc = new TextEncoder();
+const dec = new TextDecoder();
 
-  const btn = document.getElementById('loginBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> verificando…';
+function b64ToBytes(b64) {
+  return Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+}
+function bytesToB64(buf) {
+  return btoa(String.fromCharCode(...new Uint8Array(buf)));
+}
 
+async function deriveKey(password, salt) {
+  const keyMaterial = await crypto.subtle.importKey(
+    'raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']
+  );
+  return crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+    keyMaterial, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']
+  );
+}
+
+async function encryptToken(token, password) {
+  const salt      = crypto.getRandomValues(new Uint8Array(16));
+  const iv        = crypto.getRandomValues(new Uint8Array(12));
+  const key       = await deriveKey(password, salt);
+  const encrypted = await crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv }, key, enc.encode(token)
+  );
+  return {
+    salt: bytesToB64(salt),
+    iv:   bytesToB64(iv),
+    data: bytesToB64(encrypted)
+  };
+}
+
+async function decryptToken(entry, password) {
   try {
-    await loadData();
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    renderAll();
-    setStatus('dados carregados ✓', 'ok');
-  } catch (e) {
-    const err = document.getElementById('loginErr');
-    err.textContent = 'Token inválido ou repositório não encontrado.';
-    btn.disabled = false;
-    btn.innerHTML = 'Entrar →';
+    const salt = b64ToBytes(entry.salt);
+    const iv   = b64ToBytes(entry.iv);
+    const key  = await deriveKey(password, salt);
+    const decrypted = await crypto.subtle.decrypt(
+      { name: 'AES-GCM', iv }, key, b64ToBytes(entry.data)
+    );
+    return dec.decode(decrypted);
+  } catch {
+    return null; // senha errada
   }
 }
 
 /* ══════════════════════════════════════════════════════════
-   GITHUB API
+   GITHUB API (sem token ainda — só para carregar o JSON)
 ══════════════════════════════════════════════════════════ */
 async function ghGet(path) {
+  const headers = { Accept: 'application/vnd.github.v3+json' };
+  if (TOKEN) headers.Authorization = `token ${TOKEN}`;
   const res = await fetch(
     `https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}`,
-    { headers: { Authorization: `token ${TOKEN}`, Accept: 'application/vnd.github.v3+json' } }
+    { headers }
   );
   if (!res.ok) throw new Error(`GET ${path} → ${res.status}`);
   return res.json();
@@ -71,29 +99,177 @@ async function ghPut(path, content, sha, message) {
   return res.json();
 }
 
-async function loadData() {
+async function loadData(tok) {
+  if (tok) TOKEN = tok;
   const file = await ghGet(FILE);
   fileSHA = file.sha;
   data = JSON.parse(decodeURIComponent(escape(atob(file.content.replace(/\n/g, '')))));
 }
 
-async function saveAll() {
-  collectAll();
-  const btn = document.getElementById('saveBtn');
+async function saveData(commitMsg) {
+  const result = await ghPut(FILE, JSON.stringify(data, null, 2), fileSHA, commitMsg);
+  fileSHA = result.content.sha;
+}
+
+/* ══════════════════════════════════════════════════════════
+   LOGIN
+══════════════════════════════════════════════════════════ */
+async function doLogin() {
+  const password = document.getElementById('passwordInput').value.trim();
+  if (!password) return;
+
+  const btn = document.getElementById('loginBtn');
   btn.disabled = true;
-  document.getElementById('saveBtnText').innerHTML = '<span class="spinner"></span>';
-  setStatus('salvando…', '');
+  btn.innerHTML = '<span class="spinner"></span> verificando…';
+  document.getElementById('loginErr').textContent = '';
+
   try {
-    const result = await ghPut(FILE, JSON.stringify(data, null, 2), fileSHA, 'admin: atualiza data.json');
-    fileSHA = result.content.sha;
-    setStatus('salvo ✓', 'ok');
-    toast('Salvo no GitHub!', 'ok');
+    // 1. Carrega o JSON publicamente (sem token)
+    await loadData();
+
+    // 2. Verifica se existe _auth configurado
+    const tokens = data._auth?.tokens || [];
+    if (tokens.length === 0) {
+      // Nenhuma senha cadastrada ainda — mostra tela de setup
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('setupScreen').style.display = 'flex';
+      btn.disabled = false;
+      btn.innerHTML = 'Entrar →';
+      return;
+    }
+
+    // 3. Tenta descriptografar com a senha digitada
+    let decryptedToken = null;
+    for (const entry of tokens) {
+      decryptedToken = await decryptToken(entry, password);
+      if (decryptedToken) break;
+    }
+
+    if (!decryptedToken) throw new Error('Senha incorreta.');
+
+    TOKEN = decryptedToken;
+    showApp();
+
   } catch (e) {
-    setStatus('erro ao salvar ✗', 'err');
+    document.getElementById('loginErr').textContent = e.message;
+    btn.disabled = false;
+    btn.innerHTML = 'Entrar →';
+  }
+}
+
+document.getElementById('passwordInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+function showApp() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('setupScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  renderAll();
+  setStatus('dados carregados ✓', 'ok');
+}
+
+function doLogout() {
+  TOKEN = ''; fileSHA = ''; data = {};
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('passwordInput').value = '';
+  document.getElementById('loginErr').textContent = '';
+}
+
+/* ══════════════════════════════════════════════════════════
+   SETUP — primeira configuração (nenhuma senha cadastrada)
+══════════════════════════════════════════════════════════ */
+async function doSetup() {
+  const token    = document.getElementById('setupToken').value.trim();
+  const password = document.getElementById('setupPassword').value.trim();
+  const label    = document.getElementById('setupLabel').value.trim() || 'admin';
+
+  if (!token || !password) {
+    document.getElementById('setupErr').textContent = 'Preencha token e senha.';
+    return;
+  }
+
+  const btn = document.getElementById('setupBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> salvando…';
+
+  try {
+    TOKEN = token;
+    // Recarrega com o token para garantir SHA atualizado
+    await loadData(token);
+
+    const encrypted = await encryptToken(token, password);
+    if (!data._auth) data._auth = { tokens: [] };
+    data._auth.tokens.push({ label, ...encrypted });
+    await saveData('admin: configura autenticação');
+    showApp();
+  } catch (e) {
+    document.getElementById('setupErr').textContent = 'Erro: ' + e.message;
+    btn.disabled = false;
+    btn.innerHTML = 'Salvar e entrar →';
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   GERENCIAR ACESSOS
+══════════════════════════════════════════════════════════ */
+function renderAcessos() {
+  const tokens = data._auth?.tokens || [];
+  document.getElementById('acessosList').innerHTML = tokens.length === 0
+    ? '<p style="font-family:var(--mono);font-size:0.8rem;color:var(--muted)">Nenhum acesso cadastrado.</p>'
+    : tokens.map((t, i) => `
+        <div class="card" style="margin-bottom:0.5rem">
+          <div class="card-header" style="cursor:default">
+            <div class="card-header-left">
+              <span class="card-num">${String(i+1).padStart(2,'0')}</span>
+              <span class="card-name">${t.label || 'sem nome'}</span>
+            </div>
+            <button class="btn btn-danger btn-small" onclick="revokeAccess(${i})">Revogar</button>
+          </div>
+        </div>`).join('');
+}
+
+async function addAccess() {
+  const token    = document.getElementById('newToken').value.trim();
+  const password = document.getElementById('newPassword').value.trim();
+  const label    = document.getElementById('newLabel').value.trim() || 'usuário';
+
+  if (!token || !password) {
+    toast('Preencha token e senha.', 'err'); return;
+  }
+
+  const btn = document.getElementById('addAccessBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+
+  try {
+    const encrypted = await encryptToken(token, password);
+    if (!data._auth) data._auth = { tokens: [] };
+    data._auth.tokens.push({ label, ...encrypted });
+    await saveData('admin: adiciona acesso');
+    renderAcessos();
+    document.getElementById('newToken').value = '';
+    document.getElementById('newPassword').value = '';
+    document.getElementById('newLabel').value = '';
+    toast('Acesso adicionado!', 'ok');
+  } catch (e) {
     toast('Erro: ' + e.message, 'err');
   } finally {
     btn.disabled = false;
-    document.getElementById('saveBtnText').textContent = 'Salvar no GitHub';
+    btn.innerHTML = '+ adicionar acesso';
+  }
+}
+
+async function revokeAccess(i) {
+  if (!confirm(`Revogar acesso de "${data._auth.tokens[i].label}"?`)) return;
+  data._auth.tokens.splice(i, 1);
+  try {
+    await saveData('admin: revoga acesso');
+    renderAcessos();
+    toast('Acesso revogado.', 'ok');
+  } catch (e) {
+    toast('Erro: ' + e.message, 'err');
   }
 }
 
@@ -105,6 +281,7 @@ function showPanel(name) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
   document.querySelector(`[onclick="showPanel('${name}')"]`).classList.add('active');
+  if (name === 'acessos') renderAcessos();
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -118,6 +295,28 @@ function renderAll() {
   renderTeam();
   renderParceiros();
   document.getElementById('saveBtn').disabled = false;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SAVE ALL
+══════════════════════════════════════════════════════════ */
+async function saveAll() {
+  collectAll();
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  document.getElementById('saveBtnText').innerHTML = '<span class="spinner"></span>';
+  setStatus('salvando…', '');
+  try {
+    await saveData('admin: atualiza data.json');
+    setStatus('salvo ✓', 'ok');
+    toast('Salvo no GitHub!', 'ok');
+  } catch (e) {
+    setStatus('erro ao salvar ✗', 'err');
+    toast('Erro: ' + e.message, 'err');
+  } finally {
+    btn.disabled = false;
+    document.getElementById('saveBtnText').textContent = 'Salvar no GitHub';
+  }
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -291,7 +490,7 @@ function renderMarcos() {
       </div>
       <div class="card-body">
         <div class="fields-grid">
-          <div class="field"><label>Ano</label><input data-marco="${i}" data-key="year"    value="${esc(m.year)}"></div>
+          <div class="field"><label>Ano</label><input data-marco="${i}" data-key="year" value="${esc(m.year)}"></div>
           <div class="field"></div>
           <div class="field"><label>Título PT</label><input data-marco="${i}" data-key="title"   value="${esc(m.title)}"></div>
           <div class="field"><label>Título EN</label><input data-marco="${i}" data-key="titleEn" value="${esc(m.titleEn)}"></div>
@@ -380,7 +579,7 @@ function updateImgPreview(i, url) {
 function renderParceiros() {
   const parceiros = data.historiaData.parceiros || [];
   document.getElementById('parceirosForm').innerHTML = `
-    <div class="parceiros-list" id="parceirosList">
+    <div class="parceiros-list">
       ${parceiros.map((p, i) => `
         <span class="tag-badge">${esc(p)}
           <button onclick="removeParceiro(${i})" title="remover">×</button>
@@ -438,7 +637,7 @@ function removeTag(type, idx, ti) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   COLLECT ALL — DOM → data (antes de salvar)
+   COLLECT ALL
 ══════════════════════════════════════════════════════════ */
 function collectAll() {
   document.querySelectorAll('[data-film]').forEach(el => {
