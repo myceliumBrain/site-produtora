@@ -13,6 +13,10 @@
   --mono:      'IBM Plex Mono', monospace;
 }
 
+.cursor, .cursor-ring { display: none !important; }
+body { cursor: default !important; }
+a, button { cursor: pointer !important; }
+
 /* ── LOGIN ── */
 #loginScreen {
   display: flex;

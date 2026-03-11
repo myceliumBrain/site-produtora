@@ -364,15 +364,5 @@
       "Cinélatino",
       "Festival de Gramado"
     ]
-  },
-  "_auth": {
-    "tokens": [
-      {
-        "label": "Exemplo",
-        "salt": "m8UOjS2eatItrRQ51knlyg==",
-        "iv": "n5E1hdrczVlw76bN",
-        "data": "YPkMHhlvdfAsHAt+3UViERXaVhEyIt0xig98+Px+XtPrDui6+52bO2DNqJ/rUrYLPUTjHjUqB10="
-      }
-    ]
   }
 }
