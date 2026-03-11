@@ -1,23 +1,19 @@
 {
   "films": [
     {
-      "title": "Última Fronteira perdida",
-      "titleEn": "The Last Frontier",
-      "director": "Ana Luiza Morais",
-      "year": "2025",
-      "genre": "Drama",
-      "ratio": "p",
-      "size": "wide",
-      "hero": true,
-      "synopsis": "Em um vilarejo isolado do sertão, uma mulher confronta o passado de sua família enquanto as fronteiras entre memória e esquecimento começam a se dissolver.",
-      "synopsisEn": "In an isolated village in the sertão, a woman confronts her family's past as the boundaries between memory and forgetting begin to dissolve.",
-      "tags": [
-        "Drama",
-        "Sertão",
-        "87 min"
-      ],
-      "imgPortrait": "https://http.cat/images/100.jpg",
-      "imgLandscape": "https://http.cat/images/101.jpg"
+      "title": "Noite Alta",
+      "titleEn": "High Night",
+      "director": "Lucas Fonseca",
+      "year": "2024",
+      "genre": "Thriller",
+      "ratio": "l",
+      "size": "",
+      "hero": false,
+      "synopsis": "",
+      "synopsisEn": "",
+      "tags": [],
+      "imgPortrait": "https://http.cat/images/206.jpg",
+      "imgLandscape": "https://http.cat/images/207.jpg"
     },
     {
       "title": "Sombra Branca",
@@ -58,6 +54,25 @@
       "imgLandscape": "https://http.cat/images/201.jpg"
     },
     {
+      "title": "Última Fronteira perdida",
+      "titleEn": "The Last Frontier",
+      "director": "Ana Luiza Morais",
+      "year": "2025",
+      "genre": "Drama",
+      "ratio": "p",
+      "size": "wide",
+      "hero": true,
+      "synopsis": "Em um vilarejo isolado do sertão, uma mulher confronta o passado de sua família enquanto as fronteiras entre memória e esquecimento começam a se dissolver.",
+      "synopsisEn": "In an isolated village in the sertão, a woman confronts her family's past as the boundaries between memory and forgetting begin to dissolve.",
+      "tags": [
+        "Drama",
+        "Sertão",
+        "aaaa"
+      ],
+      "imgPortrait": "https://http.cat/images/100.jpg",
+      "imgLandscape": "https://http.cat/images/101.jpg"
+    },
+    {
       "title": "Mar de Dentro",
       "titleEn": "Inside Sea",
       "director": "Bruno Tavares",
@@ -86,21 +101,6 @@
       "tags": [],
       "imgPortrait": "https://http.cat/images/204.jpg",
       "imgLandscape": "https://http.cat/images/205.jpg"
-    },
-    {
-      "title": "Noite Alta",
-      "titleEn": "High Night",
-      "director": "Lucas Fonseca",
-      "year": "2024",
-      "genre": "Thriller",
-      "ratio": "l",
-      "size": "",
-      "hero": false,
-      "synopsis": "",
-      "synopsisEn": "",
-      "tags": [],
-      "imgPortrait": "https://http.cat/images/206.jpg",
-      "imgLandscape": "https://http.cat/images/207.jpg"
     },
     {
       "title": "Cerrado",
@@ -240,19 +240,6 @@
   ],
   "upcomingFilms": [
     {
-      "title": "Bruma",
-      "titleEn": "Bruma Off",
-      "director": "Carla Menezes",
-      "status": "filming",
-      "genre": "Ficção",
-      "genreEn": "Fiction",
-      "year": "2026",
-      "synopsis": "Em uma cidade costeira encoberta por névoa permanente, dois irmãos redescobrem uma língua que acreditavam perdida. Um filme sobre memória, pertencimento e as palavras que nos sobrevivem.",
-      "synopsisEn": "In a coastal city shrouded in permanent mist, two siblings rediscover a language they believed lost. A film about memory, belonging and the words that outlive us.",
-      "imgPortrait": "",
-      "imgLandscape": ""
-    },
-    {
       "title": "O Intervalo",
       "titleEn": "The Interval",
       "director": "Renata Pires",
@@ -262,6 +249,19 @@
       "year": "2027",
       "synopsis": "Entre o fim de um relacionamento e o começo de outro, existe um tempo que ninguém nomeia. O Intervalo vive exatamente ali — no espaço entre o que foi e o que ainda não é.",
       "synopsisEn": "Between the end of one relationship and the beginning of another, there is a time no one names. The Interval lives exactly there — in the space between what was and what is not yet.",
+      "imgPortrait": "",
+      "imgLandscape": ""
+    },
+    {
+      "title": "Bruma",
+      "titleEn": "Bruma Off",
+      "director": "Carla Menezes",
+      "status": "filming",
+      "genre": "Ficção",
+      "genreEn": "Fiction",
+      "year": "2026",
+      "synopsis": "Em uma cidade costeira encoberta por névoa permanente, dois irmãos redescobrem uma língua que acreditavam perdida. Um filme sobre memória, pertencimento e as palavras que nos sobrevivem.",
+      "synopsisEn": "In a coastal city shrouded in permanent mist, two siblings rediscover a language they believed lost. A film about memory, belonging and the words that outlive us.",
       "imgPortrait": "",
       "imgLandscape": ""
     },
@@ -331,20 +331,20 @@
     ],
     "team": [
       {
-        "name": "Ana Luiza Morais",
-        "role": "Diretora",
-        "roleEn": "Director",
-        "img": "https://img.migalhas.com.br/gf_base/empresas/MIGA/imagens/AF2B20D3045FEB7EF0FDFD02590961785D40_diretor.jpg",
-        "bio": "Formada pela ECA-USP, Ana Luiza dirige desde 2015 com olhar voltado para as margens do Brasil. Seu longa de estreia, <em>Última Fronteira</em>, foi selecionado para o Festival de Brasília em 2025.",
-        "bioEn": "Graduated from ECA-USP, Ana Luiza has been directing since 2015 with a focus on the margins of Brazil. Her debut feature, <em>Última Fronteira</em>, was selected for the Brasília Film Festival in 2025."
-      },
-      {
         "name": "Felipe Drummond",
         "role": "Diretor",
         "roleEn": "Director",
         "img": "",
         "bio": "Cineasta e fotógrafo carioca, Felipe transita entre o documentário e a ficção com a mesma naturalidade. <em>Sombra Branca</em> é seu segundo longa-metragem e estreia em 2025.",
         "bioEn": "A filmmaker and photographer from Rio, Felipe moves between documentary and fiction with equal ease. <em>Sombra Branca</em> is his second feature film, premiering in 2025."
+      },
+      {
+        "name": "Ana Luiza Morais",
+        "role": "Diretora",
+        "roleEn": "Director",
+        "img": "https://img.migalhas.com.br/gf_base/empresas/MIGA/imagens/AF2B20D3045FEB7EF0FDFD02590961785D40_diretor.jpg",
+        "bio": "Formada pela ECA-USP, Ana Luiza dirige desde 2015 com olhar voltado para as margens do Brasil. Seu longa de estreia, <em>Última Fronteira</em>, foi selecionado para o Festival de Brasília em 2025.",
+        "bioEn": "Graduated from ECA-USP, Ana Luiza has been directing since 2015 with a focus on the margins of Brazil. Her debut feature, <em>Última Fronteira</em>, was selected for the Brasília Film Festival in 2025."
       },
       {
         "name": "Carla Menezes",
@@ -355,20 +355,20 @@
         "bioEn": "Carla Menezes specializes in social documentary and has four award-winning films at national festivals. She is currently directing <em>Bruma</em>, her first fiction project."
       },
       {
-        "name": "Renata Pires",
-        "role": "Diretora",
-        "roleEn": "Director",
-        "img": "",
-        "bio": "Roteirista antes de diretora, Renata Pires traz para a câmera a precisão das palavras. <em>O Intervalo</em> é seu longa de estreia, atualmente em fase de desenvolvimento.",
-        "bioEn": "A screenwriter before a director, Renata Pires brings the precision of words to the camera. <em>O Intervalo</em> is her debut feature, currently in development."
-      },
-      {
         "name": "Eduardo Braga",
         "role": "Diretor",
         "roleEn": "Director",
         "img": "",
         "bio": "Eduardo Braga vem do teatro e traz ao cinema uma direção de atores visceral e precisa. <em>Corpo Fechado</em>, atualmente em pós-produção, é seu trabalho mais ambicioso até hoje.",
         "bioEn": "Eduardo Braga comes from theater and brings visceral, precise actor direction to cinema. <em>Corpo Fechado</em>, currently in post-production, is his most ambitious work to date."
+      },
+      {
+        "name": "Renata Pires",
+        "role": "Diretora",
+        "roleEn": "Director",
+        "img": "",
+        "bio": "Roteirista antes de diretora, Renata Pires traz para a câmera a precisão das palavras. <em>O Intervalo</em> é seu longa de estreia, atualmente em fase de desenvolvimento.",
+        "bioEn": "A screenwriter before a director, Renata Pires brings the precision of words to the camera. <em>O Intervalo</em> is her debut feature, currently in development."
       }
     ],
     "parceiros": [
