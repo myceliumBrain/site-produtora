@@ -1,7 +1,6 @@
 {
   "films": [
     {
-<<<<<<< HEAD
       "title": "Última Fronteira perdida",
       "titleEn": "The Last Frontier",
       "director": "Ana Luiza Morais",
@@ -17,7 +16,6 @@
       ],
       "imgPortrait": "https://http.cat/images/100.jpg",
       "imgLandscape": "https://http.cat/images/101.jpg"
-=======
       "title": "Noite Alta",
       "titleEn": "High Night",
       "director": "Lucas Fonseca",
@@ -31,7 +29,6 @@
       "tags": [],
       "imgPortrait": "https://http.cat/images/206.jpg",
       "imgLandscape": "https://http.cat/images/207.jpg"
->>>>>>> ffe35b7715f944ea3c85829c5532adb364bcfc7e
     },
     {
       "title": "Sombra Branca",
@@ -113,7 +110,6 @@
       "imgLandscape": "https://http.cat/images/205.jpg"
     },
     {
-<<<<<<< HEAD
       "title": "Noite Alta",
       "titleEn": "High Night",
       "director": "Lucas Fonseca",
@@ -127,8 +123,6 @@
       "imgLandscape": "https://http.cat/images/207.jpg"
     },
     {
-=======
->>>>>>> ffe35b7715f944ea3c85829c5532adb364bcfc7e
       "title": "Cerrado",
       "titleEn": "Cerrado",
       "director": "Mariana Luz",
