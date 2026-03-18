@@ -17,6 +17,8 @@
   --cream:        #e8e0d0;
   --gold:         #c9a84c;
   --red:          #8b1a1a;
+  --amber:        #c4622d;
+  --sage:         #6b8f71;
   --grey:         #3a3a3a;
   --border:       rgba(240, 236, 228, 0.08);
   --dim:          rgba(240, 236, 228, 0.35);
@@ -230,10 +232,15 @@ header {
   padding: 28px 0;
   text-decoration: none;
   color: var(--white);
-  transition: padding 0.3s;
+  transition: padding 0.3s, color 0.3s;
 }
 
 .menu-primary-list a:hover { padding-left: 16px; }
+
+.menu-primary-list li:nth-child(1) a:hover { color: var(--gold); }
+.menu-primary-list li:nth-child(2) a:hover { color: var(--amber); }
+.menu-primary-list li:nth-child(3) a:hover { color: var(--sage); }
+.menu-primary-list li:nth-child(4) a:hover { color: var(--gold); }
 
 .menu-item-title {
   font-family: var(--font-display);

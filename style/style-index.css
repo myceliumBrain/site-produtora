@@ -87,22 +87,36 @@ header {
   border-color: var(--border);
 }
 
-.menu-primary-list a  { color: var(--black); }
+.menu-primary-list a  { color: var(--black); transition: padding 0.3s, color 0.3s; }
 
 /* Títulos de menu: itálicos — estética de cartaz de cinema */
 .menu-item-title {
   font-style: italic;
   color: var(--black);
   letter-spacing: -0.025em;
+  transition: color 0.3s;
 }
 
 /* Contadores/subtítulos: burnt orange para quebrar a monotonia */
 .menu-item-count {
   color: var(--gold);
   font-style: italic;
+  transition: color 0.3s;
 }
 
 .menu-primary-list a:hover { padding-left: 16px; }
+
+.menu-primary-list li:nth-child(1) a:hover,
+.menu-primary-list li:nth-child(1) a:hover .menu-item-title { color: var(--gold); }
+
+.menu-primary-list li:nth-child(2) a:hover,
+.menu-primary-list li:nth-child(2) a:hover .menu-item-title { color: var(--amber); }
+
+.menu-primary-list li:nth-child(3) a:hover,
+.menu-primary-list li:nth-child(3) a:hover .menu-item-title { color: var(--sage); }
+
+.menu-primary-list li:nth-child(4) a:hover,
+.menu-primary-list li:nth-child(4) a:hover .menu-item-title { color: var(--gold); }
 
 .menu-social a        { color: var(--dim); }
 .menu-social a:hover  { color: var(--black); }
