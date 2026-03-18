@@ -55,15 +55,15 @@ header {
    ───────────────────────────────────────────────────────────────── */
 
 .cursor {
-  background: var(--black);
-  mix-blend-mode: normal;
+  background: var(--white);
+  mix-blend-mode: difference;
 }
-.cursor-ring { border-color: rgba(28, 23, 20, 0.3); }
+.cursor-ring { border-color: rgba(245, 238, 223, 0.45); }
 
 @media (hover: hover) and (pointer: fine) {
   body:has(a:hover) .cursor-ring,
   body:has(button:hover) .cursor-ring {
-    border-color: var(--gold);
+    border-color: rgba(245, 238, 223, 0.7);
   }
 }
 

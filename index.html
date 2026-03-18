@@ -26,6 +26,12 @@
     </div>
   </header>
 
+
+  <!-- ══════════════════════════════════════════════════════════════
+       1. HERO — Impacto visual puro
+          Slideshow de filmes em tela cheia. Sem texto corporativo.
+          A primeira impressão é sempre cinematográfica.
+       ══════════════════════════════════════════════════════════════ -->
   <section class="hero">
     <div class="hero-slides">
       <!-- slides gerados pelo JS -->
@@ -57,26 +63,32 @@
     </div>
   </section>
 
-  <section class="section-featured">
-    <p class="featured-eyebrow reveal" data-i18n="featured.eyebrow">Último lançamento</p>
-    <div class="featured-layout">
-      <div class="featured-img-wrap reveal"></div>
-      <div class="featured-text">
-        <div class="featured-number reveal">01</div>
-        <h2 class="featured-title reveal reveal-delay-1"></h2>
-        <p class="featured-dir reveal reveal-delay-1"></p>
-        <p class="featured-synopsis reveal reveal-delay-2"></p>
-        <div class="featured-tags reveal reveal-delay-2"></div>
-        <a href="#" class="btn-outline reveal reveal-delay-3">
-          <span data-i18n="featured.more">Saiba mais</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1"/>
-          </svg>
-        </a>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       2. IDENTIDADE — Quem somos antes de tudo
+          Uma declaração de intenção. Curta, direta, humana.
+          O visitante entende a alma da produtora antes de ver mais filmes.
+          Posição estratégica: após o impacto visual, antes do conteúdo.
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="section-identity">
+    <div class="identity-inner">
+      <p class="identity-tagline reveal" data-i18n="identity.statement">
+        Fazemos filmes que precisam existir.
+      </p>
+      <div class="identity-foot reveal reveal-delay-1">
+        <span class="identity-sub" data-i18n="manifesto.sub">Fundada em 2018 · Rio de Janeiro</span>
+        <a href="historia.html" class="identity-link" data-i18n="identity.link">Nossa história</a>
       </div>
     </div>
   </section>
 
+
+  <!-- ══════════════════════════════════════════════════════════════
+       3. STRIPE — Separador energético
+          Fita em laranja queimado com os pilares da identidade.
+          Posição: entre a declaração de identidade e o conteúdo editorial.
+          Funciona como uma transição de energia — sobe a temperatura.
+       ══════════════════════════════════════════════════════════════ -->
   <div class="section-stripe">
     <div class="stripe-track" id="stripeTrack">
       <span class="stripe-item">Cinema Brasileiro Independente</span>
@@ -97,6 +109,28 @@
     </div>
   </div>
 
+
+  <!-- ══════════════════════════════════════════════════════════════
+       4. VEM AÍ — O que está por vir (movido para cima)
+          Posição estratégica: logo após o último lançamento.
+          Narrativa: "foi isso que fizemos → é isso que vem".
+          Antes estava enterrado abaixo do grid — perdia visibilidade.
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="section-upcoming">
+    <div class="upcoming-header">
+      <h2 class="upcoming-title reveal" data-i18n="upcoming.title">Vem aí</h2>
+      <span style="font-family:var(--font-display);font-size:13px;font-style:italic;color:rgba(10,10,10,0.3)" class="reveal" data-i18n="upcoming.sub">Em produção</span>
+    </div>
+    <ul class="upcoming-list" id="upcomingList"></ul>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       6. CATÁLOGO — Grid de produções recentes
+          Posição: após featured + upcoming, o visitante está engajado.
+          Agora o grid funciona como um portfólio completo que faz sentido,
+          não como uma repetição do featured (que ficava logo antes).
+       ══════════════════════════════════════════════════════════════ -->
   <section class="section-grid">
     <div class="section-grid-header">
       <h2 class="section-grid-title reveal" data-i18n="grid.title">Produções recentes</h2>
@@ -110,13 +144,31 @@
     <div class="preview-grid" id="previewGrid"></div>
   </section>
 
-  <section class="section-upcoming">
-    <div class="upcoming-header">
-      <h2 class="upcoming-title reveal" data-i18n="upcoming.title">Vem aí</h2>
-      <span style="font-family:var(--font-display);font-size:13px;font-style:italic;color:rgba(10,10,10,0.3)" class="reveal" data-i18n="upcoming.sub">Em produção</span>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       7. CTA — Fechamento com propósito (seção nova)
+          A página antes terminava sem direção. Agora há um convite claro.
+          Posição: antes do footer, em fundo escuro que cria fechamento visual.
+          Narrativa: "viu o que fazemos → agora vem fazer com a gente".
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="section-cta">
+    <div class="cta-inner">
+      <span class="cta-eyebrow reveal" data-i18n="cta.eyebrow">Contato</span>
+      <h2 class="cta-title reveal reveal-delay-1" data-i18n="cta.title">
+        Tem uma história que precisa ser contada?
+      </h2>
+      <p class="cta-body reveal reveal-delay-2" data-i18n="cta.body">
+        Estamos sempre abertos a novos projetos, parcerias criativas e colaborações que valham a pena.
+      </p>
+      <a href="contato.html" class="btn-cta reveal reveal-delay-3">
+        <span data-i18n="cta.link">Fale com a gente</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </a>
     </div>
-    <ul class="upcoming-list" id="upcomingList"></ul>
   </section>
+
 
   <footer>
     <div class="footer-top">
@@ -126,8 +178,8 @@
           <h4 data-i18n="footer.col1">Navegação</h4>
           <ul>
             <li><a href="producoes.html" data-i18n="nav.portfolio">Portfólio</a></li>
-            <li><a href="#" data-i18n="menu.upcoming">Vem aí</a></li>
-            <li><a href="#" data-i18n="menu.history">Nossa história</a></li>
+            <li><a href="vemai.html" data-i18n="menu.upcoming">Vem aí</a></li>
+            <li><a href="historia.html" data-i18n="menu.history">Nossa história</a></li>
             <li><a href="contato.html" data-i18n="menu.contact">Contato</a></li>
           </ul>
         </div>
@@ -142,6 +194,7 @@
       </div>
     </div>
   </footer>
+
 
   <!-- MENU OVERLAY -->
   <div class="menu-overlay" id="menuOverlay">

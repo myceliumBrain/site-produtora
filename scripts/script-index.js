@@ -57,50 +57,6 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
   setInterval(() => goToSlide((currentSlide + 1) % heroFilms.length), 5000);
 
 
-  /* ── FEATURED FILM ──
-    Sempre o primeiro filme do array films ── */
-  function renderFeatured() {
-    const f    = films[0];
-    const lang = i18next.language;
-    const title    = lang === 'en' ? f.titleEn  : f.title;
-    const synopsis = lang === 'en' ? f.synopsisEn : f.synopsis;
-    const tags     = (f.tags || [f.genre, f.year]).map(t => `<span class="tag">${t}</span>`).join('');
-
-    // Link do botão "Saiba mais" — aponta sempre para films[0]
-    const featuredLink = document.querySelector('.section-featured .btn-outline');
-    if (featuredLink) featuredLink.href = 'filme.html?i=0';
-
-    // Imagem
-    const imgWrap = document.querySelector('.featured-img-wrap');
-    imgWrap.innerHTML = `
-      <img src="${f.imgPortrait}"
-          alt="${title}"
-          style="width:100%;height:100%;object-fit:cover;display:block;"
-          onerror="this.style.display='none'">
-      <div class="img-placeholder" style="${f.imgPortrait ? 'display:none' : ''}">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(240,236,228,0.15)">
-          <rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.6"/>
-          <circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.6"/>
-          <path d="M21 15l-5-5L5 21" stroke-width="0.6"/>
-        </svg>
-      </div>`;
-
-    // Título (preserva itálico na primeira palavra se tiver vírgula)
-    const titleParts  = title.split(' ');
-    const titleStyled = `<em>${titleParts[0]}</em> ${titleParts.slice(1).join(' ')}`;
-    document.querySelector('.featured-title').innerHTML = titleStyled;
-
-    // Diretor e ano
-    document.querySelector('.featured-dir').innerHTML =
-      `Dir. ${f.director} &nbsp;·&nbsp; ${f.year}`;
-
-    // Sinopse
-    document.querySelector('.featured-synopsis').textContent = synopsis || '';
-
-    // Tags
-    document.querySelector('.featured-tags').innerHTML = tags;
-  }
-
   /* ── PREVIEW GRID ──
     Usa os 4 primeiros filmes do array `films` (script-shared.js),
     ignorando os "wide" para manter o grid equilibrado na home. ── */
@@ -189,7 +145,6 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     document.querySelectorAll('[data-i18n]').forEach(el => {
       el.textContent = i18next.t(el.getAttribute('data-i18n'));
     });
-    renderFeatured();
     renderPreview();
     renderUpcoming();
     goToSlide(currentSlide);
@@ -203,6 +158,12 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         pt: {
           translation: {
             'nav.portfolio':          'Portfólio',
+            'identity.statement':     'Fazemos filmes que precisam existir.',
+            'identity.link':          'Nossa história',
+            'cta.eyebrow':            'Contato',
+            'cta.title':              'Tem uma história que precisa ser contada?',
+            'cta.body':               'Estamos sempre abertos a novos projetos, parcerias criativas e colaborações que valham a pena.',
+            'cta.link':               'Fale com a gente',
             'hero.label':             'Em destaque · 2025',
             'hero.cta':               'Ver portfólio',
             'hero.scroll':            'Scroll',
@@ -233,6 +194,12 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         en: {
           translation: {
             'nav.portfolio':          'Portfolio',
+            'identity.statement':     'We make films that need to exist.',
+            'identity.link':          'Our story',
+            'cta.eyebrow':            'Contact',
+            'cta.title':              'Got a story that needs to be told?',
+            'cta.body':               'We\'re always open to new projects, creative partnerships and collaborations worth making.',
+            'cta.link':               'Get in touch',
             'hero.label':             'Featured · 2025',
             'hero.cta':               'View portfolio',
             'hero.scroll':            'Scroll',
@@ -262,8 +229,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         }
       }
     }, () => {
-      goToSlide(0);      // inicializa hero com imagem e texto
-      renderFeatured();  // renderiza featured
+      goToSlide(0);
       renderPreview();
       renderUpcoming();
       observeReveal();

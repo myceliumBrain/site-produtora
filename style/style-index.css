@@ -56,17 +56,17 @@ header {
 .header-link         { color: var(--black); }
 .header-link:hover   { opacity: 0.35; }
 
-/* Cursor: modo claro — blend normal, não difference */
+/* Cursor: difference — auto-adapta em fundos claros E escuros (CTA, footer) */
 .cursor {
-  background: var(--black);
-  mix-blend-mode: normal;
+  background: var(--white);
+  mix-blend-mode: difference;
 }
-.cursor-ring { border-color: rgba(28, 23, 20, 0.3); }
+.cursor-ring { border-color: rgba(245, 238, 223, 0.45); }
 
 @media (hover: hover) and (pointer: fine) {
   body:has(a:hover) .cursor-ring,
   body:has(button:hover) .cursor-ring {
-    border-color: var(--gold);   /* anel burnt orange ao hover em links */
+    border-color: rgba(245, 238, 223, 0.7);
   }
 }
 
@@ -331,6 +331,71 @@ footer {
   background: linear-gradient(to bottom, rgba(245, 238, 223, 0.38), transparent);
   animation: scrollPulse 2s ease-in-out infinite;
 }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [5b]  SECTION IDENTITY — declaração de intenção
+         Uma frase única e poderosa que apresenta a produtora antes
+         de qualquer filme. Tipografia maior que todos os títulos de
+         seção — é a voz da marca, não um subtítulo.
+         Layout: tagline à esquerda em tipo grande; abaixo, em linha,
+         a sub-info e o link para história — como um rodapé editorial.
+   ───────────────────────────────────────────────────────────────── */
+
+.section-identity {
+  background: var(--white);
+  padding: 128px var(--pad-desk) 120px;
+  border-top: 1px solid var(--border);
+}
+
+.identity-inner {
+  max-width: 1100px;
+}
+
+/* Frase manifesto: a maior tipografia editorial da página */
+.identity-tagline {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 6.5vw, 88px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--black);
+  margin-bottom: 48px;
+}
+
+/* Rodapé da identidade: info de um lado, link do outro */
+.identity-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+.identity-sub {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.identity-link {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(28, 23, 20, 0.38);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.identity-link::after {
+  content: ' →';
+}
+
+.identity-link:hover { color: var(--black); }
 
 
 /* ─────────────────────────────────────────────────────────────────
@@ -794,6 +859,93 @@ footer {
 
 
 /* ─────────────────────────────────────────────────────────────────
+   [9b]  SECTION CTA — fechamento com propósito
+         Ilha escura antes do footer. Contraste máximo que sinaliza
+         "você chegou ao final — agora aja".
+         Fundo tinta escura, texto parchment, botão ácido preenchido.
+         O CTA flui naturalmente para o footer (ambos escuros).
+   ───────────────────────────────────────────────────────────────── */
+
+.section-cta {
+  background: var(--black);
+  padding: 144px var(--pad-desk) 152px;
+  position: relative;
+}
+
+/* Linha fina de separação no topo (dentro do fundo escuro) */
+.section-cta::before {
+  content: '';
+  position: absolute;
+  top: 0; left: var(--pad-desk); right: var(--pad-desk);
+  height: 1px;
+  background: rgba(245, 238, 223, 0.07);
+}
+
+.cta-inner {
+  max-width: 820px;
+}
+
+/* Eyebrow: burnt orange — ancora o bloco tematicamente */
+.cta-eyebrow {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  margin-bottom: 28px;
+}
+
+/* Título: pergunta em itálico grande — convida, não comanda */
+.cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 5.5vw, 76px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  margin-bottom: 36px;
+}
+
+.cta-body {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.72;
+  color: rgba(245, 238, 223, 0.5);
+  max-width: 540px;
+  margin-bottom: 56px;
+}
+
+/* Botão CTA: ácido preenchido — o único elemento vibrante no escuro */
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--acid);
+  color: var(--black);
+  padding: 18px 36px;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: none;
+  transition: background 0.3s, gap 0.3s;
+}
+
+.btn-cta:hover {
+  background: var(--white);   /* parchment no hover — suaviza o ácido */
+}
+
+.btn-cta svg            { transition: transform 0.3s; }
+.btn-cta:hover svg      { transform: translateX(5px); }
+
+
+/* ─────────────────────────────────────────────────────────────────
    [10]  BTN-OUTLINE — estilo base (seções claras)
          O hero sobreescreve com versão clara via .hero-cta .btn-outline
    ───────────────────────────────────────────────────────────────── */
@@ -862,6 +1014,13 @@ footer {
    ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
+  .section-identity           { padding: 80px var(--pad-mob) 72px; }
+  .identity-tagline           { font-size: clamp(36px, 9vw, 56px); margin-bottom: 36px; }
+  .identity-foot              { flex-direction: column; gap: 16px; }
+
+  .section-cta                { padding: 96px var(--pad-mob) 104px; }
+  .section-cta::before        { left: var(--pad-mob); right: var(--pad-mob); }
+
   .hero-content       { padding: 0 var(--pad-mob) 56px; }
   .hero-nav           { display: none; }
   .hero-scroll-hint   { display: none; }
