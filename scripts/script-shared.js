@@ -49,6 +49,33 @@ function closeMenu() {
 
 menuBtn.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
 
+/* ── COR CÍCLICA DOS BOTÕES DA HEADER NO HOVER ── */
+const headerPalette = ['#c9a84c', '#c4622d', '#6b8f71', '#8b1a1a'];
+let headerColorIdx = -1;
+
+menuBtn.addEventListener('mouseenter', () => {
+  headerColorIdx = (headerColorIdx + 1) % headerPalette.length;
+  menuBtn.style.color = headerPalette[headerColorIdx];
+});
+menuBtn.addEventListener('mouseleave', () => {
+  menuBtn.style.color = '';
+});
+
+document.querySelectorAll('.header-link').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    headerColorIdx = (headerColorIdx + 1) % headerPalette.length;
+    const color = headerPalette[headerColorIdx];
+    el.style.color = color;
+    el.style.borderColor = color;
+    el.style.fontWeight = '700';
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.color = '';
+    el.style.borderColor = '';
+    el.style.fontWeight = '';
+  });
+});
+
 // Fecha o menu ao clicar fora dele
 menuOverlay.addEventListener('click', e => {
   if (e.target === menuOverlay) closeMenu();

@@ -53,8 +53,7 @@ header {
 
 .logo-btn            { color: var(--black); }
 .hamburger span      { background: var(--black); }
-.header-link         { color: var(--black); }
-.header-link:hover   { opacity: 0.35; }
+.header-link         { color: var(--black); transition: color 0.35s ease; }
 
 /* Cursor: difference — auto-adapta em fundos claros E escuros (CTA, footer) */
 .cursor {

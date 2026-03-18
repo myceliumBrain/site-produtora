@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 /* ================================================================
    style-base.css — 000 filmes
@@ -22,8 +22,8 @@
   --grey:         #3a3a3a;
   --border:       rgba(240, 236, 228, 0.08);
   --dim:          rgba(240, 236, 228, 0.35);
-  --font-display: 'Cormorant Garamond', serif;
-  --font-ui:      'Syne', sans-serif;
+  --font-display: 'Fraunces', serif;
+  --font-ui:      'Space Grotesk', sans-serif;
   --pad-desk:     48px;
   --pad-mob:      24px;
 }
@@ -129,6 +129,7 @@ header {
   display: flex;
   align-items: center;
   gap: 14px;
+  transition: color 0.35s ease;
 }
 
 .hamburger {
@@ -164,12 +165,11 @@ header {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   background: none;
-  border: none;
+  border: 1px solid transparent;
+  padding: 4px 10px;
   cursor: none;
-  transition: opacity 0.3s;
+  transition: color 0.35s ease, border-color 0.35s ease, font-weight 0.1s ease;
 }
-
-.header-link:hover { opacity: 0.5; }
 
 
 /* ── MENU OVERLAY ── */

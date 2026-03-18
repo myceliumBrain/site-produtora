@@ -53,8 +53,7 @@ header {
 
 .logo-btn          { color: var(--white); }
 .hamburger span    { background: var(--white); }
-.header-link       { color: var(--white); }
-.header-link:hover { opacity: 0.45; }
+.header-link       { color: var(--white); transition: color 0.35s ease; }
 
 
 /* ─────────────────────────────────────────────────────────────────
