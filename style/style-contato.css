@@ -1,58 +1,178 @@
 /* ================================================================
-   style-contato.css — 000 filmes
-   Exclusivo da página contato.html
-   Depende de: style-base.css
+   style-contato.css — 000 filmes · Edição Indie / Alternativa
+   Visual: zine digital · produtora independente · DIY artístico
+
+   Estratégia: formulário editorial — papel e tinta.
+   Campos com underline fino, foco em burnt orange, submit com
+   fill sólido. Sensação de carta escrita à mão, não formulário web.
    ================================================================ */
 
-/* ── PAGE LAYOUT ── */
+
+/* ─────────────────────────────────────────────────────────────────
+   [1]  PALETA INDIE (sobrescreve style-base.css)
+   ───────────────────────────────────────────────────────────────── */
+
+:root {
+  --black:      #1c1714;
+  --white:      #f5eedf;
+  --cream:      #ece5d3;
+  --gold:       #c83b18;
+  --red:        #c83b18;
+  --electric:   #1a3bd4;
+  --acid:       #b4d600;
+  --sand:       #d3c5ae;
+  --grey:       #cbc3b4;
+  --border:     rgba(28, 23, 20, 0.1);
+  --dim:        rgba(28, 23, 20, 0.4);
+  --pad-desk:   56px;
+  --pad-mob:    24px;
+}
+
+body {
+  background: var(--white);
+  color: var(--black);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [2]  HEADER
+   ───────────────────────────────────────────────────────────────── */
+
+header {
+  background: var(--white);
+  background-color: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-btn          { color: var(--black); }
+.hamburger span    { background: var(--black); }
+.header-link       { color: var(--black); }
+.header-link:hover { opacity: 0.35; }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [3]  CURSOR
+   ───────────────────────────────────────────────────────────────── */
+
+.cursor {
+  background: var(--black);
+  mix-blend-mode: normal;
+}
+.cursor-ring { border-color: rgba(28, 23, 20, 0.3); }
+
+@media (hover: hover) and (pointer: fine) {
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring {
+    border-color: var(--gold);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [4]  MENU OVERLAY
+   ───────────────────────────────────────────────────────────────── */
+
+.menu-overlay {
+  background: var(--white);
+  border-right-color: var(--border);
+}
+
+.menu-primary-list li,
+.menu-primary-list li:last-child { border-color: var(--border); }
+
+.menu-primary-list a { color: var(--black); }
+.menu-item-title     { font-style: italic; color: var(--black); letter-spacing: -0.025em; }
+.menu-item-count     { color: var(--gold); font-style: italic; }
+
+.menu-social a       { color: var(--dim); }
+.menu-social a:hover { color: var(--black); }
+.menu-copy           { color: rgba(28, 23, 20, 0.2); }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [5]  FOOTER
+   ───────────────────────────────────────────────────────────────── */
+
+footer                { background: var(--black); border-top-color: rgba(28,23,20,0.2); }
+.footer-logo          { color: var(--white); }
+.footer-col h4        { color: rgba(245,238,223,0.35); font-style: italic; }
+.footer-col a         { color: rgba(245,238,223,0.55); }
+.footer-col a:hover   { color: var(--white); }
+.footer-bottom        { border-top-color: rgba(245,238,223,0.07); }
+.footer-copy          { color: rgba(245,238,223,0.18); }
+.footer-social a      { color: rgba(245,238,223,0.3); }
+.footer-social a:hover { color: var(--white); }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   PÁGINA DE CONTATO
+   ═══════════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [6]  PAGE LAYOUT
+   ───────────────────────────────────────────────────────────────── */
 
 .contact-page {
   min-height: 100vh;
-  padding-top: 120px;
-  padding-bottom: 120px;
+  padding-top: 144px;
+  padding-bottom: 144px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* ── HEADER DA PÁGINA ── */
+
+/* ─────────────────────────────────────────────────────────────────
+   [7]  HEADER DA PÁGINA
+        Eyebrow itálico, título grande em tinta, subtítulo suave.
+        Sensação de cartão postal / correspondência artística.
+   ───────────────────────────────────────────────────────────────── */
 
 .contact-header {
   text-align: center;
   max-width: 600px;
   padding: 0 var(--pad-desk);
-  margin-bottom: 80px;
+  margin-bottom: 96px;
 }
 
+/* Eyebrow: itálico burnt — sem all-caps agressivo */
 .contact-eyebrow {
   display: block;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  text-transform: none;
   color: var(--gold);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
+/* Título: itálico expressivo, muito maior */
 .contact-title {
   font-family: var(--font-display);
-  font-size: clamp(52px, 8vw, 96px);
+  font-size: clamp(56px, 9vw, 108px);
   font-weight: 300;
-  line-height: 0.92;
-  letter-spacing: -0.01em;
-  margin-bottom: 24px;
-  color: var(--white);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  margin-bottom: 28px;
+  color: var(--black);
+  font-style: italic;
 }
 
 .contact-sub {
   font-family: var(--font-display);
   font-size: 18px;
   font-weight: 300;
-  line-height: 1.6;
-  color: rgba(240, 236, 228, 0.45);
+  line-height: 1.65;
+  color: rgba(28, 23, 20, 0.48);
 }
 
-/* ── FORM WRAP ── */
+
+/* ─────────────────────────────────────────────────────────────────
+   [8]  FORM WRAP
+   ───────────────────────────────────────────────────────────────── */
 
 .contact-body {
   width: 100%;
@@ -60,11 +180,14 @@
   padding: 0 var(--pad-desk);
 }
 
-.contact-form-wrap {
-  width: 100%;
-}
+.contact-form-wrap { width: 100%; }
 
-/* ── FORMULÁRIO ── */
+
+/* ─────────────────────────────────────────────────────────────────
+   [9]  FORMULÁRIO
+        Campos com underline tênue em areia. Foco ativa burnt orange.
+        Estética de caderno de anotações, não formulário corporativo.
+   ───────────────────────────────────────────────────────────────── */
 
 .contact-form {
   display: flex;
@@ -82,13 +205,14 @@
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid var(--border);
-  padding: 20px 0;
+  padding: 24px 0;
   position: relative;
-  transition: border-color 0.3s;
+  transition: border-color 0.35s;
 }
 
+/* Foco: underline burnt orange — momento de expressão */
 .form-field:focus-within {
-  border-color: rgba(240, 236, 228, 0.4);
+  border-color: var(--gold);
 }
 
 .form-row .form-field:first-child {
@@ -101,14 +225,16 @@
 }
 
 .form-field label {
+  font-family: var(--font-ui);
   font-size: 9px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(240, 236, 228, 0.3);
-  margin-bottom: 10px;
-  transition: color 0.3s;
+  color: rgba(28, 23, 20, 0.3);
+  margin-bottom: 12px;
+  transition: color 0.35s;
 }
 
+/* Label ativa: burnt orange */
 .form-field:focus-within label {
   color: var(--gold);
 }
@@ -118,9 +244,9 @@
   background: none;
   border: none;
   outline: none;
-  color: var(--white);
+  color: var(--black);
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 300;
   letter-spacing: 0.01em;
   width: 100%;
@@ -129,22 +255,27 @@
 }
 
 .form-field textarea {
-  min-height: 120px;
-  line-height: 1.5;
+  min-height: 130px;
+  line-height: 1.55;
 }
 
 .form-field input::placeholder,
 .form-field textarea::placeholder {
-  color: rgba(240, 236, 228, 0.12);
+  color: rgba(28, 23, 20, 0.14);
 }
 
-/* ── AÇÕES DO FORMULÁRIO ── */
+
+/* ─────────────────────────────────────────────────────────────────
+   [10]  AÇÕES DO FORMULÁRIO
+         Submit: tinta sólida no hover — decisão, não sugestão.
+         WhatsApp: azul elétrico no hover — pop de cor.
+   ───────────────────────────────────────────────────────────────── */
 
 .form-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 40px;
+  padding-top: 48px;
   gap: 24px;
   flex-wrap: wrap;
 }
@@ -152,35 +283,31 @@
 .btn-submit {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  border: 1px solid rgba(240, 236, 228, 0.3);
-  padding: 14px 28px;
+  gap: 14px;
+  border: 1px solid rgba(28, 23, 20, 0.28);
+  padding: 16px 32px;
   font-family: var(--font-ui);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--white);
+  color: var(--black);
   background: none;
   cursor: none;
-  transition: border-color 0.3s, background 0.3s;
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
 }
 
+/* Submit: fill sólido tinta no hover */
 .btn-submit:hover {
-  border-color: var(--white);
-  background: rgba(240, 236, 228, 0.05);
+  border-color: var(--black);
+  background: var(--black);
+  color: var(--white);
 }
 
-.btn-submit svg {
-  transition: transform 0.3s;
-}
+.btn-submit svg         { transition: transform 0.3s; }
+.btn-submit:hover svg   { transform: translateX(5px); }
 
-.btn-submit:hover svg {
-  transform: translateX(4px);
-}
-
-/* ── WHATSAPP ── */
-
+/* WhatsApp: azul elétrico no hover */
 .btn-whatsapp {
   display: inline-flex;
   align-items: center;
@@ -190,25 +317,19 @@
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(240, 236, 228, 0.35);
+  color: rgba(28, 23, 20, 0.35);
   text-decoration: none;
   transition: color 0.3s;
 }
 
-.btn-whatsapp:hover {
-  color: var(--white);
-}
+.btn-whatsapp:hover           { color: var(--electric); }
+.btn-whatsapp svg             { flex-shrink: 0; transition: transform 0.3s; }
+.btn-whatsapp:hover svg       { transform: scale(1.15); }
 
-.btn-whatsapp svg {
-  flex-shrink: 0;
-  transition: transform 0.3s;
-}
 
-.btn-whatsapp:hover svg {
-  transform: scale(1.15);
-}
-
-/* ── FEEDBACK ── */
+/* ─────────────────────────────────────────────────────────────────
+   [11]  FEEDBACK DO FORMULÁRIO
+   ───────────────────────────────────────────────────────────────── */
 
 .form-feedback {
   margin-top: 24px;
@@ -220,36 +341,25 @@
 }
 
 .form-feedback.success { color: var(--gold); }
-.form-feedback.error   { color: var(--red); }
+.form-feedback.error   { color: var(--electric); }
 
-/* ── RESPONSIVE ── */
+
+/* ─────────────────────────────────────────────────────────────────
+   [12]  RESPONSIVE
+   ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
-  .contact-page     { padding-top: 100px; padding-bottom: 80px; }
-  .contact-header   { padding: 0 var(--pad-mob); margin-bottom: 56px; }
-  .contact-body     { padding: 0 var(--pad-mob); }
+  .contact-page   { padding-top: 108px; padding-bottom: 96px; }
+  .contact-header { padding: 0 var(--pad-mob); margin-bottom: 64px; }
+  .contact-body   { padding: 0 var(--pad-mob); }
 
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
+  .form-row                         { grid-template-columns: 1fr; gap: 0; }
+  .form-row .form-field:first-child { padding-right: 0; border-right: none; }
+  .form-row .form-field:last-child  { padding-left: 0; }
 
-  .form-row .form-field:first-child {
-    padding-right: 0;
-    border-right: none;
-  }
+  .form-actions { flex-direction: column; align-items: flex-start; gap: 20px; }
 
-  .form-row .form-field:last-child {
-    padding-left: 0;
-  }
-
-  .form-actions {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  footer { padding: 40px var(--pad-mob) 24px; }
-  .footer-top { flex-direction: column; gap: 40px; }
-  .footer-links { flex-wrap: wrap; gap: 32px; }
+  footer          { padding: 40px var(--pad-mob) 24px; }
+  .footer-top     { flex-direction: column; gap: 40px; }
+  .footer-links   { flex-wrap: wrap; gap: 32px; }
 }

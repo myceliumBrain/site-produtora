@@ -1,38 +1,151 @@
 /* ================================================================
-   style-producoes.css — 000 filmes
-   Exclusivo da página de catálogo (producoes.html)
-   Depende de: style-base.css
+   style-producoes.css — 000 filmes · Edição Indie / Alternativa
+   Visual: zine digital · produtora independente · DIY artístico
+
+   Estratégia: cabeçalho da página em parchment (sente editorial),
+   grade de filmes permanece escura — os cards são principalmente
+   imagens. Contraste parchment ↔ tinta cria ritmo visual forte.
    ================================================================ */
 
 
-/* ── PAGE LAYOUT ── */
+/* ─────────────────────────────────────────────────────────────────
+   [1]  PALETA INDIE (sobrescreve style-base.css)
+   ───────────────────────────────────────────────────────────────── */
 
-.page {
-  padding-top: 80px; /* altura do header */
-  min-height: 100vh;
+:root {
+  --black:      #1c1714;
+  --white:      #f5eedf;
+  --cream:      #ece5d3;
+  --gold:       #c83b18;
+  --red:        #c83b18;
+  --electric:   #1a3bd4;
+  --acid:       #b4d600;
+  --sand:       #d3c5ae;
+  --grey:       #cbc3b4;
+  --border:     rgba(28, 23, 20, 0.1);
+  --dim:        rgba(28, 23, 20, 0.4);
+  --pad-desk:   56px;
+  --pad-mob:    24px;
+}
+
+body {
+  background: var(--white);
+  color: var(--black);
 }
 
 
-/* ── SECTION HEADER ── */
+/* ─────────────────────────────────────────────────────────────────
+   [2]  HEADER
+   ───────────────────────────────────────────────────────────────── */
+
+header {
+  background: var(--white);
+  background-color: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-btn          { color: var(--black); }
+.hamburger span    { background: var(--black); }
+.header-link       { color: var(--black); }
+.header-link:hover { opacity: 0.35; }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [3]  CURSOR
+   ───────────────────────────────────────────────────────────────── */
+
+.cursor {
+  background: var(--black);
+  mix-blend-mode: normal;
+}
+.cursor-ring { border-color: rgba(28, 23, 20, 0.3); }
+
+@media (hover: hover) and (pointer: fine) {
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring {
+    border-color: var(--gold);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [4]  MENU OVERLAY
+   ───────────────────────────────────────────────────────────────── */
+
+.menu-overlay {
+  background: var(--white);
+  border-right-color: var(--border);
+}
+
+.menu-primary-list li,
+.menu-primary-list li:last-child { border-color: var(--border); }
+
+.menu-primary-list a { color: var(--black); }
+.menu-item-title     { font-style: italic; color: var(--black); letter-spacing: -0.025em; }
+.menu-item-count     { color: var(--gold); font-style: italic; }
+
+.menu-social a       { color: var(--dim); }
+.menu-social a:hover { color: var(--black); }
+.menu-copy           { color: rgba(28, 23, 20, 0.2); }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [5]  FOOTER
+   ───────────────────────────────────────────────────────────────── */
+
+footer                { background: var(--black); border-top-color: rgba(28,23,20,0.2); }
+.footer-logo          { color: var(--white); }
+.footer-col h4        { color: rgba(245,238,223,0.35); font-style: italic; }
+.footer-col a         { color: rgba(245,238,223,0.55); }
+.footer-col a:hover   { color: var(--white); }
+.footer-bottom        { border-top-color: rgba(245,238,223,0.07); }
+.footer-copy          { color: rgba(245,238,223,0.18); }
+.footer-social a      { color: rgba(245,238,223,0.3); }
+.footer-social a:hover { color: var(--white); }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   CATÁLOGO DE PRODUÇÕES
+   ═══════════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [6]  PAGE LAYOUT
+   ───────────────────────────────────────────────────────────────── */
+
+.page {
+  padding-top: 80px;
+  min-height: 100vh;
+  background: var(--white);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [7]  SECTION HEADER
+        Parchment, título itálico, sort buttons com underline burnt.
+   ───────────────────────────────────────────────────────────────── */
 
 .section-header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  padding: 48px var(--pad-desk) 32px;
+  padding: 56px var(--pad-desk) 40px;
   border-bottom: 1px solid var(--border);
+  background: var(--white);
 }
 
 @media (max-width: 767px) {
-  .section-header { padding: 32px var(--pad-mob) 24px; }
+  .section-header { padding: 40px var(--pad-mob) 28px; }
 }
 
+/* Título itálico expressivo — marca da identidade */
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 48px);
+  font-size: clamp(32px, 4.5vw, 56px);
   font-weight: 300;
-  letter-spacing: -0.01em;
-  color: var(--white);
+  letter-spacing: -0.025em;
+  font-style: italic;
+  color: var(--black);
 }
 
 .section-sort { display: flex; gap: 20px; }
@@ -44,28 +157,33 @@
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--dim);
+  color: rgba(28, 23, 20, 0.35);
   cursor: none;
-  padding: 0 0 2px;
-  transition: color 0.2s;
+  padding: 0 0 3px;
+  transition: color 0.25s;
   border-bottom: 1px solid transparent;
 }
 
+/* Sort ativo: underline burnt orange */
 .sort-btn.active {
-  color: var(--white);
-  border-bottom-color: var(--white);
+  color: var(--black);
+  border-bottom-color: var(--gold);
 }
 
-.sort-btn:hover { color: var(--white); }
+.sort-btn:hover { color: var(--black); }
 
 
-/* ── FILMS GRID ── */
+/* ─────────────────────────────────────────────────────────────────
+   [8]  FILMS GRID
+        Grade permanece escura — os cards são imagens de filme.
+        Gap de 1px em tinta quente cria textura de grade artesanal.
+   ───────────────────────────────────────────────────────────────── */
 
 .films-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1px;
-  background: var(--black);
+  background: var(--black);      /* tinta quente como gap entre cards */
   border-top: 1px solid var(--black);
 }
 
@@ -76,7 +194,13 @@
 .card--wide { grid-column: span 2; }
 .card--tall { grid-row: span 2; }
 
-/* ── FILM CARD ── */
+
+/* ─────────────────────────────────────────────────────────────────
+   [9]  FILM CARD
+        Cards escuros (imagens). Hover: subtle warm ink lift.
+        Ano em ácido, título em parchment, dir em dim parchment.
+        Overlay burnt orange no hover da imagem.
+   ───────────────────────────────────────────────────────────────── */
 
 .film-card {
   background: var(--black);
@@ -87,7 +211,7 @@
   transition: background 0.3s;
 }
 
-.film-card:hover { background: #111; }
+.film-card:hover { background: #251f1b; }
 
 .film-card__img {
   position: relative;
@@ -127,23 +251,26 @@
 }
 
 .film-card__placeholder svg {
-  opacity: 0.08;
+  opacity: 0.07;
   stroke: var(--white);
 }
 
+/* Info do card: tinta com texto parchment */
 .film-card__info {
-  padding: 14px 16px 18px;
-  border-top: 1px solid var(--border);
+  padding: 14px 16px 20px;
+  border-top: 1px solid rgba(245, 238, 223, 0.06);
   display: flex;
   flex-direction: column;
   gap: 5px;
+  background: var(--black);
 }
 
+/* Ano em ácido — consistência com o index */
 .film-card__year {
   font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--acid);
 }
 
 .film-card__title {
@@ -161,6 +288,6 @@
 .film-card__dir {
   font-size: 10px;
   letter-spacing: 0.06em;
-  color: var(--dim);
+  color: rgba(245, 238, 223, 0.4);
   line-height: 1.4;
 }

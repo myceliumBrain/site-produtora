@@ -57,10 +57,14 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
   /* ── RENDERIZA GRID (com ordenação) ── */
 
-  function renderGrid(sortMode = 'recent') {
+  function renderGrid(sortMode = 'relevance') {
     let sorted = [...films];
 
-    if (sortMode === 'az') {
+    if (sortMode === 'relevance') {
+      // Preserva a ordem editorial do data.json (sem modificação)
+    } else if (sortMode === 'recent') {
+      sorted.sort((a, b) => b.year - a.year);
+    } else if (sortMode === 'az') {
       const lang = i18next.language;
       sorted.sort((a, b) => {
         const titleA = lang === 'en' ? a.titleEn : a.title;
@@ -96,7 +100,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
     // Mantém o sort ativo ao trocar idioma
     const activeSort = document.querySelector('.sort-btn.active');
-    const mode = activeSort ? activeSort.getAttribute('data-sort') : 'recent';
+    const mode = activeSort ? activeSort.getAttribute('data-sort') : 'relevance';
     renderGrid(mode);
   }
 
@@ -109,6 +113,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         translation: {
           'nav.home':               'Início',
           'section.title':          'Produções',
+          'sort.relevance':         'Relevância',
           'sort.recent':            'Recentes',
           'sort.az':                'A–Z',
           'footer.col1':            'Navegação',
@@ -129,6 +134,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         translation: {
           'nav.home':               'Home',
           'section.title':          'Productions',
+          'sort.relevance':         'Relevance',
           'sort.recent':            'Latest',
           'sort.az':                'A–Z',
           'footer.col1':            'Navigation',

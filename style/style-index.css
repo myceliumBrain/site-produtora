@@ -1,11 +1,160 @@
 /* ================================================================
-   style-index.css — 000 filmes
-   Exclusivo da home (index.html)
-   Depende de: style-base.css
+   style-index.css — 000 filmes · Edição Indie / Alternativa
+   Visual: zine digital · produtora independente · DIY artístico
+
+   Estratégia de design:
+   - Sobrescreve variáveis CSS do style-base.css para tema claro-quente
+   - Paleta: parchment/tinta com acentos burnt orange, azul elétrico e ácido
+   - Tipografia expressiva: tamanhos extremos, itálicos assertivos, pesos contrastantes
+   - "Imperfeição intencional": inclinações, underlines de acento, grão reforçado
+   - O hero permanece escuro (legibilidade sobre fotos de filme)
    ================================================================ */
 
 
-/* ── HERO ── */
+/* ─────────────────────────────────────────────────────────────────
+   [1]  PALETA INDIE
+        Sobrescreve --black/--white/--gold do style-base para tema claro.
+        As outras páginas não carregam este arquivo, então continuam escuras.
+   ───────────────────────────────────────────────────────────────── */
+
+:root {
+  --black:      #1c1714;          /* tinta quente — não preto puro  */
+  --white:      #f5eedf;          /* parchment / papel off-white    */
+  --cream:      #ece5d3;          /* cream mais escuro, seções alt. */
+  --gold:       #c83b18;          /* laranja queimado (acento #1)   */
+  --red:        #c83b18;          /* mesmo — acento principal       */
+  --electric:   #1a3bd4;          /* azul elétrico (acento #2)      */
+  --acid:       #b4d600;          /* verde ácido (tags e micro)     */
+  --sand:       #d3c5ae;          /* bege areia (bordas e divisores)*/
+  --grey:       #cbc3b4;          /* cinza areia (placeholder bg)   */
+  --border:     rgba(28, 23, 20, 0.1);
+  --dim:        rgba(28, 23, 20, 0.4);
+  --pad-desk:   56px;
+  --pad-mob:    24px;
+}
+
+body {
+  background: var(--white);
+  color: var(--black);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [2]  HEADER — tema claro
+        Barra fixa com fundo parchment e separador sutil.
+   ───────────────────────────────────────────────────────────────── */
+
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  /* remove o hardcode de #0a0a0a do style-base */
+  background-color: var(--white);
+}
+
+.logo-btn            { color: var(--black); }
+.hamburger span      { background: var(--black); }
+.header-link         { color: var(--black); }
+.header-link:hover   { opacity: 0.35; }
+
+/* Cursor: modo claro — blend normal, não difference */
+.cursor {
+  background: var(--black);
+  mix-blend-mode: normal;
+}
+.cursor-ring { border-color: rgba(28, 23, 20, 0.3); }
+
+@media (hover: hover) and (pointer: fine) {
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring {
+    border-color: var(--gold);   /* anel burnt orange ao hover em links */
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [3]  MENU OVERLAY — papel e tinta
+        Painel lateral com personalidade: contadores em burnt orange,
+        títulos itálicos grandes, sem frieza corporativa.
+   ───────────────────────────────────────────────────────────────── */
+
+.menu-overlay {
+  background: var(--white);
+  border-right-color: var(--border);
+}
+
+.menu-primary-list li,
+.menu-primary-list li:last-child {
+  border-color: var(--border);
+}
+
+.menu-primary-list a  { color: var(--black); }
+
+/* Títulos de menu: itálicos — estética de cartaz de cinema */
+.menu-item-title {
+  font-style: italic;
+  color: var(--black);
+  letter-spacing: -0.025em;
+}
+
+/* Contadores/subtítulos: burnt orange para quebrar a monotonia */
+.menu-item-count {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.menu-primary-list a:hover { padding-left: 16px; }
+
+.menu-social a        { color: var(--dim); }
+.menu-social a:hover  { color: var(--black); }
+.menu-copy            { color: rgba(28, 23, 20, 0.2); }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [4]  FOOTER — escuro quente
+        Contraste máximo: fundo tinta vs. corpo claro.
+        Acentos em burnt orange para os links de navegação ativos.
+   ───────────────────────────────────────────────────────────────── */
+
+footer {
+  background: var(--black);
+  border-top-color: rgba(28, 23, 20, 0.2);
+}
+
+.footer-logo {
+  color: var(--white);
+  font-size: 14px;
+  letter-spacing: 0.22em;
+}
+
+.footer-col h4 {
+  color: rgba(245, 238, 223, 0.35);
+  font-style: italic;
+  letter-spacing: 0.1em;
+  font-size: 10px;
+}
+
+.footer-col a {
+  color: rgba(245, 238, 223, 0.55);
+  transition: color 0.3s;
+}
+.footer-col a:hover { color: var(--white); }
+
+.footer-bottom        { border-top-color: rgba(245, 238, 223, 0.07); }
+.footer-copy          { color: rgba(245, 238, 223, 0.18); }
+.footer-social a      { color: rgba(245, 238, 223, 0.3); }
+.footer-social a:hover { color: var(--white); }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SEÇÕES ESPECÍFICAS DA HOME
+   ═══════════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [5]  HERO — mantém escuro (legibilidade sobre fotos de filme)
+        Ajustes: grain mais visível, label em ácido, dots viram linhas,
+        título maior. Tinta quente em vez de preto puro.
+   ───────────────────────────────────────────────────────────────── */
 
 .hero {
   position: relative;
@@ -26,19 +175,20 @@
   inset: 0;
   opacity: 0;
   transition: opacity 1.4s cubic-bezier(0.76, 0, 0.24, 1);
-  /* fallback para slides sem imagem */
-  background: linear-gradient(135deg, #1a0e2e 0%, #0d1a2e 50%, #0a0a0a 100%);
+  /* fallback: gradiente mais quente, menos azulado */
+  background: linear-gradient(135deg, #1a0e2e 0%, #160d20 50%, #1c1714 100%);
   background-size: cover;
   background-position: center;
 }
 
 .hero-slide.active { opacity: 1; }
 
+/* Grain reforçado — textura artesanal de película */
 .hero-grain {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
-  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+  opacity: 0.65;
   pointer-events: none;
   z-index: 2;
 }
@@ -46,7 +196,7 @@
 .hero-vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 30%, rgba(10,10,10,0.7) 100%);
+  background: radial-gradient(ellipse at center, transparent 20%, rgba(28, 23, 20, 0.75) 100%);
   z-index: 3;
   pointer-events: none;
 }
@@ -54,7 +204,7 @@
 .hero-bottom-fade {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 50%;
+  height: 56%;
   background: linear-gradient(to bottom, transparent, var(--black));
   z-index: 4;
   pointer-events: none;
@@ -63,34 +213,37 @@
 .hero-content {
   position: relative;
   z-index: 5;
-  padding: 0 var(--pad-desk) 56px;
+  padding: 0 var(--pad-desk) 72px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
 
-.hero-film-info { max-width: 520px; }
+.hero-film-info { max-width: 580px; }
 
+/* Label: ácido — pop visual, distinto do gold corporativo */
 .hero-label {
   font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 16px;
+  color: var(--acid);
+  margin-bottom: 20px;
   opacity: 0;
   transform: translateY(20px);
   animation: fadeUp 0.8s ease 0.5s forwards;
 }
 
+/* Título do hero: maior e mais impactante */
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(52px, 7vw, 96px);
+  font-size: clamp(58px, 8.5vw, 112px);
   font-weight: 300;
-  line-height: 0.92;
-  letter-spacing: -0.01em;
-  margin-bottom: 20px;
+  line-height: 0.89;
+  letter-spacing: -0.025em;
+  margin-bottom: 24px;
+  color: var(--white);
   opacity: 0;
   transform: translateY(30px);
   animation: fadeUp 1s ease 0.7s forwards;
@@ -100,8 +253,8 @@
 
 .hero-meta {
   font-size: 11px;
-  letter-spacing: 0.12em;
-  color: rgba(240,236,228,0.5);
+  letter-spacing: 0.14em;
+  color: rgba(245, 238, 223, 0.5);
   opacity: 0;
   animation: fadeUp 0.8s ease 1s forwards;
 }
@@ -111,27 +264,18 @@
   animation: fadeUp 0.8s ease 1.2s forwards;
 }
 
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  border: 1px solid rgba(240,236,228,0.3);
-  padding: 14px 28px;
-  font-family: var(--font-ui);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+/* Botão do hero: borda parchment, hover burnt orange */
+.hero-cta .btn-outline {
+  border-color: rgba(245, 238, 223, 0.3);
   color: var(--white);
-  text-decoration: none;
   background: none;
-  cursor: none;
-  transition: border-color 0.3s, background 0.3s;
 }
 
-.btn-outline:hover { border-color: var(--white); background: rgba(240,236,228,0.05); }
-.btn-outline svg   { transition: transform 0.3s; }
-.btn-outline:hover svg { transform: translateX(4px); }
+.hero-cta .btn-outline:hover {
+  border-color: var(--gold);
+  background: rgba(200, 59, 24, 0.18);
+  color: var(--white);
+}
 
 .hero-nav {
   position: absolute;
@@ -141,63 +285,88 @@
   z-index: 5;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
+/* Dots viram linhas horizontais — mais editorial, menos corporativo */
 .hero-dot {
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: rgba(240,236,228,0.3);
+  width: 24px;
+  height: 2px;
+  border-radius: 1px;
+  background: rgba(245, 238, 223, 0.2);
   cursor: none;
-  transition: background 0.3s, transform 0.3s;
+  transition: background 0.3s, width 0.4s ease, transform 0.3s;
 }
 
-.hero-dot.active { background: var(--white); transform: scale(1.5); }
+.hero-dot.active {
+  background: var(--white);
+  width: 40px;
+}
 
 .hero-scroll-hint {
   position: absolute;
-  bottom: 56px;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   opacity: 0;
   animation: fadeUp 0.8s ease 1.6s forwards;
 }
 
 .hero-scroll-hint span {
   font-size: 9px;
-  letter-spacing: 0.22em;
+  font-style: italic;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(240,236,228,0.4);
+  color: rgba(245, 238, 223, 0.38);
 }
 
 .scroll-line {
   width: 1px;
-  height: 40px;
-  background: linear-gradient(to bottom, rgba(240,236,228,0.4), transparent);
+  height: 52px;
+  background: linear-gradient(to bottom, rgba(245, 238, 223, 0.38), transparent);
   animation: scrollPulse 2s ease-in-out infinite;
 }
 
 
-/* ── FEATURED FILM ── */
+/* ─────────────────────────────────────────────────────────────────
+   [6]  FEATURED FILM — papel e tinta
+        Seção clara em contraste total com o hero escuro.
+        Número decorativo em burnt suave, itálico no título,
+        tags com fundo ácido, botão tinta sólida no hover.
+   ───────────────────────────────────────────────────────────────── */
 
 .section-featured {
-  background: var(--black);
-  padding: 120px 0 0;
+  background: var(--white);
+  padding: 144px 0 0;
   overflow: hidden;
+  position: relative;
 }
 
+/* Linha fina no topo — separa do hero sem brutalidade */
+.section-featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: var(--pad-desk); right: var(--pad-desk);
+  height: 1px;
+  background: var(--border);
+}
+
+/* Eyebrow: itálico, sem all-caps — mais orgânico e editorial */
 .featured-eyebrow {
   padding: 0 var(--pad-desk);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  text-transform: none;
   color: var(--gold);
-  margin-bottom: 64px;
+  margin-bottom: 80px;
 }
 
 .featured-layout {
@@ -228,141 +397,202 @@
   justify-content: center;
 }
 
+/* Gradiente lateral: agora usa --white (parchment) — dissolve na área de texto */
 .featured-img-wrap::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, transparent 60%, var(--black));
+  background: linear-gradient(to right, transparent 52%, var(--white));
 }
 
-.featured-text { padding: 80px 80px 80px 64px; }
+.featured-text {
+  padding: 80px 80px 80px 72px;
+  position: relative;
+}
 
+/* Número decorativo: burnt orange bem suave + itálico — dá profundidade */
 .featured-number {
   font-family: var(--font-display);
-  font-size: 120px;
+  font-size: 180px;
   font-weight: 300;
-  color: rgba(240,236,228,0.06);
+  font-style: italic;
+  color: rgba(200, 59, 24, 0.07);
   line-height: 1;
-  margin-bottom: -30px;
-  margin-left: -8px;
+  margin-bottom: -48px;
+  margin-left: -14px;
+  user-select: none;
+  pointer-events: none;
 }
 
 .featured-title {
   font-family: var(--font-display);
-  font-size: clamp(42px, 5vw, 72px);
+  font-size: clamp(46px, 5.5vw, 82px);
   font-weight: 300;
-  line-height: 0.95;
-  margin-bottom: 28px;
+  line-height: 0.92;
+  margin-bottom: 32px;
+  color: var(--black);
+  letter-spacing: -0.025em;
 }
 
-.featured-title em { font-style: italic; }
+/* Primeira palavra em itálico burnt — pequeno detalhe expressivo */
+.featured-title em {
+  font-style: italic;
+  color: var(--gold);
+}
 
 .featured-dir {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: rgba(240,236,228,0.4);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: rgba(28, 23, 20, 0.42);
   text-transform: uppercase;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 
 .featured-synopsis {
   font-family: var(--font-display);
   font-size: 18px;
   font-weight: 300;
-  line-height: 1.7;
-  color: rgba(240,236,228,0.7);
+  line-height: 1.78;
+  color: rgba(28, 23, 20, 0.7);
   margin-bottom: 48px;
 }
 
-.featured-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+.featured-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 52px;
+}
 
+/* Tags: preenchidas em verde ácido + texto escuro — anti-corporativo */
 .tag {
+  font-family: var(--font-ui);
   font-size: 9px;
-  letter-spacing: 0.16em;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  border: 1px solid rgba(240,236,228,0.2);
-  padding: 6px 12px;
-  color: rgba(240,236,228,0.5);
+  background: var(--acid);
+  color: var(--black);
+  padding: 7px 14px;
+  border: none;
+  display: inline-block;
+}
+
+/* Botão da seção featured: dark fill no hover */
+.section-featured .btn-outline {
+  border-color: rgba(28, 23, 20, 0.28);
+  color: var(--black);
+  background: none;
+}
+
+.section-featured .btn-outline:hover {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
 }
 
 
-/* ── MARQUEE STRIPE ── */
+/* ─────────────────────────────────────────────────────────────────
+   [7]  MARQUEE STRIPE — burnt orange vibrante
+        Faixa de alto contraste que separa as seções principais.
+        Texto em parchment sobre laranja queimado — muito impacto.
+   ───────────────────────────────────────────────────────────────── */
 
 .section-stripe {
   overflow: hidden;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 20px 0;
-  background: var(--black);
+  padding: 28px 0;
+  background: var(--gold);      /* laranja queimado — o maior impacto visual */
+  border: none;
 }
 
 .stripe-track {
   display: flex;
-  gap: 64px;
+  gap: 72px;
   width: max-content;
-  animation: marquee 20s linear infinite;
+  animation: marquee 18s linear infinite;
   white-space: nowrap;
 }
 
 .stripe-item {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 300;
   font-style: italic;
-  letter-spacing: 0.08em;
-  color: rgba(240,236,228,0.25);
+  letter-spacing: 0.05em;
+  color: rgba(245, 238, 223, 0.88);
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 28px;
 }
 
 .stripe-item::before {
   content: '◆';
-  font-size: 6px;
-  color: var(--gold);
+  font-size: 7px;
+  color: rgba(245, 238, 223, 0.4);
   font-style: normal;
 }
 
-/* ── PREVIEW GRID (home) ── */
+
+/* ─────────────────────────────────────────────────────────────────
+   [8]  PREVIEW GRID — papel com hover burnt
+        Fundo claro para o grid. No hover, overlay troca de escuro puro
+        para gradiente burnt orange — distintivo e artístico.
+        Imagem de card posicionada para preencher o container.
+   ───────────────────────────────────────────────────────────────── */
 
 .section-grid {
-  background: var(--black);
-  padding: 0 0 120px;
+  background: var(--white);
+  padding: 0 0 144px;
 }
 
 .section-grid-header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding: 80px var(--pad-desk) 64px;
+  padding: 104px var(--pad-desk) 72px;
   border-top: 1px solid var(--border);
 }
 
+/* Título com itálico e underline de acento */
 .section-grid-title {
   font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 48px);
+  font-size: clamp(32px, 4.5vw, 58px);
   font-weight: 300;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.025em;
+  font-style: italic;
+  color: var(--black);
+}
+
+/* Linha de acento burnt orange sob o título */
+.section-grid-title::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--gold);
+  margin-top: 14px;
 }
 
 .section-grid-link {
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  font-size: 10px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(240,236,228,0.4);
+  color: rgba(28, 23, 20, 0.38);
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 10px;
   transition: color 0.3s;
+  align-self: flex-start;
+  margin-top: 8px;
 }
 
-.section-grid-link:hover { color: var(--white); }
+.section-grid-link:hover { color: var(--black); }
 
 .preview-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
+  gap: 3px;
   padding: 0 var(--pad-desk);
 }
 
@@ -385,45 +615,68 @@
   overflow: hidden;
 }
 
-.preview-card:hover .preview-card__bg { transform: scale(1.06); }
+/* Imagem do card: posição absoluta para preencher o bg */
+.preview-card__img-portrait {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
+.preview-card:hover .preview-card__bg { transform: scale(1.07); }
+
+/* Overlay padrão: escuro suave */
 .preview-card__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 50%);
-  transition: opacity 0.4s;
+  background: linear-gradient(to top, rgba(28, 23, 20, 0.92) 0%, transparent 55%);
+  transition: background 0.5s ease;
+}
+
+/* Hover: overlay passa a ter toque burnt orange — marca visual da produtora */
+.preview-card:hover .preview-card__overlay {
+  background: linear-gradient(
+    to top,
+    rgba(200, 59, 24, 0.82) 0%,
+    rgba(28, 23, 20, 0.5) 60%,
+    transparent 100%
+  );
 }
 
 .preview-card__info {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 24px 20px;
+  padding: 28px 22px;
   transform: translateY(8px);
   transition: transform 0.4s ease;
 }
 
 .preview-card:hover .preview-card__info { transform: translateY(0); }
 
+/* Ano em ácido — pop visual sobre o fundo escuro/burnt */
 .preview-card__year {
   font-size: 9px;
-  letter-spacing: 0.18em;
-  color: var(--gold);
+  letter-spacing: 0.22em;
+  color: var(--acid);
   text-transform: uppercase;
   margin-bottom: 6px;
 }
 
 .preview-card__title {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 300;
   line-height: 1.1;
+  color: var(--white);
 }
 
 .preview-card__dir {
   font-size: 10px;
   letter-spacing: 0.1em;
-  color: rgba(240,236,228,0.4);
-  margin-top: 4px;
+  color: rgba(245, 238, 223, 0.55);
+  margin-top: 6px;
   opacity: 0;
   transform: translateY(6px);
   transition: opacity 0.4s 0.05s, transform 0.4s 0.05s;
@@ -432,97 +685,213 @@
 .preview-card:hover .preview-card__dir { opacity: 1; transform: translateY(0); }
 
 
-/* ── UPCOMING ── */
+/* ─────────────────────────────────────────────────────────────────
+   [9]  UPCOMING — cream com muito caractere
+        Fundo cream (mais escuro que o body) para criar ritmo visual.
+        Números em burnt, status em azul elétrico, título itálico.
+        Hover na linha: toque burnt sutil.
+   ───────────────────────────────────────────────────────────────── */
 
 .section-upcoming {
   background: var(--cream);
   color: var(--black);
-  padding: 120px var(--pad-desk);
+  padding: 144px var(--pad-desk);
+  position: relative;
 }
 
 .upcoming-header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
 }
 
+/* Título com itálico expressivo e linha de acento */
 .upcoming-title {
   font-family: var(--font-display);
-  font-size: clamp(32px, 4vw, 56px);
+  font-size: clamp(40px, 5.5vw, 76px);
   font-weight: 300;
+  font-style: italic;
   color: var(--black);
+  letter-spacing: -0.035em;
+  position: relative;
+  display: inline-block;
 }
+
+/* Linha de acento burnt orange — elemento recorrente na identidade */
+.upcoming-title::after {
+  content: '';
+  position: absolute;
+  bottom: -14px; left: 0;
+  width: 56px; height: 3px;
+  background: var(--gold);
+}
+
+.upcoming-list { list-style: none; }
 
 .upcoming-item {
-  border-top: 1px solid rgba(10,10,10,0.1);
+  border-top: 1px solid rgba(28, 23, 20, 0.1);
   cursor: none;
+  transition: background 0.35s ease;
 }
 
-.upcoming-item:last-child { border-bottom: 1px solid rgba(10,10,10,0.1); }
+/* Hover da linha: micro-feedback burnt */
+.upcoming-item:hover {
+  background: rgba(200, 59, 24, 0.04);
+}
+
+.upcoming-item:last-child { border-bottom: 1px solid rgba(28, 23, 20, 0.1); }
 
 .upcoming-item__link {
   display: grid;
-  grid-template-columns: 0px 1fr auto;
+  grid-template-columns: 52px 1fr auto;
   align-items: center;
   gap: 32px;
-  padding: 28px 0;
+  padding: 36px 0;
   width: 100%;
   text-decoration: none;
   color: inherit;
   transition: gap 0.4s ease;
 }
 
-.upcoming-item__link:hover { gap: 48px; }
+.upcoming-item__link:hover { gap: 60px; }
 
-.upcoming-list { list-style: none; }
-
+/* Número: burnt orange itálico — distancia do look neutro */
 .upcoming-item__num {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: rgba(10,10,10,0.3);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-style: italic;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  text-align: right;
 }
 
 .upcoming-item__title {
   font-family: var(--font-display);
-  font-size: clamp(24px, 3vw, 36px);
+  font-size: clamp(26px, 3.5vw, 44px);
   font-weight: 300;
+  color: var(--black);
+  letter-spacing: -0.015em;
 }
 
 .upcoming-item__meta {
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(10,10,10,0.35);
+  color: rgba(28, 23, 20, 0.38);
   text-align: right;
 }
 
+/* Status em azul elétrico — contraste com o burnt, sinaliza progresso */
 .upcoming-item__status {
-  color: var(--red);
+  color: var(--electric);
   font-size: 9px;
-  letter-spacing: 0.16em;
+  font-weight: 700;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 
-/* ── RESPONSIVE ── */
+/* ─────────────────────────────────────────────────────────────────
+   [10]  BTN-OUTLINE — estilo base (seções claras)
+         O hero sobreescreve com versão clara via .hero-cta .btn-outline
+   ───────────────────────────────────────────────────────────────── */
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid rgba(28, 23, 20, 0.25);
+  padding: 16px 32px;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  background: none;
+  cursor: none;
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
+}
+
+.btn-outline:hover { border-color: var(--black); }
+.btn-outline svg   { transition: transform 0.3s; }
+.btn-outline:hover svg { transform: translateX(5px); }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [11]  SCROLL REVEAL
+   ───────────────────────────────────────────────────────────────── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible    { opacity: 1; transform: translateY(0); }
+.reveal-delay-1    { transition-delay: 0.1s; }
+.reveal-delay-2    { transition-delay: 0.2s; }
+.reveal-delay-3    { transition-delay: 0.3s; }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [12]  KEYFRAMES
+   ───────────────────────────────────────────────────────────────── */
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(0.7); }
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [13]  RESPONSIVE
+   ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
-  .hero-content       { padding: 0 var(--pad-mob) 48px; }
+  .hero-content       { padding: 0 var(--pad-mob) 56px; }
   .hero-nav           { display: none; }
   .hero-scroll-hint   { display: none; }
+
   .featured-layout    { grid-template-columns: 1fr; }
   .featured-img-wrap  { aspect-ratio: 16/9; }
-  .featured-img-wrap::after { background: linear-gradient(to top, var(--black) 0%, transparent 50%); }
-  .featured-text      { padding: 40px var(--pad-mob); }
-  .featured-number    { font-size: 72px; }
-  .featured-eyebrow   { padding: 0 var(--pad-mob); }
-  .section-featured   { padding: 80px 0 0; }
-  .preview-grid       { grid-template-columns: 1fr 1fr; padding: 0 var(--pad-mob); gap: 1px; }
-  .section-grid-header { padding: 60px var(--pad-mob) 40px; }
-  .section-upcoming   { padding: 80px var(--pad-mob); }
-  .upcoming-item      { grid-template-columns: 40px 1fr auto; gap: 16px; }
+  /* Gradiente mobile: de baixo para cima (layout empilhado) */
+  .featured-img-wrap::after {
+    background: linear-gradient(to top, var(--white) 0%, transparent 55%);
+  }
+  .featured-text      { padding: 48px var(--pad-mob) 60px; }
+  .featured-number    { font-size: 104px; margin-bottom: -32px; }
+  .featured-eyebrow   { padding: 0 var(--pad-mob); margin-bottom: 48px; }
+  .section-featured   { padding: 96px 0 0; }
+
+  .preview-grid {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 var(--pad-mob);
+    gap: 2px;
+  }
+  .section-grid-header { padding: 72px var(--pad-mob) 48px; }
+  .section-grid       { padding: 0 0 96px; }
+
+  .section-upcoming   { padding: 96px var(--pad-mob); }
+  .upcoming-item__link {
+    grid-template-columns: 40px 1fr auto;
+    gap: 16px;
+  }
+  .upcoming-item__link:hover { gap: 24px; }
+
   footer              { padding: 60px var(--pad-mob) 32px; }
   .footer-top         { flex-direction: column; gap: 40px; }
   .footer-links       { flex-wrap: wrap; gap: 32px; }

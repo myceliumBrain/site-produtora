@@ -1,16 +1,132 @@
 /* ================================================================
-   style-filme.css — 000 filmes
-   Exclusivo da página filme.html
-   Depende de: style-base.css
+   style-filme.css — 000 filmes · Edição Indie / Alternativa
+   Visual: zine digital · produtora independente · DIY artístico
+
+   Estratégia: hero permanece escuro (imagem de capa do filme).
+   Body vira parchment — contraste limpo que destaca a sinopse.
+   Tags com fundo ácido. Eyebrow em burnt orange.
    ================================================================ */
 
-/* ── PAGE ── */
 
-.filme-page {
-  min-height: 100vh;
+/* ─────────────────────────────────────────────────────────────────
+   [1]  PALETA INDIE (sobrescreve style-base.css)
+   ───────────────────────────────────────────────────────────────── */
+
+:root {
+  --black:      #1c1714;
+  --white:      #f5eedf;
+  --cream:      #ece5d3;
+  --gold:       #c83b18;
+  --red:        #c83b18;
+  --electric:   #1a3bd4;
+  --acid:       #b4d600;
+  --sand:       #d3c5ae;
+  --grey:       #cbc3b4;
+  --border:     rgba(28, 23, 20, 0.1);
+  --dim:        rgba(28, 23, 20, 0.4);
+  --pad-desk:   56px;
+  --pad-mob:    24px;
 }
 
-/* ── HERO ── */
+body {
+  background: var(--white);
+  color: var(--black);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [2]  HEADER
+   ───────────────────────────────────────────────────────────────── */
+
+header {
+  background: transparent;         /* transparente sobre o hero escuro */
+  background-color: transparent;
+  border-bottom: none;
+}
+
+/* Quando scroll passa do hero, header fica visível — script adiciona classe */
+.header--scrolled {
+  background: var(--white);
+  background-color: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-btn          { color: var(--white); }
+.hamburger span    { background: var(--white); }
+.header-link       { color: var(--white); }
+.header-link:hover { opacity: 0.45; }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [3]  CURSOR
+   ───────────────────────────────────────────────────────────────── */
+
+.cursor {
+  background: var(--white);        /* branco sobre hero escuro */
+  mix-blend-mode: difference;
+}
+.cursor-ring { border-color: rgba(245, 238, 223, 0.4); }
+
+@media (hover: hover) and (pointer: fine) {
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring {
+    border-color: var(--gold);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [4]  MENU OVERLAY
+   ───────────────────────────────────────────────────────────────── */
+
+.menu-overlay {
+  background: var(--white);
+  border-right-color: var(--border);
+}
+
+.menu-primary-list li,
+.menu-primary-list li:last-child { border-color: var(--border); }
+
+.menu-primary-list a { color: var(--black); }
+.menu-item-title     { font-style: italic; color: var(--black); letter-spacing: -0.025em; }
+.menu-item-count     { color: var(--gold); font-style: italic; }
+
+.menu-social a       { color: var(--dim); }
+.menu-social a:hover { color: var(--black); }
+.menu-copy           { color: rgba(28, 23, 20, 0.2); }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [5]  FOOTER
+   ───────────────────────────────────────────────────────────────── */
+
+footer                { background: var(--black); border-top-color: rgba(28,23,20,0.2); }
+.footer-logo          { color: var(--white); }
+.footer-col h4        { color: rgba(245,238,223,0.35); font-style: italic; }
+.footer-col a         { color: rgba(245,238,223,0.55); }
+.footer-col a:hover   { color: var(--white); }
+.footer-bottom        { border-top-color: rgba(245,238,223,0.07); }
+.footer-copy          { color: rgba(245,238,223,0.18); }
+.footer-social a      { color: rgba(245,238,223,0.3); }
+.footer-social a:hover { color: var(--white); }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   PÁGINA DO FILME
+   ═══════════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [6]  PAGE
+   ───────────────────────────────────────────────────────────────── */
+
+.filme-page { min-height: 100vh; }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [7]  HERO — permanece escuro (imagem de capa do filme)
+        Eyebrow em ácido, título grande parchment.
+   ───────────────────────────────────────────────────────────────── */
 
 .filme-hero {
   position: relative;
@@ -19,13 +135,14 @@
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  padding-top: 80px; /* altura do header */
+  padding-top: 80px;
 }
 
+/* Fundo: fallback para tinta quente */
 .filme-hero__bg {
   position: absolute;
   inset: 0;
-  top: 80px; /* empurra abaixo do header */
+  top: 80px;
   background-size: contain;
   background-position: center top;
   background-repeat: no-repeat;
@@ -33,45 +150,63 @@
   transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
+/* Gradiente de leitura na base do hero */
+.filme-hero::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 65%;
+  background: linear-gradient(to bottom, transparent, var(--black));
+  z-index: 2;
+  pointer-events: none;
+}
+
 .filme-hero__content {
   position: relative;
   z-index: 3;
-  padding: 0 var(--pad-desk) 32px;
+  padding: 0 var(--pad-desk) 40px;
   width: 100%;
 }
 
+/* Eyebrow: ácido — elemento diferenciador */
 .filme-hero__eyebrow {
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 10px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--acid);
+  margin-bottom: 12px;
   display: block;
 }
 
 .filme-hero__title {
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.5vw, 52px);
+  font-size: clamp(32px, 4vw, 60px);
   font-weight: 300;
-  line-height: 0.95;
-  letter-spacing: -0.01em;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
   color: var(--white);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  font-style: italic;
 }
 
 .filme-hero__meta {
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(240, 236, 228, 0.45);
+  color: rgba(245, 238, 223, 0.45);
 }
 
-/* ── BODY ── */
+
+/* ─────────────────────────────────────────────────────────────────
+   [8]  BODY — parchment, sinopse em tinta, tags ácidas
+   ───────────────────────────────────────────────────────────────── */
 
 .filme-body {
   position: relative;
-  padding: 100px var(--pad-desk) 120px;
+  background: var(--white);
+  padding: 112px var(--pad-desk) 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,8 +221,8 @@
   font-family: var(--font-display);
   font-size: clamp(20px, 2vw, 26px);
   font-weight: 300;
-  line-height: 1.75;
-  color: rgba(240, 236, 228, 0.65);
+  line-height: 1.78;
+  color: rgba(28, 23, 20, 0.68);
 }
 
 .filme-info {
@@ -95,7 +230,7 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  margin-top: 48px;
+  margin-top: 56px;
 }
 
 .filme-info__tags {
@@ -105,21 +240,32 @@
   gap: 8px;
 }
 
+/* Tags: fundo ácido preenchido — consistência com identidade */
 .filme-info__tags .tag {
+  font-family: var(--font-ui);
   font-size: 9px;
-  letter-spacing: 0.18em;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  border: 1px solid rgba(240, 236, 228, 0.1);
-  padding: 6px 14px;
-  color: rgba(240, 236, 228, 0.25);
+  background: var(--acid);
+  color: var(--black);
+  padding: 7px 14px;
+  border: none;
+  display: inline-block;
 }
 
-/* ── RESPONSIVE ── */
+
+/* ─────────────────────────────────────────────────────────────────
+   [9]  RESPONSIVE
+   ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
-  .filme-hero           { height: 50vh; }
-  .filme-hero__content  { padding: 0 var(--pad-mob) 40px; }
-  .filme-body           { padding: 60px var(--pad-mob) 80px; }
-  .filme-info           { position: static; align-items: center; margin-top: 40px; }
-  .filme-info__tags     { align-items: center; }
+  .filme-hero          { height: 52vh; }
+  .filme-hero__content { padding: 0 var(--pad-mob) 40px; }
+  .filme-body          { padding: 72px var(--pad-mob) 96px; }
+  .filme-info          { position: static; align-items: center; margin-top: 40px; }
+  .filme-info__tags    { align-items: center; }
+  footer               { padding: 40px var(--pad-mob) 24px; }
+  .footer-top          { flex-direction: column; gap: 40px; }
+  .footer-links        { flex-wrap: wrap; gap: 32px; }
 }

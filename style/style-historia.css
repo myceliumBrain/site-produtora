@@ -1,23 +1,135 @@
 /* ================================================================
-   style-historia.css — 000 filmes
-   Exclusivo da página historia.html
-   Depende de: style-base.css
+   style-historia.css — 000 filmes · Edição Indie / Alternativa
+   Visual: zine digital · produtora independente · DIY artístico
+
+   Estratégia: página editorial, quase um fanzine impresso.
+   Manifesto em tinta grande itálica, marcos com anos em burnt orange,
+   membros com overlay quente nas fotos, parceiros em parchment.
    ================================================================ */
 
-/* ── PAGE ── */
 
-.historia-page {
-  min-height: 100vh;
-  padding-top: 140px;
-  padding-bottom: 120px;
+/* ─────────────────────────────────────────────────────────────────
+   [1]  PALETA INDIE (sobrescreve style-base.css)
+   ───────────────────────────────────────────────────────────────── */
+
+:root {
+  --black:      #1c1714;
+  --white:      #f5eedf;
+  --cream:      #ece5d3;
+  --gold:       #c83b18;
+  --red:        #c83b18;
+  --electric:   #1a3bd4;
+  --acid:       #b4d600;
+  --sand:       #d3c5ae;
+  --grey:       #cbc3b4;
+  --border:     rgba(28, 23, 20, 0.1);
+  --dim:        rgba(28, 23, 20, 0.4);
+  --pad-desk:   56px;
+  --pad-mob:    24px;
+}
+
+body {
+  background: var(--white);
+  color: var(--black);
 }
 
 
-/* ── MANIFESTO ── */
+/* ─────────────────────────────────────────────────────────────────
+   [2]  HEADER
+   ───────────────────────────────────────────────────────────────── */
+
+header {
+  background: var(--white);
+  background-color: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-btn          { color: var(--black); }
+.hamburger span    { background: var(--black); }
+.header-link       { color: var(--black); }
+.header-link:hover { opacity: 0.35; }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [3]  CURSOR
+   ───────────────────────────────────────────────────────────────── */
+
+.cursor {
+  background: var(--black);
+  mix-blend-mode: normal;
+}
+.cursor-ring { border-color: rgba(28, 23, 20, 0.3); }
+
+@media (hover: hover) and (pointer: fine) {
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring {
+    border-color: var(--gold);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [4]  MENU OVERLAY
+   ───────────────────────────────────────────────────────────────── */
+
+.menu-overlay {
+  background: var(--white);
+  border-right-color: var(--border);
+}
+
+.menu-primary-list li,
+.menu-primary-list li:last-child { border-color: var(--border); }
+
+.menu-primary-list a { color: var(--black); }
+.menu-item-title     { font-style: italic; color: var(--black); letter-spacing: -0.025em; }
+.menu-item-count     { color: var(--gold); font-style: italic; }
+
+.menu-social a       { color: var(--dim); }
+.menu-social a:hover { color: var(--black); }
+.menu-copy           { color: rgba(28, 23, 20, 0.2); }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [5]  FOOTER
+   ───────────────────────────────────────────────────────────────── */
+
+footer                { background: var(--black); border-top-color: rgba(28,23,20,0.2); }
+.footer-logo          { color: var(--white); }
+.footer-col h4        { color: rgba(245,238,223,0.35); font-style: italic; }
+.footer-col a         { color: rgba(245,238,223,0.55); }
+.footer-col a:hover   { color: var(--white); }
+.footer-bottom        { border-top-color: rgba(245,238,223,0.07); }
+.footer-copy          { color: rgba(245,238,223,0.18); }
+.footer-social a      { color: rgba(245,238,223,0.3); }
+.footer-social a:hover { color: var(--white); }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   NOSSA HISTÓRIA
+   ═══════════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [6]  PAGE
+   ───────────────────────────────────────────────────────────────── */
+
+.historia-page {
+  min-height: 100vh;
+  padding-top: 148px;
+  padding-bottom: 140px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [7]  MANIFESTO
+        Título enorme itálico em tinta — presença de cartaz.
+        Em em burnt orange: palavra-chave que pulsa.
+        Corpo: voz da produtora em tinta suave.
+   ───────────────────────────────────────────────────────────────── */
 
 .historia-manifesto {
   padding: 0 var(--pad-desk);
-  margin-bottom: 140px;
+  margin-bottom: 148px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
@@ -25,30 +137,36 @@
   row-gap: 0;
 }
 
+/* Eyebrow: itálico burnt */
 .historia-manifesto__eyebrow {
   grid-column: 1 / -1;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  text-transform: none;
   color: var(--gold);
-  margin-bottom: 32px;
+  margin-bottom: 36px;
   display: block;
 }
 
+/* Título: tinta escura, peso leve, grande itálico */
 .historia-manifesto__title {
   font-family: var(--font-display);
   font-size: clamp(56px, 8vw, 112px);
   font-weight: 300;
   line-height: 0.9;
-  letter-spacing: -0.02em;
-  color: var(--white);
+  letter-spacing: -0.025em;
+  color: var(--black);
   align-self: start;
+  font-style: italic;
 }
 
+/* Em: burnt orange — palavra viva no título */
 .historia-manifesto__title em {
   font-style: italic;
-  color: rgba(240, 236, 228, 0.4);
+  color: var(--gold);
 }
 
 .historia-manifesto__body {
@@ -64,15 +182,19 @@
   font-size: 18px;
   font-weight: 300;
   line-height: 1.75;
-  color: rgba(240, 236, 228, 0.5);
+  color: rgba(28, 23, 20, 0.52);
 }
 
 
-/* ── MARCOS ── */
+/* ─────────────────────────────────────────────────────────────────
+   [8]  MARCOS
+        Timeline: anos em burnt orange grande, títulos em tinta,
+        textos em tinta suave. Bordas em areia. Hover: indent.
+   ───────────────────────────────────────────────────────────────── */
 
 .historia-marcos {
   padding: 0 var(--pad-desk);
-  margin-bottom: 140px;
+  margin-bottom: 148px;
 }
 
 .historia-marcos__list {
@@ -84,27 +206,21 @@
   display: grid;
   grid-template-columns: 120px 1fr;
   gap: 0 64px;
-  padding: 40px 0;
+  padding: 44px 0;
   border-bottom: 1px solid var(--border);
   transition: padding-left 0.4s ease;
 }
 
-.historia-marco:first-child {
-  border-top: none;
-}
+.historia-marco:first-child { border-top: none; }
+.historia-marco:last-child  { border-bottom: none; }
+.historia-marco:hover       { padding-left: 16px; }
 
-.historia-marco:last-child {
-  border-bottom: none;
-}
-
-.historia-marco:hover {
-  padding-left: 16px;
-}
-
+/* Ano: burnt orange, itálico — elemento mais chamativo da timeline */
 .historia-marco__year {
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 300;
+  font-style: italic;
   color: var(--gold);
   padding-top: 4px;
   line-height: 1;
@@ -114,7 +230,7 @@
   font-family: var(--font-display);
   font-size: 24px;
   font-weight: 300;
-  color: var(--white);
+  color: var(--black);
   margin-bottom: 12px;
   line-height: 1;
 }
@@ -123,24 +239,26 @@
   font-family: var(--font-display);
   font-size: 17px;
   font-weight: 300;
-  line-height: 1.7;
-  color: rgba(240, 236, 228, 0.45);
+  line-height: 1.72;
+  color: rgba(28, 23, 20, 0.5);
 }
 
 .historia-marco__text em {
   font-style: italic;
-  color: rgba(240, 236, 228, 0.65);
+  color: rgba(28, 23, 20, 0.72);
 }
 
 
-/* ── DIVISOR ── */
+/* ─────────────────────────────────────────────────────────────────
+   [9]  DIVISOR
+   ───────────────────────────────────────────────────────────────── */
 
 .historia-divider {
   display: flex;
   align-items: center;
   gap: 32px;
   padding: 0 var(--pad-desk);
-  margin-bottom: 120px;
+  margin-bottom: 128px;
 }
 
 .historia-divider__line {
@@ -150,22 +268,28 @@
 }
 
 .historia-divider span {
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(240, 236, 228, 0.25);
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 0.1em;
+  color: rgba(28, 23, 20, 0.28);
   white-space: nowrap;
 }
 
 
-/* ── TIME ── */
+/* ─────────────────────────────────────────────────────────────────
+   [10]  TIME / MEMBROS
+         Fotos: overlay quente (burnt) em vez de preto frio.
+         Roles em burnt orange, nomes grandes em tinta itálica,
+         bios em tinta suave.
+   ───────────────────────────────────────────────────────────────── */
 
 .historia-team {
   padding: 0 var(--pad-desk);
   display: flex;
   flex-direction: column;
   gap: 120px;
-  margin-bottom: 140px;
+  margin-bottom: 148px;
 }
 
 .historia-team__line {
@@ -181,13 +305,8 @@
   align-items: center;
 }
 
-.historia-member--reverse {
-  direction: rtl;
-}
-
-.historia-member--reverse > * {
-  direction: ltr;
-}
+.historia-member--reverse   { direction: rtl; }
+.historia-member--reverse > * { direction: ltr; }
 
 .historia-member__img-wrap {
   position: relative;
@@ -196,10 +315,11 @@
   background: var(--grey);
 }
 
+/* Fundo placeholder: substituído por parchment suave */
 .historia-member__img-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  background: linear-gradient(135deg, var(--cream) 0%, var(--sand) 100%);
 }
 
 .historia-member__img {
@@ -211,15 +331,18 @@
   transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.historia-member:hover .historia-member__img {
-  transform: scale(1.04);
-}
+.historia-member:hover .historia-member__img { transform: scale(1.04); }
 
+/* Overlay: gradiente burnt orange suave em vez de preto frio */
 .historia-member__img-wrap::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10,10,10,0.6) 0%, transparent 60%);
+  background: linear-gradient(
+    to top,
+    rgba(200, 59, 24, 0.35) 0%,
+    transparent 60%
+  );
   pointer-events: none;
 }
 
@@ -228,23 +351,26 @@
   flex-direction: column;
 }
 
+/* Role: burnt orange maiúsculo */
 .historia-member__role {
   font-size: 9px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   display: block;
 }
 
+/* Nome: itálico tinta grande */
 .historia-member__name {
   font-family: var(--font-display);
   font-size: clamp(36px, 4vw, 64px);
   font-weight: 300;
+  font-style: italic;
   line-height: 0.95;
-  color: var(--white);
+  color: var(--black);
   margin-bottom: 32px;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .historia-member__bio {
@@ -252,26 +378,28 @@
   font-size: 18px;
   font-weight: 300;
   line-height: 1.75;
-  color: rgba(240, 236, 228, 0.5);
+  color: rgba(28, 23, 20, 0.52);
 }
 
 .historia-member__bio em {
   font-style: italic;
-  color: rgba(240, 236, 228, 0.7);
+  color: rgba(28, 23, 20, 0.75);
 }
 
 
-/* ── PARCEIROS ── */
+/* ─────────────────────────────────────────────────────────────────
+   [11]  PARCEIROS
+         Grid claro com texto em tinta suave. Hover: tinta plena.
+   ───────────────────────────────────────────────────────────────── */
 
-.historia-parceiros {
-  padding: 0 var(--pad-desk);
-}
+.historia-parceiros { padding: 0 var(--pad-desk); }
 
 .historia-parceiros__header span {
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(240, 236, 228, 0.25);
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 0.1em;
+  color: rgba(28, 23, 20, 0.3);
   white-space: nowrap;
 }
 
@@ -283,39 +411,40 @@
 }
 
 .historia-parceiro {
-  background: var(--black);
+  background: var(--white);
   padding: 40px;
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 300;
-  color: rgba(240, 236, 228, 0.25);
-  letter-spacing: 0.02em;
-  transition: color 0.3s;
+  font-style: italic;
+  color: rgba(28, 23, 20, 0.28);
+  letter-spacing: 0.01em;
+  transition: color 0.3s, background 0.3s;
 }
 
 .historia-parceiro:hover {
-  color: rgba(240, 236, 228, 0.7);
+  color: var(--black);
+  background: var(--cream);
 }
 
 
-/* ── RESPONSIVE ── */
+/* ─────────────────────────────────────────────────────────────────
+   [12]  RESPONSIVE
+   ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 1024px) {
-  .historia-valores__grid     { grid-template-columns: 1fr 1fr; }
-  .historia-parceiros__grid   { grid-template-columns: 1fr 1fr; }
-  .historia-member            { gap: 48px; }
+  .historia-parceiros__grid { grid-template-columns: 1fr 1fr; }
+  .historia-member          { gap: 48px; }
 }
 
 @media (max-width: 768px) {
-  .historia-page              { padding-top: 100px; padding-bottom: 80px; }
-  .historia-manifesto         { padding: 0 var(--pad-mob); margin-bottom: 80px; grid-template-columns: 1fr; row-gap: 40px; }
+  .historia-page              { padding-top: 108px; padding-bottom: 96px; }
+  .historia-manifesto         { padding: 0 var(--pad-mob); margin-bottom: 96px; grid-template-columns: 1fr; row-gap: 40px; }
   .historia-manifesto__title  { font-size: clamp(48px, 10vw, 80px); }
-  .historia-valores           { padding: 0 var(--pad-mob); margin-bottom: 80px; }
-  .historia-valores__grid     { grid-template-columns: 1fr; }
-  .historia-marcos            { padding: 0 var(--pad-mob); margin-bottom: 80px; }
+  .historia-marcos            { padding: 0 var(--pad-mob); margin-bottom: 96px; }
   .historia-marco             { grid-template-columns: 72px 1fr; gap: 0 24px; }
   .historia-divider           { padding: 0 var(--pad-mob); margin-bottom: 80px; }
-  .historia-team              { padding: 0 var(--pad-mob); gap: 80px; margin-bottom: 80px; }
+  .historia-team              { padding: 0 var(--pad-mob); gap: 80px; margin-bottom: 96px; }
   .historia-member            { grid-template-columns: 1fr; gap: 32px; }
   .historia-member--reverse   { direction: ltr; }
   .historia-member__img-wrap  { aspect-ratio: 4 / 3; }
