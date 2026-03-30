@@ -29,30 +29,52 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     </div>`;
 
 
+  /* ── PALETA HOVER DOS CARDS ── */
+  const cardPalette = ['#c9a84c', '#c4622d', '#6b8f71', '#8b1a1a'];
+  let cardColorIdx = -1;
+
+  function attachCardHovers() {
+    document.querySelectorAll('.film-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        cardColorIdx = (cardColorIdx + 1) % cardPalette.length;
+        const color = cardPalette[cardColorIdx];
+        card.style.boxShadow = `inset 4px 0 0 ${color}`;
+        card.querySelector('.film-card__title').style.color = color;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.boxShadow = '';
+        card.querySelector('.film-card__title').style.color = '';
+      });
+    });
+  }
+
   /* ── CRIA CARD ── */
   function createCard(film, index) {
-    const wide = film.size === 'wide' ? 'card--wide' : '';
-    const tall = film.rows === 2      ? 'card--tall' : '';
+    const wide  = film.size === 'wide' ? 'card--wide' : '';
+    const tall  = film.rows === 2      ? 'card--tall' : '';
     const title = i18next.language === 'en' && film.titleEn ? film.titleEn : film.title;
 
     return `
-      <a href="filme.html?i=${index}" class="film-card ${wide} ${tall} card--${film.ratio}">      <div class="film-card__img">
+      <a href="filme.html?i=${index}" class="film-card ${wide} ${tall} card--${film.ratio}">
+        <div class="film-card__img">
           ${placeholder}
           <img class="img-portrait"
-              src="${film.imgPortrait}"
-              alt="${title}"
-              onerror="this.style.display='none'">
+               src="${film.imgPortrait}"
+               alt="${title}"
+               onerror="this.style.display='none'">
           <img class="img-landscape"
-              src="${film.imgLandscape}"
-              alt="${title}"
-              onerror="this.style.display='none'">
+               src="${film.imgLandscape}"
+               alt="${title}"
+               onerror="this.style.display='none'">
         </div>
         <div class="film-card__info">
-          <span class="film-card__year">${film.year}</span>
           <div class="film-card__title">${title}</div>
-          <div class="film-card__dir">Dir. ${film.director}</div>
+          <div class="film-card__meta">
+            <div class="film-card__dir">Dir. ${film.director}</div>
+            <span class="film-card__year">${film.year}</span>
+          </div>
         </div>
-      </div>`;
+      </a>`;
   }
 
   /* ── RENDERIZA GRID (com ordenação) ── */
@@ -73,19 +95,14 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       });
     }
 
-    const patterns = [
-      { size: 'wide', ratio: 'l', rows: 1 },
-      { size: '',     ratio: 'p', rows: 1 },
-      { size: '',     ratio: 'p', rows: 1 },
-      { size: '',     ratio: 'l', rows: 1 },
-      { size: '',     ratio: 'p', rows: 1 },
-    ];
-
-    document.querySelector('.films-grid').innerHTML = sorted.map((film, index) => {
-      const pattern       = patterns[index % patterns.length];
+    document.querySelector('.films-grid').innerHTML = sorted.map((film, i) => {
+      const pattern       = i === 0 ? { size: 'wide', ratio: 'l', rows: 1 }
+                                    : { size: '',     ratio: 'p', rows: 1 };
       const originalIndex = films.indexOf(film);
       return createCard({ ...film, ...pattern }, originalIndex);
     }).join('');
+
+    attachCardHovers();
   }
 
 
