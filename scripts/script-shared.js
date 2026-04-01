@@ -4,30 +4,6 @@
    Depende de: i18next (carregado antes no HTML)
    ============================================================ */
 
-/* ── CURSOR CUSTOMIZADO (só existe no index.html) ── */
-const cursor     = document.getElementById('cursor');
-const cursorRing = document.getElementById('cursorRing');
-
-if (cursor && cursorRing) {
-  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top  = mouseY + 'px';
-  });
-
-  (function animRing() {
-    ringX += (mouseX - ringX) * 0.12;
-    ringY += (mouseY - ringY) * 0.12;
-    cursorRing.style.left = ringX + 'px';
-    cursorRing.style.top  = ringY + 'px';
-    requestAnimationFrame(animRing);
-  })();
-}
-
-
 /* ── MENU TOGGLE ── */
 const menuBtn     = document.getElementById('menuBtn');
 const menuOverlay = document.getElementById('menuOverlay');

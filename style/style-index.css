@@ -55,19 +55,6 @@ header {
 .hamburger span      { background: var(--black); }
 .header-link         { color: var(--black); transition: color 0.35s ease; }
 
-/* Cursor: difference — auto-adapta em fundos claros E escuros (CTA, footer) */
-.cursor {
-  background: var(--white);
-  mix-blend-mode: difference;
-}
-.cursor-ring { border-color: rgba(245, 238, 223, 0.45); }
-
-@media (hover: hover) and (pointer: fine) {
-  body:has(a:hover) .cursor-ring,
-  body:has(button:hover) .cursor-ring {
-    border-color: rgba(245, 238, 223, 0.7);
-  }
-}
 
 
 /* ─────────────────────────────────────────────────────────────────
@@ -172,7 +159,7 @@ footer {
 .hero {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
@@ -196,12 +183,12 @@ footer {
 
 .hero-slide.active { opacity: 1; }
 
-/* Grain reforçado — textura artesanal de película */
+/* Grain: pseudo-elemento fixo para evitar repaint no scroll */
 .hero-grain {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
-  opacity: 0.65;
+  opacity: 0.45;
   pointer-events: none;
   z-index: 2;
 }
@@ -245,7 +232,7 @@ footer {
   margin-bottom: 20px;
   opacity: 0;
   transform: translateY(20px);
-  animation: fadeUp 0.8s ease 0.5s forwards;
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
 }
 
 /* Título do hero: maior e mais impactante */
@@ -259,7 +246,7 @@ footer {
   color: var(--white);
   opacity: 0;
   transform: translateY(30px);
-  animation: fadeUp 1s ease 0.7s forwards;
+  animation: fadeUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
 }
 
 .hero-title em { font-style: italic; font-weight: 300; }
@@ -269,12 +256,12 @@ footer {
   letter-spacing: 0.14em;
   color: rgba(245, 238, 223, 0.5);
   opacity: 0;
-  animation: fadeUp 0.8s ease 1s forwards;
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.85s forwards;
 }
 
 .hero-cta {
   opacity: 0;
-  animation: fadeUp 0.8s ease 1.2s forwards;
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.05s forwards;
 }
 
 /* Botão do hero: borda parchment, hover burnt orange */
@@ -307,8 +294,8 @@ footer {
   height: 2px;
   border-radius: 1px;
   background: rgba(245, 238, 223, 0.2);
-  cursor: none;
-  transition: background 0.3s, width 0.4s ease, transform 0.3s;
+  cursor: pointer;
+  transition: background 0.3s, width 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s;
 }
 
 .hero-dot.active {
@@ -327,7 +314,7 @@ footer {
   align-items: center;
   gap: 10px;
   opacity: 0;
-  animation: fadeUp 0.8s ease 1.6s forwards;
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.4s forwards;
 }
 
 .hero-scroll-hint span {
@@ -355,17 +342,19 @@ footer {
          a sub-info e o link para história — como um rodapé editorial.
    ───────────────────────────────────────────────────────────────── */
 
+/* ─────────────────────────────────────────────────────────────────
+   IDENTIDADE
+   ───────────────────────────────────────────────────────────────── */
+
 .section-identity {
-  background: var(--white);
-  padding: 128px var(--pad-desk) 120px;
-  border-top: 1px solid var(--border);
+  background: var(--black);
+  padding: 120px var(--pad-desk);
 }
 
 .identity-inner {
-  max-width: 1100px;
+  max-width: 800px;
 }
 
-/* Frase manifesto: a maior tipografia editorial da página */
 .identity-tagline {
   font-family: var(--font-display);
   font-size: clamp(42px, 6.5vw, 88px);
@@ -373,17 +362,17 @@ footer {
   font-style: italic;
   line-height: 1.0;
   letter-spacing: -0.03em;
-  color: var(--black);
-  margin-bottom: 48px;
+  color: #f5eedf;
+  margin-bottom: 36px;
 }
 
-/* Rodapé da identidade: info de um lado, link do outro */
 .identity-foot {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  border-top: 1px solid var(--border);
-  padding-top: 20px;
+  border-top: 1px solid rgba(245, 238, 223, 0.15);
+  padding-top: 18px;
+  max-width: 560px;
 }
 
 .identity-sub {
@@ -391,7 +380,7 @@ footer {
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--acid);
 }
 
 .identity-link {
@@ -399,16 +388,16 @@ footer {
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(28, 23, 20, 0.38);
+  color: rgba(245, 238, 223, 0.45);
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .identity-link::after {
   content: ' →';
 }
 
-.identity-link:hover { color: var(--black); }
+.identity-link:hover { color: #f5eedf; }
 
 
 /* ─────────────────────────────────────────────────────────────────
@@ -674,10 +663,14 @@ footer {
   padding: 0 var(--pad-desk);
 }
 
+@media (max-width: 767px) {
+  .preview-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 .preview-card {
   position: relative;
   overflow: hidden;
-  cursor: none;
+  cursor: pointer;
   aspect-ratio: 2/3;
 }
 
@@ -704,6 +697,7 @@ footer {
 }
 
 .preview-card:hover .preview-card__bg { transform: scale(1.07); }
+.preview-card:active .preview-card__bg { transform: scale(1.02); }
 
 /* Overlay padrão: escuro suave */
 .preview-card__overlay {
@@ -713,15 +707,6 @@ footer {
   transition: background 0.5s ease;
 }
 
-/* Hover: overlay passa a ter toque burnt orange — marca visual da produtora */
-.preview-card:hover .preview-card__overlay {
-  background: linear-gradient(
-    to top,
-    rgba(200, 59, 24, 0.82) 0%,
-    rgba(28, 23, 20, 0.5) 60%,
-    transparent 100%
-  );
-}
 
 .preview-card__info {
   position: absolute;
@@ -809,8 +794,8 @@ footer {
 
 .upcoming-item {
   border-top: 1px solid rgba(28, 23, 20, 0.1);
-  cursor: none;
-  transition: background 0.35s ease;
+  cursor: pointer;
+  transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Hover da linha: micro-feedback burnt */
@@ -946,15 +931,19 @@ footer {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
-  cursor: none;
-  transition: background 0.3s, gap 0.3s;
+  cursor: pointer;
+  transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              gap 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-cta:hover {
-  background: var(--white);   /* parchment no hover — suaviza o ácido */
+  background: var(--white);
 }
 
-.btn-cta svg            { transition: transform 0.3s; }
+.btn-cta:active { transform: translateY(1px) scale(0.99); }
+
+.btn-cta svg            { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
 .btn-cta:hover svg      { transform: translateX(5px); }
 
 
@@ -977,12 +966,16 @@ footer {
   color: var(--black);
   text-decoration: none;
   background: none;
-  cursor: none;
-  transition: border-color 0.3s, background 0.3s, color 0.3s;
+  cursor: pointer;
+  transition: border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-outline:hover { border-color: var(--black); }
-.btn-outline svg   { transition: transform 0.3s; }
+.btn-outline:active { transform: translateY(1px); }
+.btn-outline svg   { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
 .btn-outline:hover svg { transform: translateX(5px); }
 
 
@@ -1027,7 +1020,7 @@ footer {
    ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
-  .section-identity           { padding: 80px var(--pad-mob) 72px; }
+  .section-identity           { padding: 80px var(--pad-mob); }
   .identity-tagline           { font-size: clamp(36px, 9vw, 56px); margin-bottom: 36px; }
   .identity-foot              { flex-direction: column; gap: 16px; }
 

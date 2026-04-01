@@ -90,6 +90,22 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         </a>`;
     }).join('');
 
+    const previewPalette = ['#c9a84c', '#c4622d', '#6b8f71', '#8b1a1a'];
+    let previewColorIdx = -1;
+
+    document.querySelectorAll('.preview-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        previewColorIdx = (previewColorIdx + 1) % previewPalette.length;
+        const color = previewPalette[previewColorIdx];
+        card.style.outline = `3px solid ${color}`;
+        card.querySelector('.preview-card__title').style.color = color;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.outline = '';
+        card.querySelector('.preview-card__title').style.color = '';
+      });
+    });
+
     observeReveal();
   }
 
@@ -140,11 +156,23 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
   }
 
 
+  /* ── IDENTITY (tagline + sub do index, editáveis via admin) ── */
+  function renderIdentity() {
+    const lang = i18next.language;
+    const m = historiaData.manifesto;
+    if (!m) return;
+    const tagline = document.querySelector('.identity-tagline');
+    const sub     = document.querySelector('.identity-sub');
+    if (tagline) tagline.textContent = lang === 'en' ? m.identityStatementEn : m.identityStatement;
+    if (sub)     sub.textContent     = lang === 'en' ? m.manifestoSubEn      : m.manifestoSub;
+  }
+
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
   window.updateDOM = function() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       el.textContent = i18next.t(el.getAttribute('data-i18n'));
     });
+    renderIdentity();
     renderPreview();
     renderUpcoming();
     goToSlide(currentSlide);
@@ -158,7 +186,6 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         pt: {
           translation: {
             'nav.portfolio':          'Portfólio',
-            'identity.statement':     'Fazemos filmes que precisam existir.',
             'identity.link':          'Nossa história',
             'cta.eyebrow':            'Contato',
             'cta.title':              'Tem uma história que precisa ser contada?',
@@ -169,7 +196,6 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
             'hero.scroll':            'Scroll',
             'featured.eyebrow':       'Último lançamento',
             'featured.more':          'Saiba mais',
-            'manifesto.sub':          'Fundada em 2018 · Rio de Janeiro',
             'grid.title':             'Produções recentes',
             'grid.all':               'Ver todas',
             'upcoming.title':         'Vem aí',
@@ -194,7 +220,6 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         en: {
           translation: {
             'nav.portfolio':          'Portfolio',
-            'identity.statement':     'We make films that need to exist.',
             'identity.link':          'Our story',
             'cta.eyebrow':            'Contact',
             'cta.title':              'Got a story that needs to be told?',
@@ -205,7 +230,6 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
             'hero.scroll':            'Scroll',
             'featured.eyebrow':       'Latest release',
             'featured.more':          'Learn more',
-            'manifesto.sub':          'Founded in 2018 · Rio de Janeiro',
             'grid.title':             'Recent productions',
             'grid.all':               'View all',
             'upcoming.title':         'Coming soon',
@@ -230,6 +254,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       }
     }, () => {
       goToSlide(0);
+      renderIdentity();
       renderPreview();
       renderUpcoming();
       observeReveal();

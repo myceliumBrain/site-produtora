@@ -12,7 +12,7 @@
 }
 
 :root {
-  --black:        #0a0a0a;
+  --black:        #0d0b09;
   --white:        #f0ece4;
   --cream:        #e8e0d0;
   --gold:         #c9a84c;
@@ -45,50 +45,6 @@ a {
   text-decoration: none;
 }
 
-/* ── CUSTOM CURSOR ──
-   (hover: hover) + (pointer: fine) detecta mouse real,
-   independente do tamanho da tela. Funciona em PCs com
-   tela pequena e não aparece em dispositivos touch. ── */
-
-.cursor, .cursor-ring { display: none; }
-
-@media (hover: hover) and (pointer: fine) {
-  body      { cursor: none; }
-  a, button { cursor: none; }
-
-  .cursor {
-    display: block;
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    background: var(--white);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
-    mix-blend-mode: difference;
-  }
-
-  .cursor-ring {
-    display: block;
-    position: fixed;
-    width: 36px;
-    height: 36px;
-    border: 1px solid rgba(240, 236, 228, 0.5);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
-  }
-
-  body:has(a:hover) .cursor-ring,
-  body:has(button:hover) .cursor-ring {
-    width: 60px;
-    height: 60px;
-  }
-}
 
 
 /* ── HEADER ── */
@@ -101,10 +57,8 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 28px var(--pad-desk);
-  background-color: #0a0a0a;
-  transition: transform 0.3s ease; /* Smooth transition*/
-  
-
+  background-color: var(--black);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* This class will be added by JavaScript when scrolling down */
@@ -125,12 +79,14 @@ header {
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  cursor: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 14px;
-  transition: color 0.35s ease;
+  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+.logo-btn:active { transform: scale(0.97); }
 
 .hamburger {
   display: flex;
@@ -167,9 +123,13 @@ header {
   background: none;
   border: 1px solid transparent;
   padding: 4px 10px;
-  cursor: none;
-  transition: color 0.35s ease, border-color 0.35s ease, font-weight 0.1s ease;
+  cursor: pointer;
+  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+.header-link:active { transform: translateY(1px); }
 
 
 /* ── MENU OVERLAY ── */
@@ -303,6 +263,8 @@ header {
 .reveal-delay-1    { transition-delay: 0.1s; }
 .reveal-delay-2    { transition-delay: 0.2s; }
 .reveal-delay-3    { transition-delay: 0.3s; }
+.reveal-delay-4    { transition-delay: 0.45s; }
+.reveal-delay-5    { transition-delay: 0.6s; }
 
 
 /* ── KEYFRAMES ── */

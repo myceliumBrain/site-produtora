@@ -56,22 +56,6 @@ header {
 .header-link       { color: var(--white); transition: color 0.35s ease; }
 
 
-/* ─────────────────────────────────────────────────────────────────
-   [3]  CURSOR
-   ───────────────────────────────────────────────────────────────── */
-
-.cursor {
-  background: var(--white);        /* branco sobre hero escuro */
-  mix-blend-mode: difference;
-}
-.cursor-ring { border-color: rgba(245, 238, 223, 0.4); }
-
-@media (hover: hover) and (pointer: fine) {
-  body:has(a:hover) .cursor-ring,
-  body:has(button:hover) .cursor-ring {
-    border-color: var(--gold);
-  }
-}
 
 
 /* ─────────────────────────────────────────────────────────────────

@@ -551,6 +551,13 @@ function renderManifesto() {
       <div class="field full"><label>Parágrafo 1 EN</label><textarea id="m-p1En">${esc(m.p1En)}</textarea></div>
       <div class="field full"><label>Parágrafo 2 PT</label><textarea id="m-p2">${esc(m.p2)}</textarea></div>
       <div class="field full"><label>Parágrafo 2 EN</label><textarea id="m-p2En">${esc(m.p2En)}</textarea></div>
+    </div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Tagline do índice (section-identity)</span></div>
+    <div class="fields-grid">
+      <div class="field full"><label>Frase principal PT</label><input id="m-identityStatement"   value="${esc(m.identityStatement)}"></div>
+      <div class="field full"><label>Frase principal EN</label><input id="m-identityStatementEn" value="${esc(m.identityStatementEn)}"></div>
+      <div class="field"><label>Subtítulo PT</label><input id="m-manifestoSub"   value="${esc(m.manifestoSub)}"></div>
+      <div class="field"><label>Subtítulo EN</label><input id="m-manifestoSubEn" value="${esc(m.manifestoSubEn)}"></div>
     </div>`;
 }
 
@@ -748,7 +755,8 @@ function collectAll() {
     if (!data.upcomingFilms[i]) return;
     data.upcomingFilms[i][key] = el.value;
   });
-  ['eyebrow','eyebrowEn','title1','title1En','title2','title2En','p1','p1En','p2','p2En']
+  ['eyebrow','eyebrowEn','title1','title1En','title2','title2En','p1','p1En','p2','p2En',
+   'identityStatement','identityStatementEn','manifestoSub','manifestoSubEn']
     .forEach(f => {
       const el = document.getElementById('m-' + f);
       if (el) data.historiaData.manifesto[f] = el.value;

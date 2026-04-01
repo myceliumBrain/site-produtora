@@ -38,11 +38,11 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       card.addEventListener('mouseenter', () => {
         cardColorIdx = (cardColorIdx + 1) % cardPalette.length;
         const color = cardPalette[cardColorIdx];
-        card.style.boxShadow = `inset 4px 0 0 ${color}`;
+        card.style.outline = `3px solid ${color}`;
         card.querySelector('.film-card__title').style.color = color;
       });
       card.addEventListener('mouseleave', () => {
-        card.style.boxShadow = '';
+        card.style.outline = '';
         card.querySelector('.film-card__title').style.color = '';
       });
     });
