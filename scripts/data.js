@@ -10,9 +10,10 @@
 
 /* Promessa global resolvida quando os dados estiverem prontos.
    Os scripts de página devem aguardar: await dataReady          */
-let films         = [];
-let upcomingFilms = [];
-let historiaData  = {};
+let films            = [];
+let upcomingFilms    = [];
+let historiaData     = {};
+let otherProductions = [];
 
 const dataReady = fetch('scripts/data.json')
   .then(res => {
@@ -20,9 +21,10 @@ const dataReady = fetch('scripts/data.json')
     return res.json();
   })
   .then(json => {
-    films         = json.films;
-    upcomingFilms = json.upcomingFilms;
-    historiaData  = json.historiaData;
+    films            = json.films;
+    upcomingFilms    = json.upcomingFilms;
+    historiaData     = json.historiaData;
+    otherProductions = json.otherProductions || [];
   })
   .catch(err => {
     console.error('[000 filmes] Falha ao carregar dados:', err);

@@ -300,3 +300,116 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   text-transform: uppercase;
   color: var(--acid);
 }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [10]  DIVIDER — Outras Produções
+   ───────────────────────────────────────────────────────────────── */
+
+.other-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 48px var(--pad-desk) 32px;
+}
+
+@media (max-width: 767px) {
+  .other-divider { padding: 36px var(--pad-mob) 24px; }
+}
+
+.other-divider__line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.other-divider__label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   [11]  OTHER PRODUCTIONS GRID
+   ───────────────────────────────────────────────────────────────── */
+
+.other-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  background: var(--white);
+  padding: 0 var(--pad-desk) 48px;
+}
+
+@media (max-width: 1024px) { .other-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 700px)  { .other-grid { grid-template-columns: repeat(3, 1fr); padding: 0 var(--pad-mob) 36px; } }
+
+.other-card {
+  background: #0d0b09;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: default;
+}
+
+.other-card__img {
+  position: relative;
+  overflow: hidden;
+  background: #1a1512;
+  aspect-ratio: 2 / 3;
+}
+
+.other-card__img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.other-card__img .film-card__placeholder svg { opacity: 0.04; }
+
+.other-card__info {
+  padding: 8px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #0d0b09;
+}
+
+.other-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(11px, 1.2vw, 15px);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--white);
+}
+
+.other-card__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  padding-top: 4px;
+  border-top: 1px solid rgba(245, 238, 223, 0.06);
+}
+
+.other-card__dir {
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245, 238, 223, 0.3);
+}
+
+.other-card__year {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--acid);
+}

@@ -284,6 +284,7 @@ function showPanel(name) {
 ══════════════════════════════════════════════════════════ */
 function renderAll() {
   renderFilms();
+  renderOtherProductions();
   renderUpcoming();
   renderManifesto();
   renderMarcos();
@@ -330,11 +331,12 @@ function saveCard(type, i) {
   collectAll();
 
   // Re-renderiza o painel para refletir mudanças no header (título, ano, etc.)
-  const renderMap = { film: renderFilms, upcoming: renderUpcoming, marco: renderMarcos, team: renderTeam };
+  const renderMap = { film: renderFilms, other: renderOtherProductions, upcoming: renderUpcoming, marco: renderMarcos, team: renderTeam };
   if (renderMap[type]) renderMap[type]();
 
   // Reabre o card que estava sendo editado após a re-renderização
-  const card = document.getElementById(`${type}-card-${i}`);
+  const cardId = type === 'other' ? `other-card-${i}` : `${type}-card-${i}`;
+  const card = document.getElementById(cardId);
   if (card) card.classList.add('open');
 
   toast('Visual atualizado — clique em “Salvar no GitHub” para confirmar.', 'ok');
@@ -463,9 +465,68 @@ function addFilm() {
 }
 
 function removeFilm(i) {
-  if (!confirm(`Remover "${data.films[i].title || 'este filme'}"?`)) return;
+  if (!confirm(`Remover "${data.films[i].title || 'esta produção'}"?`)) return;
   data.films.splice(i, 1);
   renderFilms();
+}
+
+/* ══════════════════════════════════════════════════════════
+   OTHER PRODUCTIONS
+══════════════════════════════════════════════════════════ */
+function renderOtherProductions() {
+  const items = data.otherProductions || [];
+  document.getElementById('otherPanelCount').textContent = items.length + ' itens';
+  document.getElementById('otherProductionsList').innerHTML = items.map((f, i) => `
+    <div class="card" id="other-card-${i}">
+      <div class="card-header" onclick="toggleCard('other-card-${i}')">
+        <div class="card-header-left">
+          ${reorderBtns(i, items.length,
+            `event.stopPropagation(); moveOtherProduction(${i}, ${i-1})`,
+            `event.stopPropagation(); moveOtherProduction(${i}, ${i+1})`
+          )}
+          <span class="card-num">${String(i+1).padStart(2,'0')}</span>
+          <span class="card-name">${f.title || '(sem título)'}</span>
+          <span class="card-meta">${f.year||''} · ${f.genre||''}</span>
+        </div>
+        <span class="card-chevron">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="fields-grid">
+          <div class="field"><label>Título PT</label><input data-other="${i}" data-key="title" value="${esc(f.title)}"></div>
+          <div class="field"><label>Título EN</label><input data-other="${i}" data-key="titleEn" value="${esc(f.titleEn)}"></div>
+          <div class="field"><label>Diretor</label><input data-other="${i}" data-key="director" value="${esc(f.director)}"></div>
+          <div class="field"><label>Ano</label><input data-other="${i}" data-key="year" value="${esc(f.year)}"></div>
+          <div class="field full"><label>Gênero</label><input data-other="${i}" data-key="genre" value="${esc(f.genre)}"></div>
+          <div class="field full"><label>Sinopse PT</label><textarea data-other="${i}" data-key="synopsis">${esc(f.synopsis)}</textarea></div>
+          <div class="field full"><label>Sinopse EN</label><textarea data-other="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
+          <div class="field full"><label>Imagem retrato (URL)</label><input data-other="${i}" data-key="imgPortrait" value="${esc(f.imgPortrait)}"></div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-danger btn-small" onclick="removeOtherProduction(${i})">Remover</button>
+          <button class="btn btn-primary btn-small" onclick="saveCard('other',${i})">Salvar</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function moveOtherProduction(fromIdx, toIdx) {
+  moveItem(data.otherProductions, fromIdx, toIdx, renderOtherProductions);
+}
+
+function addOtherProduction() {
+  if (!data.otherProductions) data.otherProductions = [];
+  data.otherProductions.push({ title:'', titleEn:'', director:'', year:'', genre:'',
+    synopsis:'', synopsisEn:'', imgPortrait:'' });
+  renderOtherProductions();
+  const idx = data.otherProductions.length - 1;
+  toggleCard(`other-card-${idx}`);
+  document.getElementById(`other-card-${idx}`).scrollIntoView({ behavior:'smooth' });
+}
+
+function removeOtherProduction(i) {
+  if (!confirm(`Remover "${data.otherProductions[i].title || 'esta produção'}"?`)) return;
+  data.otherProductions.splice(i, 1);
+  renderOtherProductions();
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -749,6 +810,11 @@ function collectAll() {
     const i = +el.dataset.film, key = el.dataset.key;
     if (!data.films[i]) return;
     data.films[i][key] = el.type === 'checkbox' ? el.checked : el.value;
+  });
+  document.querySelectorAll('[data-other]').forEach(el => {
+    const i = +el.dataset.other, key = el.dataset.key;
+    if (!data.otherProductions || !data.otherProductions[i]) return;
+    data.otherProductions[i][key] = el.value;
   });
   document.querySelectorAll('[data-upcoming]').forEach(el => {
     const i = +el.dataset.upcoming, key = el.dataset.key;

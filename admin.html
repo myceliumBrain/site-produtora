@@ -68,7 +68,7 @@
       <!-- SIDEBAR -->
       <aside class="adm-sidebar">
         <span class="sidebar-section">Catálogo</span>
-        <button class="nav-btn active" onclick="showPanel('films')">Filmes <span id="filmsCount"></span></button>
+        <button class="nav-btn active" onclick="showPanel('films')">Produções <span id="filmsCount"></span></button>
         <button class="nav-btn" onclick="showPanel('upcoming')">Em produção <span id="upcomingCount"></span></button>
         <span class="sidebar-section">Institucional</span>
         <button class="nav-btn" onclick="showPanel('manifesto')">Manifesto</button>
@@ -84,11 +84,19 @@
 
         <div class="section-panel active" id="panel-films">
           <div class="panel-header">
-            <span class="panel-title">Filmes</span>
+            <span class="panel-title">Produções</span>
             <span class="panel-count" id="filmsPanelCount"></span>
           </div>
           <div id="filmsList"></div>
-          <button class="add-btn" onclick="addFilm()">+ adicionar filme</button>
+          <button class="add-btn" onclick="addFilm()">+ adicionar produção</button>
+
+          <!-- ── OUTRAS PRODUÇÕES ── -->
+          <div class="panel-header" style="margin-top:2.5rem">
+            <span class="panel-title" style="font-size:16px">Outras Produções</span>
+            <span class="panel-count" id="otherPanelCount"></span>
+          </div>
+          <div id="otherProductionsList"></div>
+          <button class="add-btn" onclick="addOtherProduction()">+ adicionar outra produção</button>
         </div>
 
         <div class="section-panel" id="panel-upcoming">

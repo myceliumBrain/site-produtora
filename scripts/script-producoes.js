@@ -109,6 +109,38 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
 
 
+  /* ── CRIA CARD PEQUENO (outras produções) ── */
+  function createSmallCard(prod, index) {
+    const title = i18next.language === 'en' && prod.titleEn ? prod.titleEn : prod.title;
+    return `
+      <div class="other-card">
+        <div class="other-card__img">
+          ${placeholder}
+          <img src="${prod.imgPortrait || ''}" alt="${title}" onerror="this.style.display='none'">
+        </div>
+        <div class="other-card__info">
+          <div class="other-card__title">${title}</div>
+          <div class="other-card__meta">
+            <span class="other-card__dir">Dir. ${prod.director || ''}</span>
+            <span class="other-card__year">${prod.year || ''}</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  /* ── RENDERIZA OUTRAS PRODUÇÕES ── */
+  function renderOtherGrid() {
+    const divider = document.getElementById('otherDivider');
+    const grid    = document.getElementById('otherGrid');
+    if (!otherProductions || otherProductions.length === 0) {
+      divider.style.display = 'none';
+      grid.innerHTML = '';
+      return;
+    }
+    divider.style.display = 'flex';
+    grid.innerHTML = otherProductions.map((prod, i) => createSmallCard(prod, i)).join('');
+  }
+
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
   window.updateDOM = function() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -119,6 +151,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     const activeSort = document.querySelector('.sort-btn.active');
     const mode = activeSort ? activeSort.getAttribute('data-sort') : 'relevance';
     renderGrid(mode);
+    renderOtherGrid();
   }
 
 
@@ -170,6 +203,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       }
     }
   }, () => {
-    renderGrid(); // renderiza o grid logo após o i18next estar pronto
+    renderGrid();      // renderiza o grid logo após o i18next estar pronto
+    renderOtherGrid(); // renderiza outras produções
   });
 });
