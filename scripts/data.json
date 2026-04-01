@@ -103,19 +103,6 @@
       "tags": [],
       "imgPortrait": "",
       "imgLandscape": ""
-    },
-    {
-      "title": "",
-      "titleEn": "",
-      "director": "",
-      "year": "",
-      "genre": "Drama",
-      "hero": false,
-      "synopsis": "",
-      "synopsisEn": "",
-      "tags": [],
-      "imgPortrait": "",
-      "imgLandscape": ""
     }
   ],
   "upcomingFilms": [
@@ -267,5 +254,46 @@
       }
     ]
   },
-  "otherProductions": []
+  "otherProductions": [
+    {
+      "title": "A Ordem do Mundo",
+      "titleEn": "A Ordem do Mundo",
+      "director": "Aderbal Freire Filho",
+      "year": "",
+      "genre": "",
+      "synopsis": "Monólogo de Drica Moraes, no papel da responsável por organizar todos os fatos que ocorrem no planeta, catalogando e arquivando recortes de manchetes e notícias. Texto de Patrícia Melo e direção de Aderbal Freire Filho.",
+      "synopsisEn": "A monologue by Drica Moraes, in the role of the person responsible for organizing all the events that occur on the planet, cataloging and archiving clippings of headlines and news. Text by Patrícia Melo and directed by Aderbal Freire Filho.",
+      "imgPortrait": ""
+    },
+    {
+      "title": "Confronto",
+      "titleEn": "Confronto",
+      "director": "",
+      "year": "",
+      "genre": "",
+      "synopsis": "Livre adaptação teatral de Domingos Oliveira do livro \"Elite da Tropa\", de Luiz Eduardo Soares.",
+      "synopsisEn": "A free theatrical adaptation by Domingos Oliveira of the book \"Elite da Tropa\" by Luiz Eduardo Soares.",
+      "imgPortrait": ""
+    },
+    {
+      "title": "Castelos de Areia",
+      "titleEn": "Castelos de Areia",
+      "director": "",
+      "year": "",
+      "genre": "",
+      "synopsis": "Exposição da artista visual, crítica de arte e escritora Katia Canton. Com curadoria de Adriana Rede e expografia de José Marton, a mostra reúne mais de 80 obras que tratam de sonhos e desejos, da impermanência da vida e da potência do imponderável.",
+      "synopsisEn": "Exhibition by visual artist, art critic, and writer Katia Canton. Curated by Adriana Rede and with exhibition design by José Marton, the show brings together more than 80 works that deal with dreams and desires, the impermanence of life, and the power of the imponderable.",
+      "imgPortrait": ""
+    },
+    {
+      "title": "O Trem da História",
+      "titleEn": "O Trem da História",
+      "director": "",
+      "year": "",
+      "genre": "",
+      "synopsis": "Uma exposição interativa voltada para crianças e adolescentes. A mostra revela diversos períodos da história da arte através da réplica de obras importantes, que se encontram nos principais museus do país.",
+      "synopsisEn": "An interactive exhibition aimed at children and teenagers. The show reveals various periods in art history through replicas of important works found in the country's main museums.",
+      "imgPortrait": ""
+    }
+  ]
 }
