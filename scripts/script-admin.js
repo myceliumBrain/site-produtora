@@ -991,10 +991,15 @@ function imgField(dataAttr, idx, key, labelText, currentVal) {
         <img id="${previewId}" class="img-field-thumb"
              src="${esc(currentVal)}" style="${currentVal ? '' : 'display:none'}"
              onerror="this.style.display='none'">
-        <label class="upload-label">
-          <span class="upload-label-text">${btnText}</span>
-          <input type="file" accept="image/*" onchange="uploadImage(this,'${fieldId}','${previewId}')">
-        </label>
+        <div class="asset-btns">
+          <label class="upload-label">
+            <span class="upload-label-text">${btnText}</span>
+            <input type="file" accept="image/*" onchange="uploadImage(this,'${fieldId}','${previewId}')">
+          </label>
+          ${currentVal ? `
+          <a class="btn btn-small asset-btn-dl" href="${esc(currentVal)}" download target="_blank">↓ baixar</a>
+          <button class="btn btn-danger btn-small" onclick="removeAsset('${fieldId}','${previewId}')">✕ remover</button>` : ''}
+        </div>
       </div>
     </div>`;
 }
@@ -1011,12 +1016,37 @@ function videoField(dataAttr, idx, key, labelText, currentVal) {
       <div class="img-field-row">
         <video id="${previewId}" class="img-field-thumb"
                src="${esc(currentVal)}" style="${currentVal ? '' : 'display:none'}" muted></video>
-        <label class="upload-label">
-          <span class="upload-label-text">${btnText}</span>
-          <input type="file" accept="video/mp4,video/*" onchange="uploadImage(this,'${fieldId}','${previewId}')">
-        </label>
+        <div class="asset-btns">
+          <label class="upload-label">
+            <span class="upload-label-text">${btnText}</span>
+            <input type="file" accept="video/mp4,video/*" onchange="uploadImage(this,'${fieldId}','${previewId}')">
+          </label>
+          ${currentVal ? `
+          <a class="btn btn-small asset-btn-dl" href="${esc(currentVal)}" download target="_blank">↓ baixar</a>
+          <button class="btn btn-danger btn-small" onclick="removeAsset('${fieldId}','${previewId}')">✕ remover</button>` : ''}
+        </div>
       </div>
     </div>`;
+}
+
+async function removeAsset(fieldId, previewId) {
+  if (!confirm('Remover este arquivo do GitHub?')) return;
+  const field = document.getElementById(fieldId);
+  const url   = field.value;
+  if (!url) return;
+  const rawBase = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
+  if (url.startsWith(rawBase)) {
+    const path = url.replace(rawBase, '').split('?')[0];
+    try {
+      const file = await ghGet(path);
+      await ghDelete(path, file.sha, `assets: remove ${path}`);
+    } catch { /* arquivo já não existe */ }
+  }
+  field.value = '';
+  field.dispatchEvent(new Event('input', { bubbles: true }));
+  const thumb = document.getElementById(previewId);
+  if (thumb) { thumb.src = ''; thumb.style.display = 'none'; }
+  toast('Arquivo removido.', 'ok');
 }
 
 async function uploadImage(fileInput, targetFieldId, previewId) {
@@ -1039,12 +1069,14 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
   const baseName  = titleRaw
     ? titleRaw.replace(/\s+/g, '_').replace(/[/\\?#%*:|"<>]/g, '').slice(0, 80)
     : Math.floor(Math.random() * 1e6).toString();
+  const isPreview = targetFieldId.includes('videoHover');
   const keySuffix = targetFieldId.includes('imgLandscape') ? '_l'
-                  : targetFieldId.includes('videoHover')   ? '_v'
+                  : isPreview                               ? '_p'
                   : '_p';
-  const folder    = dataAttr === 'team'     ? 'assets/equipe'
-                  : dataAttr === 'parceiro' ? 'assets/parceiros'
-                  : dataAttr === 'festival' ? 'assets/festivais'
+  const folder    = isPreview                ? 'assets/previews'
+                  : dataAttr === 'team'      ? 'assets/equipe'
+                  : dataAttr === 'parceiro'  ? 'assets/parceiros'
+                  : dataAttr === 'festival'  ? 'assets/festivais'
                   : 'assets/filmes';
   const newPath   = `${folder}/${baseName}${keySuffix}.${ext}`;
 

@@ -430,6 +430,9 @@ a, button { cursor: pointer !important; }
 .upload-label:hover { border-color: var(--accent); color: var(--accent); }
 .upload-label input[type="file"] { display: none; }
 
+.asset-btns { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.asset-btn-dl { text-decoration: none; }
+
 /* ── ADD BUTTON ── */
 .add-btn {
   display: flex;
