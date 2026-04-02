@@ -12,6 +12,7 @@ let TOKEN   = '';
 let fileSHA = '';
 let data    = {};
 
+
 /* ══════════════════════════════════════════════════════════
    CRYPTO — Web Crypto API (nativa no browser)
 ══════════════════════════════════════════════════════════ */
@@ -132,6 +133,7 @@ async function ghDelete(path, sha, message) {
   if (!res.ok) { const e = await res.json(); throw new Error(e.message || `DELETE → ${res.status}`); }
   return res.json();
 }
+
 
 async function loadData(tok) {
   if (tok) TOKEN = tok;
@@ -997,7 +999,12 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
 /* ══════════════════════════════════════════════════════════
    UTILS
 ══════════════════════════════════════════════════════════ */
-function toggleCard(id) { document.getElementById(id).classList.toggle('open'); }
+function toggleCard(id) {
+  const target = document.getElementById(id);
+  const isOpen = target.classList.contains('open');
+  document.querySelectorAll('.card.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) target.classList.add('open');
+}
 
 function esc(str) {
   if (!str) return '';

@@ -349,14 +349,14 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 
 .other-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
   background: var(--white);
   padding: 0 var(--pad-desk) 48px;
 }
 
-@media (max-width: 1024px) { .other-grid { grid-template-columns: repeat(4, 1fr); } }
-@media (max-width: 700px)  { .other-grid { grid-template-columns: repeat(3, 1fr); padding: 0 var(--pad-mob) 36px; } }
+@media (max-width: 1024px) { .other-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px)  { .other-grid { grid-template-columns: repeat(2, 1fr); padding: 0 var(--pad-mob) 36px; } }
 
 .other-card {
   background: #0d0b09;

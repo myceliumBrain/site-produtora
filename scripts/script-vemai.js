@@ -45,7 +45,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
             <div class="vemai-filme__status">${status}</div>
             <h2 class="vemai-filme__title">${title}</h2>
             <div class="vemai-filme__meta">
-              Dir. ${f.director} &nbsp;·&nbsp; ${genre} &nbsp;·&nbsp; ${f.year}
+              ${genre} &nbsp;·&nbsp; ${f.year}
             </div>
             <p class="vemai-filme__synopsis">${synopsis}</p>
             <div class="vemai-filme__tags">
