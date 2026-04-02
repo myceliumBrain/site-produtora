@@ -60,17 +60,19 @@
 
 
   <!-- ══════════════════════════════════════════════════════════════
-       2. IDENTIDADE + VÍDEO SCROLL
-          Declaração de intenção ao lado do vídeo controlado pelo scroll.
+       2. CATÁLOGO — Grid de produções recentes
        ══════════════════════════════════════════════════════════════ -->
-  <section class="section-identity">
-    <div class="identity-inner">
-      <p class="identity-tagline" data-i18n="identity.statement"></p>
-      <div class="identity-foot">
-        <span class="identity-sub" data-i18n="manifesto.sub"></span>
-        <a href="historia.html" class="identity-link" data-i18n="identity.link">Nossa história</a>
-      </div>
+  <section class="section-grid">
+    <div class="section-grid-header">
+      <h2 class="section-grid-title reveal" data-i18n="grid.title">Produções recentes</h2>
+      <a href="producoes.html" class="section-grid-link reveal">
+        <span data-i18n="grid.all">Ver todas</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </a>
     </div>
+    <div class="preview-grid" id="previewGrid"></div>
   </section>
 
 
@@ -117,22 +119,16 @@
 
 
   <!-- ══════════════════════════════════════════════════════════════
-       6. CATÁLOGO — Grid de produções recentes
-          Posição: após featured + upcoming, o visitante está engajado.
-          Agora o grid funciona como um portfólio completo que faz sentido,
-          não como uma repetição do featured (que ficava logo antes).
+       6. IDENTIDADE — Nossa história
        ══════════════════════════════════════════════════════════════ -->
-  <section class="section-grid">
-    <div class="section-grid-header">
-      <h2 class="section-grid-title reveal" data-i18n="grid.title">Produções recentes</h2>
-      <a href="producoes.html" class="section-grid-link reveal">
-        <span data-i18n="grid.all">Ver todas</span>
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1"/>
-        </svg>
-      </a>
+  <section class="section-identity">
+    <div class="identity-inner">
+      <p class="identity-tagline" data-i18n="identity.statement"></p>
+      <div class="identity-foot">
+        <span class="identity-sub" data-i18n="manifesto.sub"></span>
+        <a href="historia.html" class="identity-link" data-i18n="identity.link">Nossa história</a>
+      </div>
     </div>
-    <div class="preview-grid" id="previewGrid"></div>
   </section>
 
 
