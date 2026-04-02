@@ -24,8 +24,11 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
   
     /* ── FESTIVAIS ── */
+    const festivais = d.festivais || [];
+    document.getElementById('festivaisDivider').style.display  = festivais.length ? '' : 'none';
+    document.getElementById('festivaisSection').style.display  = festivais.length ? '' : 'none';
     document.querySelector('.historia-festivais__grid').innerHTML =
-      (d.festivais || []).map(f => `
+      festivais.map(f => `
         <div class="historia-festival">
           ${f.logo ? `<img src="${f.logo}" alt="${f.name}">` : ''}
           <span class="historia-festival__name">${f.name}</span>
