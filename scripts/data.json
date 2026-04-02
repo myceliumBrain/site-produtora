@@ -238,20 +238,62 @@
       }
     ],
     "parceiros": [
-      "Arte 1",
-      "Banco do Brasil",
-      "BNDES",
-      "BNDE",
-      "Canal Brasil",
-      "Canal Curta",
-      "Downtown Filmes",
-      "globofilmes",
-      "HBO",
-      "imagem filmes",
-      "Lojas Americanas",
-      "Neoenergia",
-      "Netflix",
-      "Rio Filme"
+      {
+        "name": "Arte 1",
+        "logo": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/parceiros/Arte_1_p.png"
+      },
+      {
+        "name": "Banco do Brasil",
+        "logo": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/parceiros/Banco_do_Brasil_p.png"
+      },
+      {
+        "name": "BNDES",
+        "logo": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/parceiros/BNDES_p.png"
+      },
+      {
+        "name": "BRDE",
+        "logo": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/parceiros/BNDE_p.png"
+      },
+      {
+        "name": "Canal Brasil",
+        "logo": ""
+      },
+      {
+        "name": "Canal Curta",
+        "logo": ""
+      },
+      {
+        "name": "Downtown Filmes",
+        "logo": ""
+      },
+      {
+        "name": "globofilmes",
+        "logo": ""
+      },
+      {
+        "name": "HBO",
+        "logo": ""
+      },
+      {
+        "name": "imagem filmes",
+        "logo": ""
+      },
+      {
+        "name": "Lojas Americanas",
+        "logo": ""
+      },
+      {
+        "name": "Neoenergia",
+        "logo": ""
+      },
+      {
+        "name": "Netflix",
+        "logo": ""
+      },
+      {
+        "name": "Rio Filme",
+        "logo": ""
+      }
     ]
   },
   "_auth": {
