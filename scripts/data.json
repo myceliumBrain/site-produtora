@@ -53,6 +53,19 @@
       "imgLandscape": ""
     },
     {
+      "title": "Simonal - Ninguém Sabe o Duro Que Dei",
+      "titleEn": "Simonal - Ninguém Sabe o Duro Que Dei",
+      "director": "Cláudio Manoel, Calvito Leal e Micael Langer",
+      "year": "2008",
+      "genre": "Longa-Metragem Documental",
+      "hero": true,
+      "synopsis": "Baseado na vida do cantor e compositor Wilson Simonal, o filme mostra o sucesso do artista durante as décadas de 1960 e 1970 em uma carreira repleta de altos e baixos",
+      "synopsisEn": "Based on the life of singer and songwriter Wilson Simonal, the film portrays the artist's success during the 1960s and 1970s in a career full of highs and lows.",
+      "tags": [],
+      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/film-7-imgPortrait.png",
+      "imgLandscape": ""
+    },
+    {
       "title": "Arte Brasileira Quadro a Quadro",
       "titleEn": "Arte Brasileira Quadro a Quadro",
       "director": "Marcos Guttmann e Fabiano Maciel",
@@ -89,19 +102,6 @@
       "synopsisEn": "A series about Brazilian furniture designers showcasing the work of designers such as Carlos Motta Quinderé, Rodrigo Almeida, the duo Ovo, Sérgio Rodrigues, and others.",
       "tags": [],
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/film-6-imgPortrait.png",
-      "imgLandscape": ""
-    },
-    {
-      "title": "Simonal - Ninguém Sabe o Duro Que Dei",
-      "titleEn": "Simonal - Ninguém Sabe o Duro Que Dei",
-      "director": "Cláudio Manoel, Calvito Leal e Micael Langer",
-      "year": "2008",
-      "genre": "Longa-Metragem Documental",
-      "hero": true,
-      "synopsis": "Baseado na vida do cantor e compositor Wilson Simonal, o filme mostra o sucesso do artista durante as décadas de 1960 e 1970 em uma carreira repleta de altos e baixos",
-      "synopsisEn": "Based on the life of singer and songwriter Wilson Simonal, the film portrays the artist's success during the 1960s and 1970s in a career full of highs and lows.",
-      "tags": [],
-      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/film-7-imgPortrait.png",
       "imgLandscape": ""
     }
   ],
