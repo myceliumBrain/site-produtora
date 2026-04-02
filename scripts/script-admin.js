@@ -873,24 +873,27 @@ function collectAll() {
    IMAGE UPLOAD
 ══════════════════════════════════════════════════════════ */
 
-/* Gera o HTML do campo de imagem com botão de upload */
+/* Gera o HTML do campo de imagem — só upload, sem input de URL */
 function imgField(dataAttr, idx, key, labelText, currentVal) {
-  const fieldId = `img-${dataAttr}-${idx}-${key}`;
+  const fieldId   = `img-${dataAttr}-${idx}-${key}`;
+  const previewId = `prev-${dataAttr}-${idx}-${key}`;
   return `
     <div class="field full">
       <label>${labelText}</label>
-      <div class="img-upload-row">
-        <input id="${fieldId}" ${dataAttr}="${idx}" data-key="${key}"
-               value="${esc(currentVal)}" placeholder="URL">
+      <input type="hidden" id="${fieldId}" ${dataAttr}="${idx}" data-key="${key}" value="${esc(currentVal)}">
+      <div class="img-field-row">
+        <img id="${previewId}" class="img-field-thumb"
+             src="${esc(currentVal)}" style="${currentVal ? '' : 'display:none'}"
+             onerror="this.style.display='none'">
         <label class="upload-label">
           <span class="upload-label-text">↑ enviar</span>
-          <input type="file" accept="image/*" onchange="uploadImage(this,'${fieldId}')">
+          <input type="file" accept="image/*" onchange="uploadImage(this,'${fieldId}','${previewId}')">
         </label>
       </div>
     </div>`;
 }
 
-async function uploadImage(fileInput, targetFieldId) {
+async function uploadImage(fileInput, targetFieldId, previewId) {
   const file = fileInput.files[0];
   if (!file) return;
 
@@ -912,6 +915,8 @@ async function uploadImage(fileInput, targetFieldId) {
       const field = document.getElementById(targetFieldId);
       field.value = url;
       field.dispatchEvent(new Event('input', { bubbles: true }));
+      const thumb = document.getElementById(previewId);
+      if (thumb) { thumb.src = url; thumb.style.display = 'block'; }
       toast('Imagem enviada!', 'ok');
     } catch (err) {
       toast('Erro no upload: ' + err.message, 'err');
