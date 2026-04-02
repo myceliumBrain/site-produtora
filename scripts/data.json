@@ -12,7 +12,8 @@
       "tags": [],
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Um_Dia_Antes_de_Todos_os_Outros_p.png",
       "imgLandscape": "",
-      "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Um_Dia_Antes_de_Todos_os_Outros_v.mp4"
+      "videoHover": "",
+      "videoTrailer": ""
     },
     {
       "title": "O Amor Dá Voltas",
@@ -26,7 +27,8 @@
       "tags": [],
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/O_Amos_Dá_Voltas_p.jpg",
       "imgLandscape": "",
-      "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/O_Amor_Dá_Voltas_v.mp4"
+      "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/O_Amor_Dá_Voltas_v.mp4",
+      "videoTrailer": ""
     },
     {
       "title": "Amor de Bicho",
@@ -40,7 +42,8 @@
       "tags": [],
       "imgPortrait": "",
       "imgLandscape": "",
-      "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Amor_de_Bicho_v.mp4"
+      "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Amor_de_Bicho_v.mp4",
+      "videoTrailer": ""
     },
     {
       "title": "Simonal",
@@ -54,7 +57,8 @@
       "tags": [],
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Simonal_p.jpeg",
       "imgLandscape": "",
-      "videoHover": ""
+      "videoHover": "",
+      "videoTrailer": ""
     },
     {
       "title": "Simonal - Ninguém Sabe o Duro Que Dei",
@@ -68,7 +72,8 @@
       "tags": [],
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei_p.png",
       "imgLandscape": "",
-      "videoHover": ""
+      "videoHover": "",
+      "videoTrailer": ""
     },
     {
       "title": "Arte Brasileira Quadro a Quadro",
@@ -82,7 +87,8 @@
       "tags": [],
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Arte_Brasileira_Quadro_a_Quadro_p.jpg",
       "imgLandscape": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/paisagens/Arte_Brasileira_Quadro_a_Quadro_l.png",
-      "videoHover": ""
+      "videoHover": "",
+      "videoTrailer": ""
     },
     {
       "title": "Zanine - Ser do Arquitetar",
@@ -96,7 +102,8 @@
       "tags": [],
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Zanine_-_Ser_do_Arquitetar_p.png",
       "imgLandscape": "",
-      "videoHover": ""
+      "videoHover": "",
+      "videoTrailer": ""
     },
     {
       "title": "Design Brasileiro",
@@ -110,7 +117,8 @@
       "tags": [],
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Design_Brasileiro_p.png",
       "imgLandscape": "",
-      "videoHover": ""
+      "videoHover": "",
+      "videoTrailer": ""
     }
   ],
   "upcomingFilms": [
