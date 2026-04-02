@@ -920,10 +920,10 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
   span.textContent = '…';
   label.style.pointerEvents = 'none';
 
-  // Nome estável por slot (ex: film-0-imgPortrait.jpg) — garante um arquivo por campo
-  const ext      = file.name.split('.').pop().toLowerCase();
-  const slotName = targetFieldId.replace(/^img-/, ''); // ex: film-0-imgPortrait
-  const newPath  = `assets/filmes/${slotName}.${ext}`;
+  // UUID único por upload — imune a reordenação de filmes
+  const ext     = file.name.split('.').pop().toLowerCase();
+  const uuid    = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
+  const newPath = `assets/filmes/${uuid}.${ext}`;
 
   // Deleta arquivo anterior do mesmo slot (mesmo que tenha extensão diferente)
   const field      = document.getElementById(targetFieldId);
