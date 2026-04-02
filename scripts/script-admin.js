@@ -920,10 +920,18 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
   span.textContent = '…';
   label.style.pointerEvents = 'none';
 
-  // UUID único por upload — imune a reordenação de filmes
-  const ext     = file.name.split('.').pop().toLowerCase();
-  const uuid    = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
-  const newPath = `assets/filmes/${uuid}.${ext}`;
+  // Nome baseado no título do filme; espaços → "_"; sem título → número aleatório
+  const ext       = file.name.split('.').pop().toLowerCase();
+  const parts     = targetFieldId.replace(/^img-/, '').split('-'); // ['film','0','imgPortrait']
+  const dataAttr  = parts[0];
+  const idx       = parts[1];
+  const titleEl   = document.querySelector(`[data-${dataAttr}="${idx}"][data-key="title"]`);
+  const titleRaw  = titleEl ? titleEl.value.trim() : '';
+  const baseName  = titleRaw
+    ? titleRaw.replace(/\s+/g, '_').replace(/[/\\?#%*:|"<>]/g, '').slice(0, 80)
+    : Math.floor(Math.random() * 1e6).toString();
+  const keySuffix = targetFieldId.includes('imgLandscape') ? '_l' : '_p';
+  const newPath   = `assets/filmes/${baseName}${keySuffix}.${ext}`;
 
   // Deleta arquivo anterior do mesmo slot (mesmo que tenha extensão diferente)
   const field      = document.getElementById(targetFieldId);
