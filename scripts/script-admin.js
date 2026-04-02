@@ -496,7 +496,7 @@ function renderFilms() {
           <div class="field full"><label>Sinopse EN</label><textarea data-film="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
           ${imgField('film', i, 'imgPortrait',  'Imagem retrato',  f.imgPortrait)}
           ${imgField('film', i, 'imgLandscape', 'Imagem paisagem', f.imgLandscape)}
-          ${videoField('film', i, 'videoHover', 'Vídeo hover (.mp4)', f.videoHover||'')}
+          ${videoField('film', i, 'videoHover', 'Preview (.mp4)', f.videoHover||'', 'recomendado máx 15 segundos')}
           <div class="field full">
             <label>Tags</label>
             <div id="tags-film-${i}">${renderTags(f.tags||[], 'film', i)}</div>
@@ -1005,13 +1005,13 @@ function imgField(dataAttr, idx, key, labelText, currentVal) {
 }
 
 /* Gera o HTML do campo de vídeo hover com botão de upload */
-function videoField(dataAttr, idx, key, labelText, currentVal) {
+function videoField(dataAttr, idx, key, labelText, currentVal, note = '') {
   const fieldId   = `img-${dataAttr}-${idx}-${key}`;
   const previewId = `prev-${dataAttr}-${idx}-${key}`;
   const btnText   = currentVal ? '↑ substituir' : '↑ enviar';
   return `
     <div class="field full">
-      <label>${labelText}</label>
+      <label>${labelText}${note ? `<span class="field-note">${note}</span>` : ''}</label>
       <input type="hidden" id="${fieldId}" data-${dataAttr}="${idx}" data-key="${key}" value="${esc(currentVal)}">
       <div class="img-field-row">
         <video id="${previewId}" class="img-field-thumb"
@@ -1069,15 +1069,16 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
   const baseName  = titleRaw
     ? titleRaw.replace(/\s+/g, '_').replace(/[/\\?#%*:|"<>]/g, '').slice(0, 80)
     : Math.floor(Math.random() * 1e6).toString();
-  const isPreview = targetFieldId.includes('videoHover');
-  const keySuffix = targetFieldId.includes('imgLandscape') ? '_l'
-                  : isPreview                               ? '_p'
-                  : '_p';
-  const folder    = isPreview                ? 'assets/previews'
-                  : dataAttr === 'team'      ? 'assets/equipe'
-                  : dataAttr === 'parceiro'  ? 'assets/parceiros'
-                  : dataAttr === 'festival'  ? 'assets/festivais'
-                  : 'assets/filmes';
+  const isPreview   = targetFieldId.includes('videoHover');
+  const isLandscape = targetFieldId.includes('imgLandscape');
+  const keySuffix   = isLandscape ? '_l' : '_p';
+  const folder      = dataAttr === 'team'                  ? 'assets/equipe'
+                    : dataAttr === 'parceiro'               ? 'assets/parceiros'
+                    : dataAttr === 'festival'               ? 'assets/festivais'
+                    : isPreview                             ? 'assets/filmes/previews'
+                    : isLandscape && dataAttr === 'film'    ? 'assets/filmes/paisagens'
+                    : dataAttr === 'film'                   ? 'assets/filmes/retratos'
+                    : 'assets/filmes';
   const newPath   = `${folder}/${baseName}${keySuffix}.${ext}`;
 
   // Deleta arquivo anterior do mesmo slot (mesmo que tenha extensão diferente)
