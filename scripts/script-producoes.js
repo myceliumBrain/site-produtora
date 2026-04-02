@@ -40,37 +40,39 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         const color = cardPalette[cardColorIdx];
         card.style.outline = `3px solid ${color}`;
         card.querySelector('.film-card__title').style.color = color;
+        const video = card.querySelector('.film-card__video');
+        if (video) { video.currentTime = 0; video.play(); }
       });
       card.addEventListener('mouseleave', () => {
         card.style.outline = '';
         card.querySelector('.film-card__title').style.color = '';
+        const video = card.querySelector('.film-card__video');
+        if (video) { video.pause(); video.currentTime = 0; }
       });
     });
   }
 
   /* ── CRIA CARD ── */
   function createCard(film, index) {
-    const wide  = film.size === 'wide' ? 'card--wide' : '';
-    const tall  = film.rows === 2      ? 'card--tall' : '';
-    const title = i18next.language === 'en' && film.titleEn ? film.titleEn : film.title;
+    const wide     = film.size === 'wide' ? 'card--wide' : '';
+    const tall     = film.rows === 2      ? 'card--tall' : '';
+    const title    = i18next.language === 'en' && film.titleEn ? film.titleEn : film.title;
+    const hasVideo = !!film.videoHover;
 
     return `
-      <a href="filme.html?i=${index}" class="film-card ${wide} ${tall} card--${film.ratio}">
+      <a href="filme.html?i=${index}" class="film-card ${wide} ${tall} card--${film.ratio}${hasVideo ? ' card--has-video' : ''}">
         <div class="film-card__img">
           ${placeholder}
           <img class="img-portrait"
                src="${film.imgPortrait}"
                alt="${title}"
                onerror="this.style.display='none'">
-          <img class="img-landscape"
-               src="${film.imgLandscape}"
-               alt="${title}"
-               onerror="this.style.display='none'">
+          ${hasVideo ? `<video class="film-card__video" src="${film.videoHover}" muted playsinline preload="none"></video>` : ''}
         </div>
         <div class="film-card__info">
           <div class="film-card__title">${title}</div>
           <div class="film-card__meta">
-            <div class="film-card__dir">Dir. ${film.director}</div>
+            <div class="film-card__dir">${film.director ? `Dir. ${film.director}` : ''}</div>
             <span class="film-card__year">${film.year}</span>
           </div>
         </div>

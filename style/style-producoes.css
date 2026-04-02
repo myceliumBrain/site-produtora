@@ -226,11 +226,21 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
               opacity   0.5s ease;
 }
 
-.film-card__img .img-portrait  { opacity: 1; transform: scale(1);    z-index: 1; }
-.film-card__img .img-landscape { opacity: 0; transform: scale(1.05); z-index: 2; }
+.film-card__img .img-portrait { opacity: 1; z-index: 1; }
 
-.film-card:hover .img-portrait  { opacity: 0; }
-.film-card:hover .img-landscape { opacity: 1; transform: scale(1); }
+.film-card__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+.card--has-video:hover .img-portrait   { opacity: 0; }
+.card--has-video:hover .film-card__video { opacity: 1; }
 
 .film-card__img::after {
   content: '';

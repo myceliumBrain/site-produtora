@@ -480,6 +480,7 @@ function renderFilms() {
           <div class="field full"><label>Sinopse EN</label><textarea data-film="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
           ${imgField('film', i, 'imgPortrait',  'Imagem retrato',  f.imgPortrait)}
           ${imgField('film', i, 'imgLandscape', 'Imagem paisagem', f.imgLandscape)}
+          ${videoField('film', i, 'videoHover', 'Vídeo hover (.mp4)', f.videoHover||'')}
           <div class="field full">
             <label>Tags</label>
             <div id="tags-film-${i}">${renderTags(f.tags||[], 'film', i)}</div>
@@ -911,6 +912,26 @@ function imgField(dataAttr, idx, key, labelText, currentVal) {
     </div>`;
 }
 
+/* Gera o HTML do campo de vídeo hover com botão de upload */
+function videoField(dataAttr, idx, key, labelText, currentVal) {
+  const fieldId   = `img-${dataAttr}-${idx}-${key}`;
+  const previewId = `prev-${dataAttr}-${idx}-${key}`;
+  const btnText   = currentVal ? '↑ substituir' : '↑ enviar';
+  return `
+    <div class="field full">
+      <label>${labelText}</label>
+      <input type="hidden" id="${fieldId}" data-${dataAttr}="${idx}" data-key="${key}" value="${esc(currentVal)}">
+      <div class="img-field-row">
+        <video id="${previewId}" class="img-field-thumb"
+               src="${esc(currentVal)}" style="${currentVal ? '' : 'display:none'}" muted></video>
+        <label class="upload-label">
+          <span class="upload-label-text">${btnText}</span>
+          <input type="file" accept="video/mp4,video/*" onchange="uploadImage(this,'${fieldId}','${previewId}')">
+        </label>
+      </div>
+    </div>`;
+}
+
 async function uploadImage(fileInput, targetFieldId, previewId) {
   const file = fileInput.files[0];
   if (!file) return;
@@ -930,7 +951,9 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
   const baseName  = titleRaw
     ? titleRaw.replace(/\s+/g, '_').replace(/[/\\?#%*:|"<>]/g, '').slice(0, 80)
     : Math.floor(Math.random() * 1e6).toString();
-  const keySuffix = targetFieldId.includes('imgLandscape') ? '_l' : '_p';
+  const keySuffix = targetFieldId.includes('imgLandscape') ? '_l'
+                  : targetFieldId.includes('videoHover')   ? '_v'
+                  : '_p';
   const newPath   = `assets/filmes/${baseName}${keySuffix}.${ext}`;
 
   // Deleta arquivo anterior do mesmo slot (mesmo que tenha extensão diferente)
@@ -954,7 +977,11 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
       field.value = url;
       field.dispatchEvent(new Event('input', { bubbles: true }));
       const thumb = document.getElementById(previewId);
-      if (thumb) { thumb.src = `${url}?t=${Date.now()}`; thumb.style.display = 'block'; }
+      if (thumb) {
+        thumb.src = url;
+        if (thumb.tagName === 'VIDEO') thumb.load();
+        thumb.style.display = 'block';
+      }
       span.textContent = '↑ substituir';
       toast('Imagem enviada!', 'ok');
     } catch (err) {
