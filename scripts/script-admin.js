@@ -748,13 +748,7 @@ function renderTeam() {
           <div class="field"></div>
           <div class="field"><label>Cargo PT</label><input data-team="${i}" data-key="role"   value="${esc(m.role)}"></div>
           <div class="field"><label>Cargo EN</label><input data-team="${i}" data-key="roleEn" value="${esc(m.roleEn)}"></div>
-          <div class="field full">
-            <label>Foto (URL)</label>
-            <input data-team="${i}" data-key="img" value="${esc(m.img)}"
-                   oninput="updateImgPreview(${i}, this.value)">
-            <img id="team-img-${i}" src="${esc(m.img)}" class="team-img-preview"
-                 style="${m.img?'':'display:none'}" onerror="this.style.display='none'">
-          </div>
+          ${imgField('team', i, 'img', 'Foto', m.img)}
           <div class="field full"><label>Bio PT (aceita &lt;em&gt;)</label><textarea data-team="${i}" data-key="bio">${esc(m.bio)}</textarea></div>
           <div class="field full"><label>Bio EN (aceita &lt;em&gt;)</label><textarea data-team="${i}" data-key="bioEn">${esc(m.bioEn)}</textarea></div>
         </div>
@@ -782,40 +776,46 @@ function removeTeamMember(i) {
   renderTeam();
 }
 
-function updateImgPreview(i, url) {
-  const img = document.getElementById(`team-img-${i}`);
-  if (!img) return;
-  img.src = url;
-  img.style.display = url ? 'block' : 'none';
-}
 
 /* ══════════════════════════════════════════════════════════
    PARCEIROS
 ══════════════════════════════════════════════════════════ */
 function renderParceiros() {
-  const parceiros = data.historiaData.parceiros || [];
-  document.getElementById('parceirosForm').innerHTML = `
-    <div class="parceiros-list">
-      ${parceiros.map((p, i) => `
-        <span class="tag-badge">${esc(p)}
-          <button onclick="removeParceiro(${i})" title="remover">×</button>
-        </span>`).join('')}
-    </div>
-    <div class="add-parceiro-row">
-      <div class="field">
-        <label>Novo parceiro</label>
-        <input id="parceiroInput" placeholder="nome do parceiro…"
-               onkeydown="if(event.key==='Enter'){addParceiro();event.preventDefault()}">
-      </div>
-      <button class="btn btn-secondary" onclick="addParceiro()">+ adicionar</button>
-    </div>`;
+  // Normaliza strings legadas para objetos
+  data.historiaData.parceiros = (data.historiaData.parceiros || []).map(p =>
+    typeof p === 'string' ? { name: p, logo: '' } : p
+  );
+  const parceiros = data.historiaData.parceiros;
+  document.getElementById('parceirosForm').innerHTML =
+    parceiros.map((p, i) => `
+      <div class="card" id="parceiro-card-${i}">
+        <div class="card-header" onclick="toggleCard('parceiro-card-${i}')">
+          <div class="card-header-left">
+            <span class="card-num">${String(i+1).padStart(2,'0')}</span>
+            <span class="card-name">${esc(p.name) || '(sem nome)'}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem">
+            <button class="btn btn-danger btn-small" onclick="event.stopPropagation();removeParceiro(${i})">Remover</button>
+            <span class="card-chevron">▼</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="fields-grid">
+            <div class="field full"><label>Nome</label><input data-parceiro="${i}" data-key="name" value="${esc(p.name)}"></div>
+            ${imgField('parceiro', i, 'logo', 'Logo', p.logo)}
+          </div>
+        </div>
+      </div>`).join('') +
+    `<button class="add-btn" onclick="addParceiro()">+ adicionar parceiro</button>`;
 }
 
 function addParceiro() {
-  const val = document.getElementById('parceiroInput').value.trim();
-  if (!val) return;
-  data.historiaData.parceiros.push(val);
+  if (!data.historiaData.parceiros) data.historiaData.parceiros = [];
+  data.historiaData.parceiros.push({ name: '', logo: '' });
   renderParceiros();
+  const idx = data.historiaData.parceiros.length - 1;
+  toggleCard(`parceiro-card-${idx}`);
+  document.getElementById(`parceiro-card-${idx}`).scrollIntoView({ behavior: 'smooth' });
 }
 
 function removeParceiro(i) {
@@ -887,6 +887,11 @@ function collectAll() {
     if (!data.historiaData.team[i]) return;
     data.historiaData.team[i][key] = el.value;
   });
+  document.querySelectorAll('[data-parceiro]').forEach(el => {
+    const i = +el.dataset.parceiro, key = el.dataset.key;
+    if (!data.historiaData.parceiros[i]) return;
+    data.historiaData.parceiros[i][key] = el.value;
+  });
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -943,20 +948,24 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
   span.textContent = '…';
   label.style.pointerEvents = 'none';
 
-  // Nome baseado no título do filme; espaços → "_"; sem título → número aleatório
+  // Nome baseado no título/nome do item; espaços → "_"; sem nome → número aleatório
   const ext       = file.name.split('.').pop().toLowerCase();
   const parts     = targetFieldId.replace(/^img-/, '').split('-'); // ['film','0','imgPortrait']
   const dataAttr  = parts[0];
   const idx       = parts[1];
-  const titleEl   = document.querySelector(`[data-${dataAttr}="${idx}"][data-key="title"]`);
-  const titleRaw  = titleEl ? titleEl.value.trim() : '';
+  const nameEl    = document.querySelector(`[data-${dataAttr}="${idx}"][data-key="title"]`)
+                 || document.querySelector(`[data-${dataAttr}="${idx}"][data-key="name"]`);
+  const titleRaw  = nameEl ? nameEl.value.trim() : '';
   const baseName  = titleRaw
     ? titleRaw.replace(/\s+/g, '_').replace(/[/\\?#%*:|"<>]/g, '').slice(0, 80)
     : Math.floor(Math.random() * 1e6).toString();
   const keySuffix = targetFieldId.includes('imgLandscape') ? '_l'
                   : targetFieldId.includes('videoHover')   ? '_v'
                   : '_p';
-  const newPath   = `assets/filmes/${baseName}${keySuffix}.${ext}`;
+  const folder    = dataAttr === 'team'     ? 'assets/equipe'
+                  : dataAttr === 'parceiro' ? 'assets/parceiros'
+                  : 'assets/filmes';
+  const newPath   = `${folder}/${baseName}${keySuffix}.${ext}`;
 
   // Deleta arquivo anterior do mesmo slot (mesmo que tenha extensão diferente)
   const field      = document.getElementById(targetFieldId);
