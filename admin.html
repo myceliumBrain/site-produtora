@@ -73,11 +73,16 @@
         <button class="nav-btn active" onclick="showPanel('films')">Produções <span id="filmsCount"></span></button>
         <button class="nav-btn" onclick="showPanel('upcoming')">Em produção <span id="upcomingCount"></span></button>
         <span class="sidebar-section">Institucional</span>
-        <button class="nav-btn" onclick="showPanel('manifesto')">Manifesto</button>
         <button class="nav-btn" onclick="showPanel('festivais')">Festivais</button>
         <button class="nav-btn" onclick="showPanel('marcos')">Marcos</button>
         <button class="nav-btn" onclick="showPanel('team')">Equipe</button>
         <button class="nav-btn" onclick="showPanel('parceiros')">Parceiros</button>
+        <span class="sidebar-section">Páginas</span>
+        <button class="nav-btn" onclick="showPanel('pag-principal')">Pág. principal</button>
+        <button class="nav-btn" onclick="showPanel('pag-producoes')">Produções</button>
+        <button class="nav-btn" onclick="showPanel('pag-historia')">Nossa história</button>
+        <button class="nav-btn" onclick="showPanel('pag-vemai')">Vem aí</button>
+        <button class="nav-btn" onclick="showPanel('pag-contato')">Contato</button>
         <span class="sidebar-section">Sistema</span>
         <button class="nav-btn" onclick="showPanel('acessos')">Acessos</button>
       </aside>
@@ -111,11 +116,6 @@
           <button class="add-btn" onclick="addUpcoming()">+ adicionar produção</button>
         </div>
 
-        <div class="section-panel" id="panel-manifesto">
-          <div class="panel-header"><span class="panel-title">Manifesto</span></div>
-          <div id="manifestoForm"></div>
-        </div>
-
         <div class="section-panel" id="panel-festivais">
           <div class="panel-header">
             <span class="panel-title">Festivais</span>
@@ -140,6 +140,36 @@
         <div class="section-panel" id="panel-parceiros">
           <div class="panel-header"><span class="panel-title">Parceiros</span></div>
           <div id="parceirosForm"></div>
+        </div>
+
+        <!-- ── NOSSA HISTÓRIA ── -->
+        <div class="section-panel" id="panel-pag-historia">
+          <div class="panel-header"><span class="panel-title">Nossa história</span></div>
+          <div id="pagHistoriaForm"></div>
+        </div>
+
+        <!-- ── PÁG. PRINCIPAL ── -->
+        <div class="section-panel" id="panel-pag-principal">
+          <div class="panel-header"><span class="panel-title">Pág. principal</span></div>
+          <div id="pagPrincipalForm"></div>
+        </div>
+
+        <!-- ── PRODUÇÕES ── -->
+        <div class="section-panel" id="panel-pag-producoes">
+          <div class="panel-header"><span class="panel-title">Produções</span></div>
+          <div id="pagProducoesForm"></div>
+        </div>
+
+        <!-- ── VEM AÍ ── -->
+        <div class="section-panel" id="panel-pag-vemai">
+          <div class="panel-header"><span class="panel-title">Vem aí</span></div>
+          <div id="pagVemaiForm"></div>
+        </div>
+
+        <!-- ── CONTATO ── -->
+        <div class="section-panel" id="panel-pag-contato">
+          <div class="panel-header"><span class="panel-title">Contato</span></div>
+          <div id="pagContatoForm"></div>
         </div>
 
         <!-- ── ACESSOS ── -->

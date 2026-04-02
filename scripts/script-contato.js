@@ -6,6 +6,8 @@
    Uso principal: EMAILJS
    ============================================================ */
 
+dataReady.then(() => {
+
   /* ── FORMULÁRIO ── */
   const form     = document.getElementById('contactForm');
   const feedback = document.getElementById('formFeedback');
@@ -126,9 +128,9 @@
           ...COMMON_I18N.pt,
           'nav.portfolio':          'Portfólio',
           'nav.shop':               'Loja',
-          'contact.eyebrow':        'Fale com a gente',
-          'contact.title':          'Contato',
-          'contact.sub':            'Estamos disponíveis para parcerias, imprensa e qualquer conversa sobre cinema.',
+          'contact.eyebrow':        (pagesData.contato && pagesData.contato.eyebrowPt) || 'Fale com a gente',
+          'contact.title':          (pagesData.contato && pagesData.contato.titlePt)   || 'Contato',
+          'contact.sub':            (pagesData.contato && pagesData.contato.subPt)     || 'Estamos disponíveis para parcerias, imprensa e qualquer conversa sobre cinema.',
           'form.name':              'Nome',
           'form.phone':             'Telefone',
           'form.email':             'E-mail',
@@ -143,9 +145,9 @@
           ...COMMON_I18N.en,
           'nav.portfolio':          'Portfolio',
           'nav.shop':               'Shop',
-          'contact.eyebrow':        'Get in touch',
-          'contact.title':          'Contact',
-          'contact.sub':            'We\'re available for partnerships, press, and any conversation about cinema.',
+          'contact.eyebrow':        (pagesData.contato && pagesData.contato.eyebrowEn) || 'Get in touch',
+          'contact.title':          (pagesData.contato && pagesData.contato.titleEn)   || 'Contact',
+          'contact.sub':            (pagesData.contato && pagesData.contato.subEn)     || "We're available for partnerships, press, and any conversation about cinema.",
           'form.name':              'Name',
           'form.phone':             'Phone',
           'form.email':             'E-mail',
@@ -157,6 +159,13 @@
       }
     }
   }, () => {
+    // Atualiza link do WhatsApp com o número do data.json
+    const waLink = document.getElementById('whatsappLink');
+    if (waLink && pagesData.contato && pagesData.contato.whatsapp) {
+      waLink.href = `https://wa.me/${pagesData.contato.whatsapp}`;
+    }
     observeReveal();
     updateDOM();
   });
+
+}); // dataReady

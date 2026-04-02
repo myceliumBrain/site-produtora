@@ -101,20 +101,20 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         translation: {
           ...COMMON_I18N.pt,
           'nav.portfolio':          'Portfólio',
-          'historia.team.eyebrow':       'Quem faz acontecer',
-          'historia.festivais.eyebrow':  'Festivais',
-          'historia.marcos.eyebrow':     'Marcos',
-          'historia.parceiros.eyebrow': 'Parceiros',
+          'historia.team.eyebrow':       (pagesData.historia && pagesData.historia.teamEyebrowPt)      || 'Quem faz acontecer',
+          'historia.festivais.eyebrow':  (pagesData.historia && pagesData.historia.festivaisEyebrowPt) || 'Festivais',
+          'historia.marcos.eyebrow':     (pagesData.historia && pagesData.historia.marcosEyebrowPt)    || 'Marcos',
+          'historia.parceiros.eyebrow': (pagesData.historia && pagesData.historia.parceirosEyebrowPt)  || 'Parceiros',
         }
       },
       en: {
         translation: {
           ...COMMON_I18N.en,
           'nav.portfolio':          'Portfolio',
-          'historia.team.eyebrow':       'The team',
-          'historia.festivais.eyebrow':  'Film Festivals',
-          'historia.marcos.eyebrow':     'Milestones',
-          'historia.parceiros.eyebrow': 'Partners',
+          'historia.team.eyebrow':       (pagesData.historia && pagesData.historia.teamEyebrowEn)      || 'The team',
+          'historia.festivais.eyebrow':  (pagesData.historia && pagesData.historia.festivaisEyebrowEn) || 'Film Festivals',
+          'historia.marcos.eyebrow':     (pagesData.historia && pagesData.historia.marcosEyebrowEn)    || 'Milestones',
+          'historia.parceiros.eyebrow': (pagesData.historia && pagesData.historia.parceirosEyebrowEn)  || 'Partners',
         }
       }
     }

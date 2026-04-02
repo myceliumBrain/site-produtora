@@ -170,7 +170,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       pt: {
         translation: {
           ...COMMON_I18N.pt,
-          'section.title':          'Produções',
+          'section.title':          (pagesData.producoes && pagesData.producoes.titlePt) || 'Produções',
           'sort.relevance':         'Relevância',
           'sort.recent':            'Recentes',
           'sort.az':                'A–Z',
@@ -179,7 +179,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       en: {
         translation: {
           ...COMMON_I18N.en,
-          'section.title':          'Productions',
+          'section.title':          (pagesData.producoes && pagesData.producoes.titleEn) || 'Productions',
           'sort.relevance':         'Relevance',
           'sort.recent':            'Latest',
           'sort.az':                'A–Z',

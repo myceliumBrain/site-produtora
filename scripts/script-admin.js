@@ -335,7 +335,11 @@ function renderAll() {
   renderFilms();
   renderOtherProductions();
   renderUpcoming();
-  renderManifesto();
+  renderPagHistoria();
+  renderPagPrincipal();
+  renderPagProducoes();
+  renderPagContato();
+  renderPagVemai();
   renderFestivais();
   renderMarcos();
   renderTeam();
@@ -664,9 +668,11 @@ function removeUpcoming(i) {
 /* ══════════════════════════════════════════════════════════
    MANIFESTO
 ══════════════════════════════════════════════════════════ */
-function renderManifesto() {
+function renderPagHistoria() {
   const m = data.historiaData.manifesto;
-  document.getElementById('manifestoForm').innerHTML = `
+  const h = data.pagesData.historia || {};
+  document.getElementById('pagHistoriaForm').innerHTML = `
+    <div class="panel-header" style="margin-top:0"><span class="panel-title" style="font-size:14px">Cabeçalho da página</span></div>
     <div class="fields-grid">
       <div class="field"><label>Eyebrow PT</label><input id="m-eyebrow"   value="${esc(m.eyebrow)}"></div>
       <div class="field"><label>Eyebrow EN</label><input id="m-eyebrowEn" value="${esc(m.eyebrowEn)}"></div>
@@ -679,12 +685,82 @@ function renderManifesto() {
       <div class="field full"><label>Parágrafo 2 PT</label><textarea id="m-p2">${esc(m.p2)}</textarea></div>
       <div class="field full"><label>Parágrafo 2 EN</label><textarea id="m-p2En">${esc(m.p2En)}</textarea></div>
     </div>
-    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Tagline do índice (section-identity)</span></div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Eyebrows das seções</span></div>
+    <div class="fields-grid">
+      <div class="field"><label>Equipe PT</label><input id="h-teamEyebrowPt"      value="${esc(h.teamEyebrowPt||'')}"></div>
+      <div class="field"><label>Equipe EN</label><input id="h-teamEyebrowEn"      value="${esc(h.teamEyebrowEn||'')}"></div>
+      <div class="field"><label>Festivais PT</label><input id="h-festivaisEyebrowPt" value="${esc(h.festivaisEyebrowPt||'')}"></div>
+      <div class="field"><label>Festivais EN</label><input id="h-festivaisEyebrowEn" value="${esc(h.festivaisEyebrowEn||'')}"></div>
+      <div class="field"><label>Marcos PT</label><input id="h-marcosEyebrowPt"    value="${esc(h.marcosEyebrowPt||'')}"></div>
+      <div class="field"><label>Marcos EN</label><input id="h-marcosEyebrowEn"    value="${esc(h.marcosEyebrowEn||'')}"></div>
+      <div class="field"><label>Parceiros PT</label><input id="h-parceirosEyebrowPt" value="${esc(h.parceirosEyebrowPt||'')}"></div>
+      <div class="field"><label>Parceiros EN</label><input id="h-parceirosEyebrowEn" value="${esc(h.parceirosEyebrowEn||'')}"></div>
+    </div>`;
+}
+
+function renderPagPrincipal() {
+  const m = data.historiaData.manifesto;
+  const ix = data.pagesData.index || {};
+  document.getElementById('pagPrincipalForm').innerHTML = `
+    <div class="panel-header" style="margin-top:0"><span class="panel-title" style="font-size:14px">Bloco de identidade</span></div>
     <div class="fields-grid">
       <div class="field full"><label>Frase principal PT</label><input id="m-identityStatement"   value="${esc(m.identityStatement)}"></div>
       <div class="field full"><label>Frase principal EN</label><input id="m-identityStatementEn" value="${esc(m.identityStatementEn)}"></div>
       <div class="field"><label>Subtítulo PT</label><input id="m-manifestoSub"   value="${esc(m.manifestoSub)}"></div>
       <div class="field"><label>Subtítulo EN</label><input id="m-manifestoSubEn" value="${esc(m.manifestoSubEn)}"></div>
+    </div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Hero</span></div>
+    <div class="fields-grid">
+      <div class="field"><label>Label PT</label><input id="ix-heroLabelPt" value="${esc(ix.heroLabelPt||'')}"></div>
+      <div class="field"><label>Label EN</label><input id="ix-heroLabelEn" value="${esc(ix.heroLabelEn||'')}"></div>
+    </div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Grid de produções recentes</span></div>
+    <div class="fields-grid">
+      <div class="field"><label>Título PT</label><input id="ix-gridTitlePt" value="${esc(ix.gridTitlePt||'')}"></div>
+      <div class="field"><label>Título EN</label><input id="ix-gridTitleEn" value="${esc(ix.gridTitleEn||'')}"></div>
+    </div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Bloco CTA (fale conosco)</span></div>
+    <div class="fields-grid">
+      <div class="field full"><label>Título PT</label><input id="ix-ctaTitlePt" value="${esc(ix.ctaTitlePt||'')}"></div>
+      <div class="field full"><label>Título EN</label><input id="ix-ctaTitleEn" value="${esc(ix.ctaTitleEn||'')}"></div>
+      <div class="field full"><label>Corpo PT</label><textarea id="ix-ctaBodyPt">${esc(ix.ctaBodyPt||'')}</textarea></div>
+      <div class="field full"><label>Corpo EN</label><textarea id="ix-ctaBodyEn">${esc(ix.ctaBodyEn||'')}</textarea></div>
+    </div>`;
+}
+
+function renderPagProducoes() {
+  const p = data.pagesData.producoes || {};
+  document.getElementById('pagProducoesForm').innerHTML = `
+    <div class="fields-grid">
+      <div class="field"><label>Título PT</label><input id="pp-titlePt" value="${esc(p.titlePt||'')}"></div>
+      <div class="field"><label>Título EN</label><input id="pp-titleEn" value="${esc(p.titleEn||'')}"></div>
+    </div>`;
+}
+
+function renderPagContato() {
+  const c = data.pagesData.contato || {};
+  document.getElementById('pagContatoForm').innerHTML = `
+    <div class="fields-grid">
+      <div class="field"><label>Eyebrow PT</label><input id="pc-eyebrowPt" value="${esc(c.eyebrowPt||'')}"></div>
+      <div class="field"><label>Eyebrow EN</label><input id="pc-eyebrowEn" value="${esc(c.eyebrowEn||'')}"></div>
+      <div class="field"><label>Título PT</label><input id="pc-titlePt" value="${esc(c.titlePt||'')}"></div>
+      <div class="field"><label>Título EN</label><input id="pc-titleEn" value="${esc(c.titleEn||'')}"></div>
+      <div class="field full"><label>Subtítulo PT</label><textarea id="pc-subPt">${esc(c.subPt||'')}</textarea></div>
+      <div class="field full"><label>Subtítulo EN</label><textarea id="pc-subEn">${esc(c.subEn||'')}</textarea></div>
+      <div class="field full"><label>WhatsApp (só o número, ex: 5521988902499)</label><input id="pc-whatsapp" value="${esc(c.whatsapp||'')}"></div>
+    </div>`;
+}
+
+function renderPagVemai() {
+  const v = data.pagesData.vemai || {};
+  document.getElementById('pagVemaiForm').innerHTML = `
+    <div class="fields-grid">
+      <div class="field"><label>Eyebrow PT</label><input id="pv-eyebrowPt" value="${esc(v.eyebrowPt||'')}"></div>
+      <div class="field"><label>Eyebrow EN</label><input id="pv-eyebrowEn" value="${esc(v.eyebrowEn||'')}"></div>
+      <div class="field"><label>Título PT</label><input id="pv-titlePt" value="${esc(v.titlePt||'')}"></div>
+      <div class="field"><label>Título EN</label><input id="pv-titleEn" value="${esc(v.titleEn||'')}"></div>
+      <div class="field full"><label>Subtítulo PT</label><textarea id="pv-subPt">${esc(v.subPt||'')}</textarea></div>
+      <div class="field full"><label>Subtítulo EN</label><textarea id="pv-subEn">${esc(v.subEn||'')}</textarea></div>
     </div>`;
 }
 
@@ -954,6 +1030,33 @@ function collectAll() {
       const el = document.getElementById('m-' + f);
       if (el) data.historiaData.manifesto[f] = el.value;
     });
+  if (!data.pagesData) data.pagesData = {};
+  if (!data.pagesData.producoes) data.pagesData.producoes = {};
+  ['titlePt','titleEn'].forEach(f => {
+    const el = document.getElementById('pp-' + f);
+    if (el) data.pagesData.producoes[f] = el.value;
+  });
+  if (!data.pagesData.contato) data.pagesData.contato = {};
+  ['eyebrowPt','eyebrowEn','titlePt','titleEn','subPt','subEn','whatsapp'].forEach(f => {
+    const el = document.getElementById('pc-' + f);
+    if (el) data.pagesData.contato[f] = el.value;
+  });
+  if (!data.pagesData.vemai) data.pagesData.vemai = {};
+  ['eyebrowPt','eyebrowEn','titlePt','titleEn','subPt','subEn'].forEach(f => {
+    const el = document.getElementById('pv-' + f);
+    if (el) data.pagesData.vemai[f] = el.value;
+  });
+  if (!data.pagesData.index) data.pagesData.index = {};
+  ['ctaTitlePt','ctaTitleEn','ctaBodyPt','ctaBodyEn','heroLabelPt','heroLabelEn','gridTitlePt','gridTitleEn'].forEach(f => {
+    const el = document.getElementById('ix-' + f);
+    if (el) data.pagesData.index[f] = el.value;
+  });
+  if (!data.pagesData.historia) data.pagesData.historia = {};
+  ['teamEyebrowPt','teamEyebrowEn','festivaisEyebrowPt','festivaisEyebrowEn',
+   'marcosEyebrowPt','marcosEyebrowEn','parceirosEyebrowPt','parceirosEyebrowEn'].forEach(f => {
+    const el = document.getElementById('h-' + f);
+    if (el) data.pagesData.historia[f] = el.value;
+  });
   document.querySelectorAll('[data-marco]').forEach(el => {
     const i = +el.dataset.marco, key = el.dataset.key;
     if (!data.historiaData.marcos[i]) return;
