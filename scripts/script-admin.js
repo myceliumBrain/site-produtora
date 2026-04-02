@@ -334,6 +334,24 @@ function saveCard(type, i) {
   const renderMap = { film: renderFilms, other: renderOtherProductions, upcoming: renderUpcoming, marco: renderMarcos, team: renderTeam };
   if (renderMap[type]) renderMap[type]();
 
+  // Reabre o card e desabilita o botão salvar até haver nova alteração
+  const cardId = type === 'other' ? `other-card-${i}` : `${type}-card-${i}`;
+  const card = document.getElementById(cardId);
+  if (card) {
+    card.classList.add('open');
+    const saveBtn = card.querySelector('.card-actions .btn-primary');
+    if (saveBtn) {
+      saveBtn.disabled = true;
+      const reEnable = () => {
+        saveBtn.disabled = false;
+        card.removeEventListener('input',  reEnable);
+        card.removeEventListener('change', reEnable);
+      };
+      card.addEventListener('input',  reEnable);
+      card.addEventListener('change', reEnable);
+    }
+  }
+
   toast('Visual atualizado — clique em “Salvar no GitHub” para confirmar.', 'ok');
 }
 
