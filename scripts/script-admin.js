@@ -486,16 +486,17 @@ function renderFilms() {
           <div class="field"><label>Diretor</label><input data-film="${i}" data-key="director" value="${esc(f.director)}"></div>
           <div class="field"><label>Ano</label><input data-film="${i}" data-key="year" value="${esc(f.year)}"></div>
           <div class="field"><label>Gênero</label><input data-film="${i}" data-key="genre" value="${esc(f.genre)}"></div>
-          <div class="field" style="display:flex;align-items:center;padding-top:1.5rem;">
+          <div class="field" style="display:flex;flex-direction:column;justify-content:center;padding-top:1.5rem;gap:4px;">
             <label class="checkbox-row">
               <input type="checkbox" data-film="${i}" data-key="hero" ${f.hero?'checked':''}>
               Aparece no hero
             </label>
+            <span class="field-note" style="margin-left:0">necessário ter imagem paisagem (horizontal)</span>
           </div>
           <div class="field full"><label>Sinopse PT</label><textarea data-film="${i}" data-key="synopsis">${esc(f.synopsis)}</textarea></div>
           <div class="field full"><label>Sinopse EN</label><textarea data-film="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
-          ${imgField('film', i, 'imgPortrait',  'Imagem retrato',  f.imgPortrait)}
-          ${imgField('film', i, 'imgLandscape', 'Imagem paisagem', f.imgLandscape)}
+          ${imgField('film', i, 'imgPortrait',  'Imagem retrato (vertical)',   f.imgPortrait)}
+          ${imgField('film', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape)}
           ${videoField('film', i, 'videoHover',   'Preview (.mp4)', f.videoHover||'',   'recomendado máx 15 segundos')}
           ${videoField('film', i, 'videoTrailer', 'Trailer (.mp4)', f.videoTrailer||'')}
           <div class="field full">
