@@ -47,8 +47,18 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
   }
 
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
+  function updateStatement() {
+    const el = document.getElementById('vemaiStatement');
+    if (!el) return;
+    const lang = i18next.language;
+    const v = pagesData.vemai || {};
+    const text = lang === 'en' ? v.statementEn : v.statementPt;
+    if (text) el.innerHTML = text;
+  }
+
   window.updateDOM = function() {
     applyI18n();
+    updateStatement();
     renderFilmes();
   }
 
@@ -87,6 +97,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       }
     }
   }, () => {
+    updateStatement();
     renderFilmes();
     observeReveal();
   });

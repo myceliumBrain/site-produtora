@@ -670,7 +670,7 @@ function removeUpcoming(i) {
 ══════════════════════════════════════════════════════════ */
 function renderPagHistoria() {
   const m = data.historiaData.manifesto;
-  const h = data.pagesData.historia || {};
+  const h = (data.pagesData && data.pagesData.historia) || {};
   document.getElementById('pagHistoriaForm').innerHTML = `
     <div class="panel-header" style="margin-top:0"><span class="panel-title" style="font-size:14px">Cabeçalho da página</span></div>
     <div class="fields-grid">
@@ -700,7 +700,7 @@ function renderPagHistoria() {
 
 function renderPagPrincipal() {
   const m = data.historiaData.manifesto;
-  const ix = data.pagesData.index || {};
+  const ix = (data.pagesData && data.pagesData.index) || {};
   document.getElementById('pagPrincipalForm').innerHTML = `
     <div class="panel-header" style="margin-top:0"><span class="panel-title" style="font-size:14px">Bloco de identidade</span></div>
     <div class="fields-grid">
@@ -729,7 +729,7 @@ function renderPagPrincipal() {
 }
 
 function renderPagProducoes() {
-  const p = data.pagesData.producoes || {};
+  const p = (data.pagesData && data.pagesData.producoes) || {};
   document.getElementById('pagProducoesForm').innerHTML = `
     <div class="fields-grid">
       <div class="field"><label>Título PT</label><input id="pp-titlePt" value="${esc(p.titlePt||'')}"></div>
@@ -738,7 +738,7 @@ function renderPagProducoes() {
 }
 
 function renderPagContato() {
-  const c = data.pagesData.contato || {};
+  const c = (data.pagesData && data.pagesData.contato) || {};
   document.getElementById('pagContatoForm').innerHTML = `
     <div class="fields-grid">
       <div class="field"><label>Eyebrow PT</label><input id="pc-eyebrowPt" value="${esc(c.eyebrowPt||'')}"></div>
@@ -752,13 +752,15 @@ function renderPagContato() {
 }
 
 function renderPagVemai() {
-  const v = data.pagesData.vemai || {};
+  const v = (data.pagesData && data.pagesData.vemai) || {};
   document.getElementById('pagVemaiForm').innerHTML = `
     <div class="fields-grid">
       <div class="field"><label>Eyebrow PT</label><input id="pv-eyebrowPt" value="${esc(v.eyebrowPt||'')}"></div>
       <div class="field"><label>Eyebrow EN</label><input id="pv-eyebrowEn" value="${esc(v.eyebrowEn||'')}"></div>
       <div class="field"><label>Título PT</label><input id="pv-titlePt" value="${esc(v.titlePt||'')}"></div>
       <div class="field"><label>Título EN</label><input id="pv-titleEn" value="${esc(v.titleEn||'')}"></div>
+      <div class="field full"><label>Frase PT <span class="field-note">aceita HTML — ex: Ele &lt;em&gt;acontece&lt;/em&gt;</span></label><textarea id="pv-statementPt">${esc(v.statementPt||'')}</textarea></div>
+      <div class="field full"><label>Frase EN <span class="field-note">aceita HTML</span></label><textarea id="pv-statementEn">${esc(v.statementEn||'')}</textarea></div>
       <div class="field full"><label>Subtítulo PT</label><textarea id="pv-subPt">${esc(v.subPt||'')}</textarea></div>
       <div class="field full"><label>Subtítulo EN</label><textarea id="pv-subEn">${esc(v.subEn||'')}</textarea></div>
     </div>`;
@@ -1031,6 +1033,7 @@ function collectAll() {
       if (el) data.historiaData.manifesto[f] = el.value;
     });
   if (!data.pagesData) data.pagesData = {};
+  if (!data.pagesData) data.pagesData = {};
   if (!data.pagesData.producoes) data.pagesData.producoes = {};
   ['titlePt','titleEn'].forEach(f => {
     const el = document.getElementById('pp-' + f);
@@ -1042,7 +1045,7 @@ function collectAll() {
     if (el) data.pagesData.contato[f] = el.value;
   });
   if (!data.pagesData.vemai) data.pagesData.vemai = {};
-  ['eyebrowPt','eyebrowEn','titlePt','titleEn','subPt','subEn'].forEach(f => {
+  ['eyebrowPt','eyebrowEn','titlePt','titleEn','statementPt','statementEn','subPt','subEn'].forEach(f => {
     const el = document.getElementById('pv-' + f);
     if (el) data.pagesData.vemai[f] = el.value;
   });
