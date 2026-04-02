@@ -53,6 +53,7 @@
   <div id="app">
 
     <div class="adm-topbar">
+      <button class="adm-menu-btn" onclick="toggleAdmDrawer()" aria-label="Menu">☰</button>
       <span class="adm-topbar-logo">pontos de fuga / admin</span>
       <div class="adm-topbar-right">
         <span id="saveStatus" class="save-status">carregando…</span>
@@ -63,6 +64,7 @@
       </div>
     </div>
 
+    <div class="adm-drawer-backdrop" id="admDrawerBackdrop" onclick="toggleAdmDrawer()"></div>
     <div class="adm-layout">
 
       <!-- SIDEBAR -->

@@ -313,6 +313,19 @@ function showPanel(name) {
   document.getElementById('panel-' + name).classList.add('active');
   document.querySelector(`[onclick="showPanel('${name}')"]`).classList.add('active');
   if (name === 'acessos') renderAcessos();
+  closeAdmDrawer();
+}
+
+function toggleAdmDrawer() {
+  const sidebar  = document.querySelector('.adm-sidebar');
+  const backdrop = document.getElementById('admDrawerBackdrop');
+  const open     = sidebar.classList.toggle('open');
+  backdrop.classList.toggle('open', open);
+}
+
+function closeAdmDrawer() {
+  document.querySelector('.adm-sidebar').classList.remove('open');
+  document.getElementById('admDrawerBackdrop').classList.remove('open');
 }
 
 /* ══════════════════════════════════════════════════════════
