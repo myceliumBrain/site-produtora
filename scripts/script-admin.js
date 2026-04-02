@@ -116,6 +116,23 @@ async function ghPutBinary(path, base64Content, message) {
   return res.json();
 }
 
+async function ghDelete(path, sha, message) {
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO}/contents/${path}`,
+    {
+      method: 'DELETE',
+      headers: {
+        Authorization: `token ${TOKEN}`,
+        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message, sha, branch: BRANCH })
+    }
+  );
+  if (!res.ok) { const e = await res.json(); throw new Error(e.message || `DELETE → ${res.status}`); }
+  return res.json();
+}
+
 async function loadData(tok) {
   if (tok) TOKEN = tok;
   const file = await ghGet(FILE);
@@ -877,16 +894,17 @@ function collectAll() {
 function imgField(dataAttr, idx, key, labelText, currentVal) {
   const fieldId   = `img-${dataAttr}-${idx}-${key}`;
   const previewId = `prev-${dataAttr}-${idx}-${key}`;
+  const btnText   = currentVal ? '↑ substituir' : '↑ enviar';
   return `
     <div class="field full">
       <label>${labelText}</label>
-      <input type="hidden" id="${fieldId}" ${dataAttr}="${idx}" data-key="${key}" value="${esc(currentVal)}">
+      <input type="hidden" id="${fieldId}" data-${dataAttr}="${idx}" data-key="${key}" value="${esc(currentVal)}">
       <div class="img-field-row">
         <img id="${previewId}" class="img-field-thumb"
              src="${esc(currentVal)}" style="${currentVal ? '' : 'display:none'}"
              onerror="this.style.display='none'">
         <label class="upload-label">
-          <span class="upload-label-text">↑ enviar</span>
+          <span class="upload-label-text">${btnText}</span>
           <input type="file" accept="image/*" onchange="uploadImage(this,'${fieldId}','${previewId}')">
         </label>
       </div>
@@ -902,26 +920,38 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
   span.textContent = '…';
   label.style.pointerEvents = 'none';
 
-  const safeName = file.name.replace(/[^\w.-]/g, '_');
-  const filename = `${Date.now()}-${safeName}`;
-  const path     = `assets/filmes/${filename}`;
+  // Nome estável por slot (ex: film-0-imgPortrait.jpg) — garante um arquivo por campo
+  const ext      = file.name.split('.').pop().toLowerCase();
+  const slotName = targetFieldId.replace(/^img-/, ''); // ex: film-0-imgPortrait
+  const newPath  = `assets/filmes/${slotName}.${ext}`;
+
+  // Deleta arquivo anterior do mesmo slot (mesmo que tenha extensão diferente)
+  const field      = document.getElementById(targetFieldId);
+  const currentUrl = field.value;
+  const rawBase    = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
+  if (currentUrl && currentUrl.startsWith(rawBase)) {
+    const oldPath = currentUrl.replace(rawBase, '').split('?')[0];
+    try {
+      const oldFile = await ghGet(oldPath);
+      await ghDelete(oldPath, oldFile.sha, `assets: remove ${oldPath}`);
+    } catch { /* arquivo anterior não encontrado — segue */ }
+  }
 
   const reader = new FileReader();
   reader.onload = async (e) => {
     const base64 = e.target.result.split(',')[1];
     try {
-      await ghPutBinary(path, base64, `assets: upload ${filename}`);
-      const url = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${path}`;
-      const field = document.getElementById(targetFieldId);
+      await ghPutBinary(newPath, base64, `assets: upload ${newPath}`);
+      const url   = `${rawBase}${newPath}`;
       field.value = url;
       field.dispatchEvent(new Event('input', { bubbles: true }));
       const thumb = document.getElementById(previewId);
-      if (thumb) { thumb.src = url; thumb.style.display = 'block'; }
+      if (thumb) { thumb.src = `${url}?t=${Date.now()}`; thumb.style.display = 'block'; }
+      span.textContent = '↑ substituir';
       toast('Imagem enviada!', 'ok');
     } catch (err) {
       toast('Erro no upload: ' + err.message, 'err');
     } finally {
-      span.textContent = '↑ enviar';
       label.style.pointerEvents = '';
       fileInput.value = '';
     }
