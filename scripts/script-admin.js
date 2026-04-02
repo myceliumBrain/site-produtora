@@ -791,6 +791,10 @@ function renderParceiros() {
       <div class="card" id="parceiro-card-${i}">
         <div class="card-header" onclick="toggleCard('parceiro-card-${i}')">
           <div class="card-header-left">
+            ${reorderBtns(i, parceiros.length,
+              `event.stopPropagation(); moveParceiro(${i}, ${i-1})`,
+              `event.stopPropagation(); moveParceiro(${i}, ${i+1})`
+            )}
             <span class="card-num">${String(i+1).padStart(2,'0')}</span>
             <span class="card-name">${esc(p.name) || '(sem nome)'}</span>
           </div>
@@ -816,6 +820,10 @@ function addParceiro() {
   const idx = data.historiaData.parceiros.length - 1;
   toggleCard(`parceiro-card-${idx}`);
   document.getElementById(`parceiro-card-${idx}`).scrollIntoView({ behavior: 'smooth' });
+}
+
+function moveParceiro(fromIdx, toIdx) {
+  moveItem(data.historiaData.parceiros, fromIdx, toIdx, renderParceiros);
 }
 
 function removeParceiro(i) {
