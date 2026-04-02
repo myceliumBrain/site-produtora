@@ -9,7 +9,10 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
   function getFilme() {
     const params = new URLSearchParams(window.location.search);
     const idx    = params.get('i');
-    const source = params.get('src') === 'upcoming' ? upcomingFilms : films;
+    const src    = params.get('src');
+    const source = src === 'upcoming' ? upcomingFilms
+                 : src === 'other'    ? otherProductions
+                 :                      films;
     return source[parseInt(idx)] || null;
   }
 
@@ -43,7 +46,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
     // meta
     document.getElementById('filmeMeta').textContent =
-      `Dir. ${f.director}`;
+      f.director ? `Dir. ${f.director}` : '';
 
     // sinopse
     document.getElementById('filmeSynopsis').textContent = synopsis || '';

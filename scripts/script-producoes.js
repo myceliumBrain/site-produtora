@@ -111,9 +111,12 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
   /* ── CRIA CARD PEQUENO (outras produções) ── */
   function createSmallCard(prod, index) {
-    const title = i18next.language === 'en' && prod.titleEn ? prod.titleEn : prod.title;
+    const title   = i18next.language === 'en' && prod.titleEn ? prod.titleEn : prod.title;
+    const dirHtml = prod.director
+      ? `<span class="other-card__dir">Dir. ${prod.director}</span>`
+      : `<span class="other-card__dir"></span>`;
     return `
-      <div class="other-card">
+      <a href="filme.html?i=${index}&src=other" class="other-card">
         <div class="other-card__img">
           ${placeholder}
           <img src="${prod.imgPortrait || ''}" alt="${title}" onerror="this.style.display='none'">
@@ -121,11 +124,27 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         <div class="other-card__info">
           <div class="other-card__title">${title}</div>
           <div class="other-card__meta">
-            <span class="other-card__dir">Dir. ${prod.director || ''}</span>
+            ${dirHtml}
             <span class="other-card__year">${prod.year || ''}</span>
           </div>
         </div>
-      </div>`;
+      </a>`;
+  }
+
+  /* ── HOVER DOS OUTROS CARDS ── */
+  function attachOtherCardHovers() {
+    document.querySelectorAll('.other-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        cardColorIdx = (cardColorIdx + 1) % cardPalette.length;
+        const color = cardPalette[cardColorIdx];
+        card.style.outline = `2px solid ${color}`;
+        card.querySelector('.other-card__title').style.color = color;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.outline = '';
+        card.querySelector('.other-card__title').style.color = '';
+      });
+    });
   }
 
   /* ── RENDERIZA OUTRAS PRODUÇÕES ── */
@@ -139,6 +158,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     }
     divider.style.display = 'flex';
     grid.innerHTML = otherProductions.map((prod, i) => createSmallCard(prod, i)).join('');
+    attachOtherCardHovers();
   }
 
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */

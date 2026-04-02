@@ -334,11 +334,6 @@ function saveCard(type, i) {
   const renderMap = { film: renderFilms, other: renderOtherProductions, upcoming: renderUpcoming, marco: renderMarcos, team: renderTeam };
   if (renderMap[type]) renderMap[type]();
 
-  // Reabre o card que estava sendo editado após a re-renderização
-  const cardId = type === 'other' ? `other-card-${i}` : `${type}-card-${i}`;
-  const card = document.getElementById(cardId);
-  if (card) card.classList.add('open');
-
   toast('Visual atualizado — clique em “Salvar no GitHub” para confirmar.', 'ok');
 }
 

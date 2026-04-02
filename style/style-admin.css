@@ -156,9 +156,12 @@ a, button { cursor: pointer !important; }
   min-height: 1.2em;
 }
 
-/* card-body aberto via toggleCard */
-.card-body.open,
-#card-add-access.open { display: block !important; }
+/* card-body aberto via toggleCard (classe .open no próprio body) */
+.card-body.open {
+  max-height: 1800px;
+  padding: 1.25rem;
+  border-top-color: var(--border-f);
+}
 
 
 /* ── CONTENT ── */
@@ -282,11 +285,19 @@ a, button { cursor: pointer !important; }
 .card.open .card-chevron { transform: rotate(180deg); }
 
 .card-body {
-  display: none;
-  padding: 1.25rem;
-  border-top: 1px solid var(--border-f);
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 1.25rem;
+  border-top: 1px solid transparent;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              padding    0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s ease;
 }
-.card.open .card-body { display: block; }
+.card.open .card-body {
+  max-height: 1800px;
+  padding: 1.25rem;
+  border-top-color: var(--border-f);
+}
 
 /* ── FIELDS GRID ── */
 .fields-grid {
