@@ -238,12 +238,20 @@
       }
     ],
     "parceiros": [
-      "ANCINE",
-      "Petrobras Cultural",
-      "Fundo Setorial do Audiovisual",
-      "Festival de Brasília",
-      "Cinélatino",
-      "Festival de Gramado"
+      "Arte 1",
+      "Banco do Brasil",
+      "BNDES",
+      "BNDE",
+      "Canal Brasil",
+      "Canal Curta",
+      "Downtown Filmes",
+      "globofilmes",
+      "HBO",
+      "imagem filmes",
+      "Lojas Americanas",
+      "Neoenergia",
+      "Netflix",
+      "Rio Filme"
     ]
   },
   "_auth": {
@@ -268,8 +276,8 @@
       "titleEn": "A Ordem do Mundo",
       "director": "Aderbal Freire Filho",
       "year": "",
-      "genre": "",
-      "synopsis": "Monólogo de Drica Moraes, no papel da responsável por organizar todos os fatos que ocorrem no planeta, catalogando e arquivando recortes de manchetes e notícias. Texto de Patrícia Melo e direção de Aderbal Freire Filho.",
+      "genre": "Peça Teatral",
+      "synopsis": "A Ordem do Mundo\nPeça Teatral\n\nMonólogo de Drica Moraes, no papel da responsável por organizar todos os fatos que ocorrem no planeta, catalogando e arquivando recortes de manchetes e notícias.\n\nTexto de Patrícia Melo e direção de Aderbal Freire Filho.\n\nFicou em cartaz onde? Por quanto tempo? \n",
       "synopsisEn": "A monologue by Drica Moraes, in the role of the person responsible for organizing all the events that occur on the planet, cataloging and archiving clippings of headlines and news. Text by Patrícia Melo and directed by Aderbal Freire Filho.",
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/A_Ordem_do_Mundo_p.png"
     },
