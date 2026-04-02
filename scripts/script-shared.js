@@ -4,6 +4,64 @@
    Depende de: i18next (carregado antes no HTML)
    ============================================================ */
 
+/* ── PALETA CÍCLICA COMPARTILHADA ── */
+const PALETTE = ['#c9a84c', '#c4622d', '#6b8f71', '#8b1a1a'];
+
+/* ── RECURSOS i18n COMUNS (menu + footer) ── */
+const COMMON_I18N = {
+  pt: {
+    'nav.home': 'Início',
+    'menu.home': 'Início', 'menu.home.count': 'Pag. inicial',
+    'menu.productions': 'Produções', 'menu.productions.count': '10+',
+    'menu.upcoming': 'Vem aí', 'menu.upcoming.count': 'Em produção',
+    'menu.history': 'Nossa história', 'menu.history.count': 'Sobre',
+    'menu.contact': 'Contato', 'menu.contact.count': 'fale com a gente',
+    'footer.col1': 'Navegação', 'footer.copy': '© 2025 - 000 FILMES',
+  },
+  en: {
+    'nav.home': 'Home',
+    'menu.home': 'Home', 'menu.home.count': 'Beginning',
+    'menu.productions': 'Productions', 'menu.productions.count': '10+',
+    'menu.upcoming': 'Coming Soon', 'menu.upcoming.count': 'In Production',
+    'menu.history': 'Our Story', 'menu.history.count': 'About',
+    'menu.contact': 'Contact', 'menu.contact.count': 'get in touch',
+    'footer.col1': 'Navigation', 'footer.copy': '© 2025 - 000 FILMES',
+  }
+};
+
+/* ── MAPA DE STATUS → chave i18n ── */
+const statusKey = {
+  filming: 'status.filming',
+  dev:     'status.dev',
+  post:    'status.post',
+};
+
+/* ── SCROLL REVEAL ── */
+function observeReveal(threshold = 0.1) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold });
+
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
+}
+
+/* ── APLICA TRADUÇÕES data-i18n ── */
+function applyI18n() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = i18next.t(el.getAttribute('data-i18n'));
+  });
+}
+
+/* ── PLACEHOLDER SVG ── */
+function placeholderSVG(size = 48, sw = 0.8, cls = 'film-card__placeholder') {
+  return `<div class="${cls}"><svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="white"><rect x="3" y="3" width="18" height="18" rx="1" stroke-width="${sw}"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="${sw}"/><path d="M21 15l-5-5L5 21" stroke-width="${sw}"/></svg></div>`;
+}
+
 /* ── MENU TOGGLE ── */
 const menuBtn     = document.getElementById('menuBtn');
 const menuOverlay = document.getElementById('menuOverlay');
@@ -26,12 +84,11 @@ function closeMenu() {
 menuBtn.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
 
 /* ── COR CÍCLICA DOS BOTÕES DA HEADER NO HOVER ── */
-const headerPalette = ['#c9a84c', '#c4622d', '#6b8f71', '#8b1a1a'];
 let headerColorIdx = -1;
 
 menuBtn.addEventListener('mouseenter', () => {
-  headerColorIdx = (headerColorIdx + 1) % headerPalette.length;
-  menuBtn.style.color = headerPalette[headerColorIdx];
+  headerColorIdx = (headerColorIdx + 1) % PALETTE.length;
+  menuBtn.style.color = PALETTE[headerColorIdx];
 });
 menuBtn.addEventListener('mouseleave', () => {
   menuBtn.style.color = '';
@@ -39,8 +96,8 @@ menuBtn.addEventListener('mouseleave', () => {
 
 document.querySelectorAll('.header-link').forEach(el => {
   el.addEventListener('mouseenter', () => {
-    headerColorIdx = (headerColorIdx + 1) % headerPalette.length;
-    const color = headerPalette[headerColorIdx];
+    headerColorIdx = (headerColorIdx + 1) % PALETTE.length;
+    const color = PALETTE[headerColorIdx];
     el.style.color = color;
     el.style.borderColor = color;
     el.style.fontWeight = '700';

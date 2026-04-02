@@ -71,11 +71,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       return `
         <a href="filme.html?i=${originalIndex}" class="preview-card reveal">
           <div class="preview-card__bg">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(240,236,228,0.1)">
-              <rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.6"/>
-              <circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.6"/>
-              <path d="M21 15l-5-5L5 21" stroke-width="0.6"/>
-            </svg>
+            ${placeholderSVG(48, 0.6)}
             <img class="preview-card__img-portrait"
                 src="${f.imgPortrait}"
                 alt="${lang === 'en' ? f.titleEn : f.title}"
@@ -90,13 +86,12 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         </a>`;
     }).join('');
 
-    const previewPalette = ['#c9a84c', '#c4622d', '#6b8f71', '#8b1a1a'];
     let previewColorIdx = -1;
 
     document.querySelectorAll('.preview-card').forEach(card => {
       card.addEventListener('mouseenter', () => {
-        previewColorIdx = (previewColorIdx + 1) % previewPalette.length;
-        const color = previewPalette[previewColorIdx];
+        previewColorIdx = (previewColorIdx + 1) % PALETTE.length;
+        const color = PALETTE[previewColorIdx];
         card.style.outline = `3px solid ${color}`;
         card.querySelector('.preview-card__title').style.color = color;
       });
@@ -106,15 +101,10 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       });
     });
 
-    observeReveal();
+    observeReveal(0.15);
   }
 
   /* ── UPCOMING (lê upcomingFilms do script-shared.js) ── */
-  const statusKey = {
-    filming: 'status.filming',
-    dev:     'status.dev',
-    post:    'status.post',
-  };
 
   function renderUpcoming() {
     const lang = i18next.language;
@@ -138,23 +128,8 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         </li>`;
     }).join('');
 
-    observeReveal();
+    observeReveal(0.15);
   }
-
-  /* ── SCROLL REVEAL ── */
-  function observeReveal() {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
-  }
-
 
   /* ── IDENTITY (tagline + sub do index, editáveis via admin) ── */
   function renderIdentity() {
@@ -169,9 +144,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
   window.updateDOM = function() {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      el.textContent = i18next.t(el.getAttribute('data-i18n'));
-    });
+    applyI18n();
     renderIdentity();
     renderPreview();
     renderUpcoming();
@@ -185,6 +158,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       resources: {
         pt: {
           translation: {
+            ...COMMON_I18N.pt,
             'nav.portfolio':          'Portfólio',
             'identity.link':          'Nossa história',
             'cta.eyebrow':            'Contato',
@@ -203,22 +177,11 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
             'status.filming':         'Filmando',
             'status.dev':             'Desenvolvimento',
             'status.post':            'Pós-produção',
-            'footer.col1':            'Navegação',
-            'footer.copy':            '© 2025 - 000 FILMES',
-            'menu.home':              'Início',
-            'menu.home.count':        '',
-            'menu.productions':       'Produções',
-            'menu.productions.count': '10+',
-            'menu.upcoming':          'Vem aí',
-            'menu.upcoming.count':    'Em produção',
-            'menu.history':           'Nossa história',
-            'menu.history.count':     'Sobre',
-            'menu.contact':           'Contato',
-            'menu.contact.count':     'fale com a gente',
           }
         },
         en: {
           translation: {
+            ...COMMON_I18N.en,
             'nav.portfolio':          'Portfolio',
             'identity.link':          'Our story',
             'cta.eyebrow':            'Contact',
@@ -237,18 +200,6 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
             'status.filming':         'Filming',
             'status.dev':             'Development',
             'status.post':            'Post-production',
-            'footer.col1':            'Navigation',
-            'footer.copy':            '© 2025 - 000 FILMES',
-            'menu.home':              'Home',
-            'menu.home.count': '',
-            'menu.productions':       'Productions',
-            'menu.productions.count': '10+',
-            'menu.upcoming':          'Coming Soon',
-            'menu.upcoming.count':    'In Production',
-            'menu.history':           'Our Story',
-            'menu.history.count':     'About',
-            'menu.contact':           'Contact',
-            'menu.contact.count':     'get in touch',
           }
         }
       }
@@ -257,6 +208,6 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       renderIdentity();
       renderPreview();
       renderUpcoming();
-      observeReveal();
+      observeReveal(0.15);
     });
 });

@@ -6,21 +6,6 @@
    Uso principal: EMAILJS
    ============================================================ */
 
-  /* ── SCROLL REVEAL ── */
-  function observeReveal() {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
-  }
-
-
   /* ── FORMULÁRIO ── */
   const form     = document.getElementById('contactForm');
   const feedback = document.getElementById('formFeedback');
@@ -128,11 +113,7 @@
 
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
   window.updateDOM = function() {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      const val = i18next.t(key);
-      if (val !== key) el.textContent = val;
-    });
+    applyI18n();
   }
 
 
@@ -142,7 +123,7 @@
     resources: {
       pt: {
         translation: {
-          'nav.home':               'Início',
+          ...COMMON_I18N.pt,
           'nav.portfolio':          'Portfólio',
           'nav.shop':               'Loja',
           'contact.eyebrow':        'Fale com a gente',
@@ -155,23 +136,11 @@
           'form.message':           'Mensagem',
           'form.send':              'Enviar mensagem',
           'form.whatsapp':          'Prefere o WhatsApp?',
-          'footer.col1':            'Navegação',
-          'footer.copy':            '© 2025 - 000 FILMES',
-          'menu.home':              'Início',
-          'menu.home.count':        'Página inicial',
-          'menu.productions':       'Produções',
-          'menu.productions.count': '10+',
-          'menu.upcoming':          'Vem aí',
-          'menu.upcoming.count':    'Em produção',
-          'menu.history':           'Nossa história',
-          'menu.history.count':     'Sobre',
-          'menu.contact':           'Contato',
-          'menu.contact.count':     'fale com a gente',
         }
       },
       en: {
         translation: {
-          'nav.home':               'Home',
+          ...COMMON_I18N.en,
           'nav.portfolio':          'Portfolio',
           'nav.shop':               'Shop',
           'contact.eyebrow':        'Get in touch',
@@ -184,18 +153,6 @@
           'form.message':           'Message',
           'form.send':              'Send message',
           'form.whatsapp':          'Prefer WhatsApp?',
-          'footer.col1':            'Navigation',
-          'footer.copy':            '© 2025 - 000 FILMES',
-          'menu.home':              'Home',
-          'menu.home.count':        'Homepage',
-          'menu.productions':       'Productions',
-          'menu.productions.count': '10+',
-          'menu.upcoming':          'Coming Soon',
-          'menu.upcoming.count':    'In Production',
-          'menu.history':           'Our Story',
-          'menu.history.count':     'About',
-          'menu.contact':           'Contact',
-          'menu.contact.count':     'get in touch',
         }
       }
     }

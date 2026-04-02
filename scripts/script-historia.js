@@ -61,28 +61,12 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
           : `<div class="historia-parceiro">${name}</div>`;
       }).join('');
 
-    observeReveal();
-  }
-
-  /* ── SCROLL REVEAL ── */
-  function observeReveal() {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
+    observeReveal(0.15);
   }
 
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
   window.updateDOM = function() {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      el.textContent = i18next.t(el.getAttribute('data-i18n'));
-    });
+    applyI18n();
     renderHistoria();
   }
 
@@ -92,20 +76,8 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     resources: {
       pt: {
         translation: {
-          'nav.home':               'Início',
+          ...COMMON_I18N.pt,
           'nav.portfolio':          'Portfólio',
-          'footer.col1':            'Navegação',
-          'footer.copy':            '© 2025 - 000 FILMES',
-          'menu.home':              'Início',
-          'menu.home.count':        'Página inicial',
-          'menu.productions':       'Produções',
-          'menu.productions.count': '10+',
-          'menu.upcoming':          'Vem aí',
-          'menu.upcoming.count':    'Em produção',
-          'menu.history':           'Nossa história',
-          'menu.history.count':     'Sobre',
-          'menu.contact':           'Contato',
-          'menu.contact.count':     'fale com a gente',
           'historia.team.eyebrow':  'Quem faz acontecer',
           'historia.marcos.eyebrow':'Marcos',
           'historia.parceiros.eyebrow': 'Parceiros',
@@ -113,20 +85,8 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       },
       en: {
         translation: {
-          'nav.home':               'Home',
+          ...COMMON_I18N.en,
           'nav.portfolio':          'Portfolio',
-          'footer.col1':            'Navigation',
-          'footer.copy':            '© 2025 - 000 FILMES',
-          'menu.home':              'Home',
-          'menu.home.count':        'Home page',
-          'menu.productions':       'Productions',
-          'menu.productions.count': '10+',
-          'menu.upcoming':          'Coming Soon',
-          'menu.upcoming.count':    'In Production',
-          'menu.history':           'Our Story',
-          'menu.history.count':     'About',
-          'menu.contact':           'Contact',
-          'menu.contact.count':     'get in touch',
           'historia.team.eyebrow':  'The team',
           'historia.marcos.eyebrow':'Milestones',
           'historia.parceiros.eyebrow': 'Partners',

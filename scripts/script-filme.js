@@ -59,23 +59,8 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     observeReveal();
   }
 
-  function observeReveal() {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
-  }
-
   window.updateDOM = function() {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      el.textContent = i18next.t(el.getAttribute('data-i18n'));
-    });
+    applyI18n();
     renderFilme();
   }
 
@@ -84,42 +69,18 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     resources: {
       pt: {
         translation: {
-          'nav.home':               'Início',
+          ...COMMON_I18N.pt,
           'nav.portfolio':          'Portfólio',
           'nav.shop':               'Loja',
-          'footer.col1':            'Navegação',
           'footer.col2':            'Mais',
-          'footer.copy':            '© 2025 - 000 FILMES',
-          'menu.home':              'Início',
-          'menu.home.count':        'Página inicial',
-          'menu.productions':       'Produções',
-          'menu.productions.count': '10+',
-          'menu.upcoming':          'Vem aí',
-          'menu.upcoming.count':    'Em produção',
-          'menu.history':           'Nossa história',
-          'menu.history.count':     'Sobre',
-          'menu.contact':           'Contato',
-          'menu.contact.count':     'fale com a gente',
         }
       },
       en: {
         translation: {
-          'nav.home':               'Home',
+          ...COMMON_I18N.en,
           'nav.portfolio':          'Portfolio',
           'nav.shop':               'Shop',
-          'footer.col1':            'Navigation',
           'footer.col2':            'More',
-          'footer.copy':            '© 2025 - 000 FILMES',
-          'menu.home':              'Home',
-          'menu.home.count':        'Home page',
-          'menu.productions':       'Productions',
-          'menu.productions.count': '10+',
-          'menu.upcoming':          'Coming Soon',
-          'menu.upcoming.count':    'In Production',
-          'menu.history':           'Our Story',
-          'menu.history.count':     'About',
-          'menu.contact':           'Contact',
-          'menu.contact.count':     'get in touch',
         }
       }
     }

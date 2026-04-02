@@ -18,26 +18,14 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     });
   });
 
-  /* ── PLACEHOLDER SVG ── */
-  const placeholder = `
-    <div class="film-card__placeholder">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white">
-        <rect x="3" y="3" width="18" height="18" rx="1" stroke-width="0.8"/>
-        <circle cx="8.5" cy="8.5" r="1.5" stroke-width="0.8"/>
-        <path d="M21 15l-5-5L5 21" stroke-width="0.8"/>
-      </svg>
-    </div>`;
-
-
   /* ── PALETA HOVER DOS CARDS ── */
-  const cardPalette = ['#c9a84c', '#c4622d', '#6b8f71', '#8b1a1a'];
   let cardColorIdx = -1;
 
   function attachCardHovers() {
     document.querySelectorAll('.film-card').forEach(card => {
       card.addEventListener('mouseenter', () => {
-        cardColorIdx = (cardColorIdx + 1) % cardPalette.length;
-        const color = cardPalette[cardColorIdx];
+        cardColorIdx = (cardColorIdx + 1) % PALETTE.length;
+        const color = PALETTE[cardColorIdx];
         card.style.outline = `3px solid ${color}`;
         card.querySelector('.film-card__title').style.color = color;
         const video = card.querySelector('.film-card__video');
@@ -62,7 +50,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     return `
       <a href="filme.html?i=${index}" class="film-card ${wide} ${tall} card--${film.ratio}${hasVideo ? ' card--has-video' : ''}">
         <div class="film-card__img">
-          ${placeholder}
+          ${placeholderSVG()}
           <img class="img-portrait"
                src="${film.imgPortrait}"
                alt="${title}"
@@ -120,7 +108,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     return `
       <a href="filme.html?i=${index}&src=other" class="other-card">
         <div class="other-card__img">
-          ${placeholder}
+          ${placeholderSVG()}
           <img src="${prod.imgPortrait || ''}" alt="${title}" onerror="this.style.display='none'">
         </div>
         <div class="other-card__info">
@@ -137,8 +125,8 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
   function attachOtherCardHovers() {
     document.querySelectorAll('.other-card').forEach(card => {
       card.addEventListener('mouseenter', () => {
-        cardColorIdx = (cardColorIdx + 1) % cardPalette.length;
-        const color = cardPalette[cardColorIdx];
+        cardColorIdx = (cardColorIdx + 1) % PALETTE.length;
+        const color = PALETTE[cardColorIdx];
         card.style.outline = `2px solid ${color}`;
         card.querySelector('.other-card__title').style.color = color;
       });
@@ -165,9 +153,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
   window.updateDOM = function() {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      el.textContent = i18next.t(el.getAttribute('data-i18n'));
-    });
+    applyI18n();
 
     // Mantém o sort ativo ao trocar idioma
     const activeSort = document.querySelector('.sort-btn.active');
@@ -183,44 +169,20 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     resources: {
       pt: {
         translation: {
-          'nav.home':               'Início',
+          ...COMMON_I18N.pt,
           'section.title':          'Produções',
           'sort.relevance':         'Relevância',
           'sort.recent':            'Recentes',
           'sort.az':                'A–Z',
-          'footer.col1':            'Navegação',
-          'footer.copy':            '© 2025 - 000 FILMES',
-          'menu.home':              'Início',
-          'menu.home.count':        'Pag. inicial',
-          'menu.productions':       'Produções',
-          'menu.productions.count': '10+',
-          'menu.upcoming':          'Vem aí',
-          'menu.upcoming.count':    'Em produção',
-          'menu.history':           'Nossa história',
-          'menu.history.count':     'Sobre',
-          'menu.contact':           'Contato',
-          'menu.contact.count':     'fale com a gente',
         }
       },
       en: {
         translation: {
-          'nav.home':               'Home',
+          ...COMMON_I18N.en,
           'section.title':          'Productions',
           'sort.relevance':         'Relevance',
           'sort.recent':            'Latest',
           'sort.az':                'A–Z',
-          'footer.col1':            'Navigation',
-          'footer.copy':            '© 2025 - 000 FILMES',
-          'menu.home':              'Home',
-          'menu.home.count':        'Beggining',
-          'menu.productions':       'Productions',
-          'menu.productions.count': '10+',
-          'menu.upcoming':          'Coming Soon',
-          'menu.upcoming.count':    'In Production',
-          'menu.history':           'Our Story',
-          'menu.history.count':     'About',
-          'menu.contact':           'Contact',
-          'menu.contact.count':     'get in touch',
         }
       }
     }
