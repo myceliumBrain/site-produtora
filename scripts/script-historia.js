@@ -23,6 +23,16 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     p2.textContent = lang === 'en' ? d.manifesto.p2En : d.manifesto.p2;
 
   
+    /* ── FESTIVAIS ── */
+    document.querySelector('.historia-festivais__grid').innerHTML =
+      (d.festivais || []).map(f => `
+        <div class="historia-festival">
+          ${f.logo ? `<img src="${f.logo}" alt="${f.name}">` : ''}
+          <span class="historia-festival__name">${f.name}</span>
+          ${f.year ? `<span class="historia-festival__year">${f.year}</span>` : ''}
+        </div>`
+      ).join('');
+
     /* ── MARCOS ── */
     document.querySelector('.historia-marcos__list').innerHTML =
       d.marcos.map(m => `
@@ -78,8 +88,9 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         translation: {
           ...COMMON_I18N.pt,
           'nav.portfolio':          'Portfólio',
-          'historia.team.eyebrow':  'Quem faz acontecer',
-          'historia.marcos.eyebrow':'Marcos',
+          'historia.team.eyebrow':       'Quem faz acontecer',
+          'historia.festivais.eyebrow':  'Festivais',
+          'historia.marcos.eyebrow':     'Marcos',
           'historia.parceiros.eyebrow': 'Parceiros',
         }
       },
@@ -87,8 +98,9 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         translation: {
           ...COMMON_I18N.en,
           'nav.portfolio':          'Portfolio',
-          'historia.team.eyebrow':  'The team',
-          'historia.marcos.eyebrow':'Milestones',
+          'historia.team.eyebrow':       'The team',
+          'historia.festivais.eyebrow':  'Film Festivals',
+          'historia.marcos.eyebrow':     'Milestones',
           'historia.parceiros.eyebrow': 'Partners',
         }
       }

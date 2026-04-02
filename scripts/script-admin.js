@@ -323,6 +323,7 @@ function renderAll() {
   renderOtherProductions();
   renderUpcoming();
   renderManifesto();
+  renderFestivais();
   renderMarcos();
   renderTeam();
   renderParceiros();
@@ -367,11 +368,11 @@ function saveCard(type, i) {
   collectAll();
 
   // Re-renderiza o painel para refletir mudanças no header (título, ano, etc.)
-  const renderMap = { film: renderFilms, other: renderOtherProductions, upcoming: renderUpcoming, marco: renderMarcos, team: renderTeam };
+  const renderMap = { film: renderFilms, other: renderOtherProductions, upcoming: renderUpcoming, festival: renderFestivais, marco: renderMarcos, team: renderTeam };
   if (renderMap[type]) renderMap[type]();
 
   // Reabre o card e desabilita o botão salvar até haver nova alteração
-  const cardId = type === 'other' ? `other-card-${i}` : `${type}-card-${i}`;
+  const cardId = `${type}-card-${i}`;
   const card = document.getElementById(cardId);
   if (card) {
     card.classList.add('open');
@@ -673,6 +674,59 @@ function renderManifesto() {
 }
 
 /* ══════════════════════════════════════════════════════════
+   FESTIVAIS
+══════════════════════════════════════════════════════════ */
+function renderFestivais() {
+  const items = data.historiaData.festivais || [];
+  document.getElementById('festivalPanelCount').textContent = items.length + ' festivais';
+  document.getElementById('festivaisList').innerHTML = items.map((f, i) => `
+    <div class="card" id="festival-card-${i}">
+      <div class="card-header" onclick="toggleCard('festival-card-${i}')">
+        <div class="card-header-left">
+          ${reorderBtns(i, items.length,
+            `event.stopPropagation(); moveFestival(${i}, ${i-1})`,
+            `event.stopPropagation(); moveFestival(${i}, ${i+1})`
+          )}
+          <span class="card-num">${String(i+1).padStart(2,'0')}</span>
+          <span class="card-name">${f.name || '(sem nome)'}</span>
+          <span class="card-meta">${f.year || ''}</span>
+        </div>
+        <span class="card-chevron">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="fields-grid">
+          <div class="field"><label>Nome</label><input data-festival="${i}" data-key="name" value="${esc(f.name)}"></div>
+          <div class="field"><label>Ano</label><input data-festival="${i}" data-key="year" value="${esc(f.year)}"></div>
+          ${imgField('festival', i, 'logo', 'Logo', f.logo)}
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-danger btn-small" onclick="removeFestival(${i})">Remover</button>
+          <button class="btn btn-primary btn-small" onclick="saveCard('festival',${i})">Salvar</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function moveFestival(fromIdx, toIdx) {
+  moveItem(data.historiaData.festivais, fromIdx, toIdx, renderFestivais);
+}
+
+function addFestival() {
+  if (!data.historiaData.festivais) data.historiaData.festivais = [];
+  data.historiaData.festivais.push({ name: '', year: '', logo: '' });
+  renderFestivais();
+  const idx = data.historiaData.festivais.length - 1;
+  toggleCard(`festival-card-${idx}`);
+  document.getElementById(`festival-card-${idx}`).scrollIntoView({ behavior: 'smooth' });
+}
+
+function removeFestival(i) {
+  if (!confirm(`Remover "${data.historiaData.festivais[i].name || 'este festival'}"?`)) return;
+  data.historiaData.festivais.splice(i, 1);
+  renderFestivais();
+}
+
+/* ══════════════════════════════════════════════════════════
    MARCOS
 ══════════════════════════════════════════════════════════ */
 function renderMarcos() {
@@ -900,6 +954,11 @@ function collectAll() {
     if (!data.historiaData.parceiros[i]) return;
     data.historiaData.parceiros[i][key] = el.value;
   });
+  document.querySelectorAll('[data-festival]').forEach(el => {
+    const i = +el.dataset.festival, key = el.dataset.key;
+    if (!data.historiaData.festivais[i]) return;
+    data.historiaData.festivais[i][key] = el.value;
+  });
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -972,6 +1031,7 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
                   : '_p';
   const folder    = dataAttr === 'team'     ? 'assets/equipe'
                   : dataAttr === 'parceiro' ? 'assets/parceiros'
+                  : dataAttr === 'festival' ? 'assets/festivais'
                   : 'assets/filmes';
   const newPath   = `${folder}/${baseName}${keySuffix}.${ext}`;
 

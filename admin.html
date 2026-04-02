@@ -72,6 +72,7 @@
         <button class="nav-btn" onclick="showPanel('upcoming')">Em produção <span id="upcomingCount"></span></button>
         <span class="sidebar-section">Institucional</span>
         <button class="nav-btn" onclick="showPanel('manifesto')">Manifesto</button>
+        <button class="nav-btn" onclick="showPanel('festivais')">Festivais</button>
         <button class="nav-btn" onclick="showPanel('marcos')">Marcos</button>
         <button class="nav-btn" onclick="showPanel('team')">Equipe</button>
         <button class="nav-btn" onclick="showPanel('parceiros')">Parceiros</button>
@@ -111,6 +112,15 @@
         <div class="section-panel" id="panel-manifesto">
           <div class="panel-header"><span class="panel-title">Manifesto</span></div>
           <div id="manifestoForm"></div>
+        </div>
+
+        <div class="section-panel" id="panel-festivais">
+          <div class="panel-header">
+            <span class="panel-title">Festivais</span>
+            <span class="panel-count" id="festivalPanelCount"></span>
+          </div>
+          <div id="festivaisList"></div>
+          <button class="add-btn" onclick="addFestival()">+ adicionar festival</button>
         </div>
 
         <div class="section-panel" id="panel-marcos">
