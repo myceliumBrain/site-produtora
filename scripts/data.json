@@ -158,7 +158,13 @@
       "manifestoSub": "Fundada em 2018 · Rio de Janeiro",
       "manifestoSubEn": "Founded in 2018 · Rio de Janeiro"
     },
-    "festivais": [],
+    "festivais": [
+      {
+        "name": "48ª Mostra Internacional de Cinema de São Paulo INT'L Film Festival",
+        "year": "2024",
+        "logo": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/festivais/48ª_Mostra_Internacional_de_Cinema_de_São_Paulo_INT'L_Film_Festival_p.png"
+      }
+    ],
     "marcos": [
       {
         "year": "2018",
