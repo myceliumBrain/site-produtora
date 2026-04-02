@@ -496,7 +496,8 @@ function renderFilms() {
           <div class="field full"><label>Sinopse EN</label><textarea data-film="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
           ${imgField('film', i, 'imgPortrait',  'Imagem retrato',  f.imgPortrait)}
           ${imgField('film', i, 'imgLandscape', 'Imagem paisagem', f.imgLandscape)}
-          ${videoField('film', i, 'videoHover', 'Preview (.mp4)', f.videoHover||'', 'recomendado máx 15 segundos')}
+          ${videoField('film', i, 'videoHover',   'Preview (.mp4)', f.videoHover||'',   'recomendado máx 15 segundos')}
+          ${videoField('film', i, 'videoTrailer', 'Trailer (.mp4)', f.videoTrailer||'')}
           <div class="field full">
             <label>Tags</label>
             <div id="tags-film-${i}">${renderTags(f.tags||[], 'film', i)}</div>
@@ -1070,12 +1071,14 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
     ? titleRaw.replace(/\s+/g, '_').replace(/[/\\?#%*:|"<>]/g, '').slice(0, 80)
     : Math.floor(Math.random() * 1e6).toString();
   const isPreview   = targetFieldId.includes('videoHover');
+  const isTrailer   = targetFieldId.includes('videoTrailer');
   const isLandscape = targetFieldId.includes('imgLandscape');
   const keySuffix   = isLandscape ? '_l' : '_p';
   const folder      = dataAttr === 'team'                  ? 'assets/equipe'
                     : dataAttr === 'parceiro'               ? 'assets/parceiros'
                     : dataAttr === 'festival'               ? 'assets/festivais'
                     : isPreview                             ? 'assets/filmes/previews'
+                    : isTrailer                             ? 'assets/filmes/trailers'
                     : isLandscape && dataAttr === 'film'    ? 'assets/filmes/paisagens'
                     : dataAttr === 'film'                   ? 'assets/filmes/retratos'
                     : 'assets/filmes';
