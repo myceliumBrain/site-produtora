@@ -387,6 +387,37 @@ a, button { cursor: pointer !important; }
 .add-parceiro-row { display: flex; gap: 0.5rem; align-items: flex-end; }
 .add-parceiro-row .field { flex: 1; margin: 0; }
 
+/* ── IMAGE UPLOAD ── */
+.img-upload-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+.img-upload-row > input {
+  flex: 1;
+  min-width: 0;
+}
+.upload-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.9rem;
+  background: transparent;
+  border: 1px solid var(--border-f);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  white-space: nowrap;
+  margin-bottom: 0;
+  transition: border-color 0.2s, color 0.2s;
+}
+.upload-label:hover { border-color: var(--accent); color: var(--accent); }
+.upload-label input[type="file"] { display: none; }
+
 /* ── ADD BUTTON ── */
 .add-btn {
   display: flex;

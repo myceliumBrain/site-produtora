@@ -88,6 +88,13 @@ header {
 
 .logo-btn:active { transform: scale(0.97); }
 
+.logo-img {
+  height: 28px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
 .hamburger {
   display: flex;
   flex-direction: column;

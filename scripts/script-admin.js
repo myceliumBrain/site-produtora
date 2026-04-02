@@ -99,6 +99,23 @@ async function ghPut(path, content, sha, message) {
   return res.json();
 }
 
+async function ghPutBinary(path, base64Content, message) {
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO}/contents/${path}`,
+    {
+      method: 'PUT',
+      headers: {
+        Authorization: `token ${TOKEN}`,
+        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message, content: base64Content, branch: BRANCH })
+    }
+  );
+  if (!res.ok) { const e = await res.json(); throw new Error(e.message || `PUT → ${res.status}`); }
+  return res.json();
+}
+
 async function loadData(tok) {
   if (tok) TOKEN = tok;
   const file = await ghGet(FILE);
@@ -444,8 +461,8 @@ function renderFilms() {
           </div>
           <div class="field full"><label>Sinopse PT</label><textarea data-film="${i}" data-key="synopsis">${esc(f.synopsis)}</textarea></div>
           <div class="field full"><label>Sinopse EN</label><textarea data-film="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
-          <div class="field full"><label>Imagem retrato (URL)</label><input data-film="${i}" data-key="imgPortrait" value="${esc(f.imgPortrait)}"></div>
-          <div class="field full"><label>Imagem paisagem (URL)</label><input data-film="${i}" data-key="imgLandscape" value="${esc(f.imgLandscape)}"></div>
+          ${imgField('film', i, 'imgPortrait',  'Imagem retrato',  f.imgPortrait)}
+          ${imgField('film', i, 'imgLandscape', 'Imagem paisagem', f.imgLandscape)}
           <div class="field full">
             <label>Tags</label>
             <div id="tags-film-${i}">${renderTags(f.tags||[], 'film', i)}</div>
@@ -512,7 +529,7 @@ function renderOtherProductions() {
           <div class="field full"><label>Gênero</label><input data-other="${i}" data-key="genre" value="${esc(f.genre)}"></div>
           <div class="field full"><label>Sinopse PT</label><textarea data-other="${i}" data-key="synopsis">${esc(f.synopsis)}</textarea></div>
           <div class="field full"><label>Sinopse EN</label><textarea data-other="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
-          <div class="field full"><label>Imagem retrato (URL)</label><input data-other="${i}" data-key="imgPortrait" value="${esc(f.imgPortrait)}"></div>
+          ${imgField('other', i, 'imgPortrait', 'Imagem retrato', f.imgPortrait)}
         </div>
         <div class="card-actions">
           <button class="btn btn-danger btn-small" onclick="removeOtherProduction(${i})">Remover</button>
@@ -580,8 +597,8 @@ function renderUpcoming() {
           </div>
           <div class="field full"><label>Sinopse PT</label><textarea data-upcoming="${i}" data-key="synopsis">${esc(f.synopsis)}</textarea></div>
           <div class="field full"><label>Sinopse EN</label><textarea data-upcoming="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
-          <div class="field full"><label>Imagem retrato (URL)</label><input data-upcoming="${i}" data-key="imgPortrait" value="${esc(f.imgPortrait)}"></div>
-          <div class="field full"><label>Imagem paisagem (URL)</label><input data-upcoming="${i}" data-key="imgLandscape" value="${esc(f.imgLandscape)}"></div>
+          ${imgField('upcoming', i, 'imgPortrait',  'Imagem retrato',  f.imgPortrait)}
+          ${imgField('upcoming', i, 'imgLandscape', 'Imagem paisagem', f.imgLandscape)}
         </div>
         <div class="card-actions">
           <button class="btn btn-danger btn-small" onclick="removeUpcoming(${i})">Remover</button>
@@ -850,6 +867,61 @@ function collectAll() {
     if (!data.historiaData.team[i]) return;
     data.historiaData.team[i][key] = el.value;
   });
+}
+
+/* ══════════════════════════════════════════════════════════
+   IMAGE UPLOAD
+══════════════════════════════════════════════════════════ */
+
+/* Gera o HTML do campo de imagem com botão de upload */
+function imgField(dataAttr, idx, key, labelText, currentVal) {
+  const fieldId = `img-${dataAttr}-${idx}-${key}`;
+  return `
+    <div class="field full">
+      <label>${labelText}</label>
+      <div class="img-upload-row">
+        <input id="${fieldId}" ${dataAttr}="${idx}" data-key="${key}"
+               value="${esc(currentVal)}" placeholder="URL">
+        <label class="upload-label">
+          <span class="upload-label-text">↑ enviar</span>
+          <input type="file" accept="image/*" onchange="uploadImage(this,'${fieldId}')">
+        </label>
+      </div>
+    </div>`;
+}
+
+async function uploadImage(fileInput, targetFieldId) {
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  const label = fileInput.closest('label');
+  const span  = label.querySelector('.upload-label-text');
+  span.textContent = '…';
+  label.style.pointerEvents = 'none';
+
+  const safeName = file.name.replace(/[^\w.-]/g, '_');
+  const filename = `${Date.now()}-${safeName}`;
+  const path     = `assets/filmes/${filename}`;
+
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const base64 = e.target.result.split(',')[1];
+    try {
+      await ghPutBinary(path, base64, `assets: upload ${filename}`);
+      const url = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${path}`;
+      const field = document.getElementById(targetFieldId);
+      field.value = url;
+      field.dispatchEvent(new Event('input', { bubbles: true }));
+      toast('Imagem enviada!', 'ok');
+    } catch (err) {
+      toast('Erro no upload: ' + err.message, 'err');
+    } finally {
+      span.textContent = '↑ enviar';
+      label.style.pointerEvents = '';
+      fileInput.value = '';
+    }
+  };
+  reader.readAsDataURL(file);
 }
 
 /* ══════════════════════════════════════════════════════════
