@@ -1,6 +1,6 @@
 /* ============================================================
    script-shared.js
-   Compartilhado entre todas as páginas do site 000 filmes
+   Compartilhado entre todas as páginas do site pontos de fuga
    Depende de: i18next (carregado antes no HTML)
    ============================================================ */
 
@@ -16,7 +16,7 @@ const COMMON_I18N = {
     'menu.upcoming': 'Vem aí', 'menu.upcoming.count': 'Em produção',
     'menu.history': 'Nossa história', 'menu.history.count': 'Sobre',
     'menu.contact': 'Contato', 'menu.contact.count': 'fale com a gente',
-    'footer.col1': 'Navegação', 'footer.copy': '© 2025 - 000 FILMES',
+    'footer.col1': 'Navegação', 'footer.copy': '© 2025 - PONTOS DE FUGA',
   },
   en: {
     'nav.home': 'Home',
@@ -25,7 +25,7 @@ const COMMON_I18N = {
     'menu.upcoming': 'Coming Soon', 'menu.upcoming.count': 'In Production',
     'menu.history': 'Our Story', 'menu.history.count': 'About',
     'menu.contact': 'Contact', 'menu.contact.count': 'get in touch',
-    'footer.col1': 'Navigation', 'footer.copy': '© 2025 - 000 FILMES',
+    'footer.col1': 'Navigation', 'footer.copy': '© 2025 - PONTOS DE FUGA',
   }
 };
 

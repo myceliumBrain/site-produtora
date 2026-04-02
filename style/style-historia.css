@@ -1,5 +1,5 @@
 /* ================================================================
-   style-historia.css — 000 filmes · Edição Indie / Alternativa
+   style-historia.css — pontos de fuga · Edição Indie / Alternativa
    Visual: zine digital · produtora independente · DIY artístico
 
    Estratégia: página editorial, quase um fanzine impresso.
@@ -439,6 +439,9 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 /* Assimetria: itens alternados ocupam 2 colunas */
 .historia-festival:nth-child(5n+1) { grid-column: span 2; }
 .historia-festival:nth-child(5n+4) { grid-column: span 2; }
+
+.historia-festival--filler,
+.historia-parceiro--filler { pointer-events: none; }
 
 
 /* ─────────────────────────────────────────────────────────────────

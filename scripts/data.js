@@ -27,5 +27,5 @@ const dataReady = fetch('scripts/data.json')
     otherProductions = json.otherProductions || [];
   })
   .catch(err => {
-    console.error('[000 filmes] Falha ao carregar dados:', err);
+    console.error('[pontos de fuga] Falha ao carregar dados:', err);
   });

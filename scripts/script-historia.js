@@ -27,6 +27,12 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     const festivais = d.festivais || [];
     document.getElementById('festivaisDivider').style.display  = festivais.length ? '' : 'none';
     document.getElementById('festivaisSection').style.display  = festivais.length ? '' : 'none';
+    const festivaisFillerCount = (() => {
+      let units = 0;
+      festivais.forEach((_, i) => { units += (i % 5 === 0 || i % 5 === 3) ? 2 : 1; });
+      const rem = units % 6;
+      return rem === 0 ? 0 : 6 - rem;
+    })();
     document.querySelector('.historia-festivais__grid').innerHTML =
       festivais.map(f => `
         <div class="historia-festival">
@@ -34,7 +40,8 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
           <span class="historia-festival__name">${f.name}</span>
           ${f.year ? `<span class="historia-festival__year">${f.year}</span>` : ''}
         </div>`
-      ).join('');
+      ).join('') +
+      '<div class="historia-festival historia-festival--filler"></div>'.repeat(festivaisFillerCount);
 
     /* ── MARCOS ── */
     document.querySelector('.historia-marcos__list').innerHTML =
@@ -65,14 +72,17 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       ).join('');
 
     /* ── PARCEIROS ── */
+    const parceiros = d.parceiros || [];
+    const parceirosFillerCount = (3 - (parceiros.length % 3)) % 3;
     document.querySelector('.historia-parceiros__grid').innerHTML =
-      d.parceiros.map(p => {
+      parceiros.map(p => {
         const name = typeof p === 'string' ? p : (p.name || '');
         const logo = typeof p === 'object' && p.logo ? p.logo : '';
         return logo
           ? `<div class="historia-parceiro"><img src="${logo}" alt="${name}" style="max-height:48px;object-fit:contain;opacity:0.5;transition:opacity 0.3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5"></div>`
           : `<div class="historia-parceiro">${name}</div>`;
-      }).join('');
+      }).join('') +
+      '<div class="historia-parceiro historia-parceiro--filler"></div>'.repeat(parceirosFillerCount);
 
     observeReveal(0.15);
   }

@@ -30,7 +30,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     const synopsis = lang === 'en' ? f.synopsisEn : f.synopsis;
 
     // título da aba
-    document.title = `${title} — 000 filmes`;
+    document.title = `${title} — pontos de fuga`;
 
     // hero bg
     if (f.imgLandscape) {

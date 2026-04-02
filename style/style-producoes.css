@@ -1,5 +1,5 @@
 /* ================================================================
-   style-producoes.css — 000 filmes · Edição Indie / Alternativa
+   style-producoes.css — pontos de fuga · Edição Indie / Alternativa
    Visual: zine digital · produtora independente · DIY artístico
 
    Estratégia: cabeçalho da página em parchment (sente editorial),
@@ -126,10 +126,6 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   background: var(--white);
 }
 
-@media (max-width: 767px) {
-  .section-header { padding: 40px var(--pad-mob) 28px; }
-}
-
 /* Título itálico expressivo — marca da identidade */
 .section-title {
   font-family: var(--font-display);
@@ -149,6 +145,7 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  white-space: nowrap;
   color: rgba(28, 23, 20, 0.35);
   cursor: pointer;
   padding: 0 0 3px;
@@ -166,6 +163,13 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 }
 
 .sort-btn:hover { color: var(--black); }
+
+@media (max-width: 767px) {
+  .section-header { padding: 40px var(--pad-mob) 28px; }
+  .section-title  { font-size: 24px; }
+  .section-sort   { gap: 8px; }
+  .sort-btn       { font-size: 7px; letter-spacing: 0.1em; }
+}
 
 
 /* ─────────────────────────────────────────────────────────────────
