@@ -28,7 +28,7 @@
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/O_Amos_Dá_Voltas_p.jpg",
       "imgLandscape": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/paisagens/O_Amor_Dá_Voltas_l.jpg",
       "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/O_Amor_Dá_Voltas_v.mp4",
-      "videoTrailer": "",
+      "videoTrailer": "https://www.youtube.com/watch?v=pGffEe96PHY",
       "makingOff": [
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/makingoff/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_mo_1775244804082_0.jpg",
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/makingoff/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_mo_1775244806205_1.jpg",
@@ -37,6 +37,13 @@
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/makingoff/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_mo_1775244810935_4.jpg",
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/makingoff/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_mo_1775244812919_5.jpg",
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/makingoff/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_mo_1775244814844_6.jpg"
+      ],
+      "fotografias": [
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_foto_1775246843958_0.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_foto_1775246845760_1.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_foto_1775246854242_2.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_foto_1775246860692_3.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_foto_1775246863481_4.jpg"
       ]
     },
     {
