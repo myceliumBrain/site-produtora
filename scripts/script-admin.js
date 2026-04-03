@@ -501,8 +501,8 @@ function renderFilms() {
           <div class="field full"><label>Sinopse EN</label><textarea data-film="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
           ${imgField('film', i, 'imgPortrait',  'Imagem retrato (vertical)',   f.imgPortrait)}
           ${imgField('film', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape)}
-          ${videoField('film', i, 'videoHover',   'Preview (.mp4)', f.videoHover||'',   'recomendado máx 15 segundos')}
-          ${videoField('film', i, 'videoTrailer', 'Trailer (.mp4)', f.videoTrailer||'')}
+          ${videoFieldWithUrl('film', i, 'videoHover',   'Preview',  f.videoHover||'',   'recomendado máx 15 segundos')}
+          ${videoFieldWithUrl('film', i, 'videoTrailer', 'Trailer',  f.videoTrailer||'')}
           ${fotografiasField('film', i, f.fotografias)}
           ${makingOffField('film', i, f.makingOff)}
           <div class="field full">
@@ -1138,6 +1138,96 @@ function videoField(dataAttr, idx, key, labelText, currentVal, note = '') {
         </div>
       </div>
     </div>`;
+}
+
+/* Campo de vídeo com upload E URL (YouTube/Vimeo) */
+function isEmbedUrl(val) {
+  return val && (val.includes('youtube') || val.includes('youtu.be') || val.includes('vimeo'));
+}
+
+function videoFieldWithUrl(dataAttr, idx, key, labelText, currentVal, note = '') {
+  const fieldId   = `img-${dataAttr}-${idx}-${key}`;
+  const previewId = `prev-${dataAttr}-${idx}-${key}`;
+  const hasEmbed  = isEmbedUrl(currentVal);
+  const hasFile   = currentVal && !hasEmbed;
+  const btnText   = hasFile ? '↑ substituir' : '↑ enviar arquivo';
+  return `
+    <div class="field full">
+      <label>${labelText}${note ? `<span class="field-note">${note}</span>` : ''}</label>
+      <input type="hidden" id="${fieldId}" data-${dataAttr}="${idx}" data-key="${key}" value="${esc(currentVal)}">
+      <div class="video-option${hasFile ? ' video-option--disabled' : ''}" id="opt-url-${fieldId}">
+        <span class="video-option__label">URL</span>
+        <input type="text" id="url-${fieldId}" class="video-url-input"
+               placeholder="YouTube ou Vimeo…"
+               value="${esc(hasEmbed ? currentVal : '')}"
+               ${hasFile ? 'disabled' : ''}
+               oninput="syncVideoUrl(this,'${fieldId}','${previewId}')">
+      </div>
+      <div class="video-field-sep">ou</div>
+      <div class="video-option${hasEmbed ? ' video-option--disabled' : ''}" id="opt-file-${fieldId}">
+        <span class="video-option__label">Arquivo</span>
+        <div class="img-field-row">
+          <video id="${previewId}" class="img-field-thumb"
+                 src="${esc(hasFile ? currentVal : '')}"
+                 style="${hasFile ? '' : 'display:none'}" muted></video>
+          <div class="asset-btns">
+            <label class="upload-label">
+              <span class="upload-label-text">${btnText}</span>
+              <input type="file" accept="video/mp4,video/*" ${hasEmbed ? 'disabled' : ''}
+                     onchange="uploadVideoFile(this,'${fieldId}','${previewId}')">
+            </label>
+            ${hasFile ? `
+            <a class="btn btn-small asset-btn-dl" href="${esc(currentVal)}" download target="_blank">↓ baixar</a>
+            <button class="btn btn-danger btn-small" onclick="removeVideoAsset('${fieldId}','${previewId}')">✕ remover</button>` : ''}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function setVideoExclusive(fieldId, active) {
+  const urlOpt   = document.getElementById('opt-url-'  + fieldId);
+  const fileOpt  = document.getElementById('opt-file-' + fieldId);
+  const urlInput = document.getElementById('url-' + fieldId);
+  const fileInput = fileOpt ? fileOpt.querySelector('input[type="file"]') : null;
+  if (active === 'url') {
+    urlOpt?.classList.remove('video-option--disabled');
+    fileOpt?.classList.add('video-option--disabled');
+    if (fileInput) fileInput.disabled = true;
+    if (urlInput)  urlInput.disabled  = false;
+  } else if (active === 'file') {
+    fileOpt?.classList.remove('video-option--disabled');
+    urlOpt?.classList.add('video-option--disabled');
+    if (urlInput)  urlInput.disabled  = true;
+    if (fileInput) fileInput.disabled = false;
+  } else {
+    urlOpt?.classList.remove('video-option--disabled');
+    fileOpt?.classList.remove('video-option--disabled');
+    if (urlInput)  urlInput.disabled  = false;
+    if (fileInput) fileInput.disabled = false;
+  }
+}
+
+function syncVideoUrl(input, fieldId, previewId) {
+  const val   = input.value.trim();
+  const field = document.getElementById(fieldId);
+  field.value = val;
+  field.dispatchEvent(new Event('input', { bubbles: true }));
+  const thumb = document.getElementById(previewId);
+  if (thumb) { thumb.src = ''; thumb.style.display = 'none'; }
+  setVideoExclusive(fieldId, val ? 'url' : null);
+}
+
+async function uploadVideoFile(fileInput, targetFieldId, previewId) {
+  const urlInput = document.getElementById('url-' + targetFieldId);
+  if (urlInput) urlInput.value = '';
+  await uploadImage(fileInput, targetFieldId, previewId);
+  setVideoExclusive(targetFieldId, 'file');
+}
+
+async function removeVideoAsset(fieldId, previewId) {
+  await removeAsset(fieldId, previewId);
+  setVideoExclusive(fieldId, null);
 }
 
 /* ── FOTOGRAFIAS — galeria de múltiplas imagens ── */

@@ -43,7 +43,10 @@
   </div>
   <div class="filme-trailer reveal reveal-delay-2" id="filmeTrailer" style="display:none">
     <p class="filme-trailer__label">assista ao trailer:</p>
-    <video class="filme-trailer__video" id="filmeTrailerVideo" controls preload="metadata"></video>
+    <div class="filme-trailer__embed" id="filmeTrailerEmbed" style="display:none">
+      <iframe id="filmeTrailerIframe" src="" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" frameborder="0"></iframe>
+    </div>
+    <video class="filme-trailer__video" id="filmeTrailerVideo" controls preload="metadata" style="display:none"></video>
   </div>
   <div class="filme-gallery-section reveal reveal-delay-2" id="filmeFotografias" style="display:none">
     <p class="filme-trailer__label">fotografias:</p>

@@ -443,6 +443,53 @@ a, button { cursor: pointer !important; }
 .asset-btns { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
 .asset-btn-dl { text-decoration: none; }
 
+/* ── VIDEO FIELD WITH URL ── */
+.video-option {
+  border: 1px solid var(--border-f);
+  border-radius: 2px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: border-color 0.2s, opacity 0.2s;
+}
+.video-option--disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+.video-option__label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  min-width: 40px;
+}
+.video-url-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-f);
+  color: #ccc;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  padding: 0.3rem 0;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.video-url-input:focus { border-bottom-color: var(--accent); }
+.video-url-input::placeholder { color: #444; }
+.video-field-sep {
+  font-size: 0.65rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 4px 0;
+}
+
 /* ── MAKING OFF GALLERY ── */
 .makingoff-gallery {
   display: flex;

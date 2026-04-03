@@ -16,6 +16,17 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     return source[parseInt(idx)] || null;
   }
 
+  function toEmbedUrl(url) {
+    if (!url) return null;
+    // YouTube: youtube.com/watch?v=ID  ou  youtu.be/ID
+    const ytMatch = url.match(/(?:youtube\.com\/watch\?.*v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+    if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+    // Vimeo: vimeo.com/ID
+    const vmMatch = url.match(/vimeo\.com\/(\d+)/);
+    if (vmMatch) return `https://player.vimeo.com/video/${vmMatch[1]}`;
+    return null;
+  }
+
   function renderFilme() {
     const f    = getFilme();
     const lang = i18next.language;
@@ -57,11 +68,23 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       tags.map(t => `<span class="tag">${t}</span>`).join('');
 
     // trailer
-    const trailerWrap = document.getElementById('filmeTrailer');
-    const trailerVideo = document.getElementById('filmeTrailerVideo');
-    if (f.videoTrailer) {
-      trailerVideo.src = f.videoTrailer;
-      trailerWrap.style.display = '';
+    const trailerWrap   = document.getElementById('filmeTrailer');
+    const trailerEmbed  = document.getElementById('filmeTrailerEmbed');
+    const trailerIframe = document.getElementById('filmeTrailerIframe');
+    const trailerVideo  = document.getElementById('filmeTrailerVideo');
+    const embedUrl      = toEmbedUrl(f.videoTrailer);
+    if (embedUrl) {
+      trailerIframe.src        = embedUrl;
+      trailerEmbed.style.display = '';
+      trailerVideo.style.display = 'none';
+      trailerVideo.src           = '';
+      trailerWrap.style.display  = '';
+    } else if (f.videoTrailer) {
+      trailerVideo.src           = f.videoTrailer;
+      trailerVideo.style.display = '';
+      trailerEmbed.style.display = 'none';
+      trailerIframe.src          = '';
+      trailerWrap.style.display  = '';
     } else {
       trailerWrap.style.display = 'none';
     }
