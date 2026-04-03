@@ -198,7 +198,7 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 .filme-body {
   position: relative;
   background: var(--white);
-  padding: 112px var(--pad-desk) 140px;
+  padding: 56px var(--pad-desk) 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -222,7 +222,7 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  margin-top: 56px;
+  margin-top: 32px;
 }
 
 .filme-info__tags {
@@ -252,23 +252,35 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
    ───────────────────────────────────────────────────────────────── */
 
 .filme-trailer {
-  margin-top: 80px;
+  margin-top: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   width: 100%;
   max-width: 840px;
 }
 
 .filme-trailer__label {
   font-family: var(--font-display);
-  font-size: clamp(22px, 2.5vw, 32px);
+  font-size: clamp(18px, 1.8vw, 24px);
   font-style: italic;
   letter-spacing: -0.01em;
   color: var(--dim);
   text-transform: lowercase;
-  align-self: flex-start;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+}
+
+.filme-trailer__label::before,
+.filme-trailer__label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
 }
 
 .filme-trailer__video {
@@ -292,11 +304,11 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 }
 
 .filme-gallery-section {
-  margin-top: 80px;
+  margin-top: 32px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
+  align-items: center;
+  gap: 24px;
   width: 100%;
   max-width: 840px;
 }
@@ -411,7 +423,7 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 @media (max-width: 768px) {
   .filme-hero          { height: 52vh; }
   .filme-hero__content { padding: 0 var(--pad-mob) 40px; }
-  .filme-body          { padding: 72px var(--pad-mob) 96px; }
+  .filme-body          { padding: 40px var(--pad-mob) 56px; }
   .filme-info          { position: static; align-items: center; margin-top: 40px; }
   .filme-info__tags    { align-items: center; }
   footer               { padding: 40px var(--pad-mob) 24px; }

@@ -712,7 +712,7 @@ function renderPagPrincipal() {
       <div class="field"><label>Subtítulo PT</label><input id="m-manifestoSub"   value="${esc(m.manifestoSub)}"></div>
       <div class="field"><label>Subtítulo EN</label><input id="m-manifestoSubEn" value="${esc(m.manifestoSubEn)}"></div>
     </div>
-    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Texto que rola</span></div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Texto Carrossel</span></div>
     <div id="stripeItemsList">${renderStripeItems(ix.stripeItems || [])}</div>
     <div class="tags-input-row" style="margin-top:8px">
       <input id="stripeItemInput" placeholder="novo item…"
