@@ -66,6 +66,16 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       trailerWrap.style.display = 'none';
     }
 
+    // making off
+    const makingOffWrap = document.getElementById('filmeMakingOff');
+    const makingOffVideo = document.getElementById('filmeMakingOffVideo');
+    if (f.videoMakingOff) {
+      makingOffVideo.src = f.videoMakingOff;
+      makingOffWrap.style.display = '';
+    } else {
+      makingOffWrap.style.display = 'none';
+    }
+
     observeReveal();
   }
 

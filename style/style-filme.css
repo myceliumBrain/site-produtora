@@ -263,9 +263,9 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 
 .filme-trailer__label {
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: clamp(22px, 2.5vw, 32px);
   font-style: italic;
-  letter-spacing: 0.06em;
+  letter-spacing: -0.01em;
   color: var(--dim);
   text-transform: lowercase;
   align-self: flex-start;

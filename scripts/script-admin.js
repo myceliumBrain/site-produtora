@@ -503,6 +503,7 @@ function renderFilms() {
           ${imgField('film', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape)}
           ${videoField('film', i, 'videoHover',   'Preview (.mp4)', f.videoHover||'',   'recomendado máx 15 segundos')}
           ${videoField('film', i, 'videoTrailer', 'Trailer (.mp4)', f.videoTrailer||'')}
+          ${makingOffField('film', i, f.makingOff)}
           <div class="field full">
             <label>Tags</label>
             <div id="tags-film-${i}">${renderTags(f.tags||[], 'film', i)}</div>
@@ -527,7 +528,8 @@ function moveFilm(fromIdx, toIdx) {
 
 function addFilm() {
   data.films.push({ title:'', titleEn:'', director:'', year:'', genre:'Drama',
-    hero:false, synopsis:'', synopsisEn:'', tags:[], imgPortrait:'', imgLandscape:'' });
+    hero:false, synopsis:'', synopsisEn:'', tags:[], imgPortrait:'', imgLandscape:'',
+    videoHover:'', videoTrailer:'', videoMakingOff:'', makingOff:[] });
   renderFilms();
   const idx = data.films.length - 1;
   toggleCard(`film-card-${idx}`);
@@ -1135,6 +1137,97 @@ function videoField(dataAttr, idx, key, labelText, currentVal, note = '') {
         </div>
       </div>
     </div>`;
+}
+
+/* ── MAKING OFF — galeria de múltiplas imagens ── */
+function makingOffField(dataAttr, idx, currentImages) {
+  const images = Array.isArray(currentImages) ? currentImages : [];
+  return `
+    <div class="field full">
+      <label>Making off (imagens)</label>
+      <div class="makingoff-gallery" id="makingoff-gallery-${dataAttr}-${idx}">
+        ${renderMakingOffItems(dataAttr, idx, images)}
+      </div>
+      <label class="upload-label" style="margin-top:10px">
+        <span class="upload-label-text">↑ adicionar imagem(ns)</span>
+        <input type="file" accept="image/*" multiple onchange="uploadMakingOffImages(this,'${dataAttr}',${idx})">
+      </label>
+    </div>`;
+}
+
+function renderMakingOffItems(dataAttr, idx, images) {
+  if (!images.length) return '<p class="makingoff-empty">nenhuma imagem ainda</p>';
+  return images.map((url, imgIdx) => `
+    <div class="makingoff-item">
+      <img src="${esc(url)}" class="makingoff-thumb" onerror="this.style.display='none'">
+      <div class="asset-btns">
+        <a class="btn btn-small asset-btn-dl" href="${esc(url)}" download target="_blank">↓ baixar</a>
+        <button class="btn btn-danger btn-small" onclick="removeMakingOffImage('${dataAttr}',${idx},${imgIdx})">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+async function uploadMakingOffImages(fileInput, dataAttr, idx) {
+  const files = Array.from(fileInput.files);
+  if (!files.length) return;
+
+  const label = fileInput.closest('label');
+  const span  = label.querySelector('.upload-label-text');
+  label.style.pointerEvents = 'none';
+
+  const source = dataAttr === 'film' ? data.films : data.upcomingFilms;
+  if (!Array.isArray(source[idx].makingOff)) source[idx].makingOff = [];
+
+  const rawBase = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
+  const nameEl  = document.querySelector(`[data-${dataAttr}="${idx}"][data-key="title"]`)
+               || document.querySelector(`[data-${dataAttr}="${idx}"][data-key="name"]`);
+  const baseName = (nameEl && nameEl.value.trim())
+    ? nameEl.value.trim().replace(/\s+/g, '_').replace(/[/\\?#%*:|"<>]/g, '').slice(0, 60)
+    : 'makingoff';
+
+  for (let n = 0; n < files.length; n++) {
+    const file = files[n];
+    span.textContent = `… (${n + 1}/${files.length})`;
+    const ext     = file.name.split('.').pop().toLowerCase();
+    const newPath = `assets/filmes/makingoff/${baseName}/${baseName}_mo_${Date.now()}_${n}.${ext}`;
+    try {
+      const base64 = await new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload  = e => res(e.target.result.split(',')[1]);
+        r.onerror = rej;
+        r.readAsDataURL(file);
+      });
+      await ghPutBinary(newPath, base64, `assets: upload ${newPath}`);
+      source[idx].makingOff.push(`${rawBase}${newPath}`);
+    } catch (err) {
+      toast(`Erro no upload (${file.name}): ${err.message}`, 'err');
+    }
+  }
+
+  const gallery = document.getElementById(`makingoff-gallery-${dataAttr}-${idx}`);
+  if (gallery) gallery.innerHTML = renderMakingOffItems(dataAttr, idx, source[idx].makingOff);
+  span.textContent = '↑ adicionar imagem(ns)';
+  label.style.pointerEvents = '';
+  fileInput.value = '';
+  toast('Imagens enviadas!', 'ok');
+}
+
+async function removeMakingOffImage(dataAttr, idx, imgIdx) {
+  if (!confirm('Remover esta imagem do GitHub?')) return;
+  const source = dataAttr === 'film' ? data.films : data.upcomingFilms;
+  const url    = source[idx].makingOff[imgIdx];
+  const rawBase = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
+  if (url && url.startsWith(rawBase)) {
+    const path = url.replace(rawBase, '').split('?')[0];
+    try {
+      const file = await ghGet(path);
+      await ghDelete(path, file.sha, `assets: remove ${path}`);
+    } catch { /* arquivo já não existe */ }
+  }
+  source[idx].makingOff.splice(imgIdx, 1);
+  const gallery = document.getElementById(`makingoff-gallery-${dataAttr}-${idx}`);
+  if (gallery) gallery.innerHTML = renderMakingOffItems(dataAttr, idx, source[idx].makingOff);
+  toast('Imagem removida.', 'ok');
 }
 
 async function removeAsset(fieldId, previewId) {
