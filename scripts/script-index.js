@@ -6,6 +6,18 @@
 
 dataReady.then(() => { /* espera os dados do json serem carregados */
 
+/* ── STRIPE ── */
+  function renderStripe() {
+    const track = document.getElementById('stripeTrack');
+    if (!track) return;
+    const items = (pagesData.index && pagesData.index.stripeItems) ||
+      ['Cinema Brasileiro Independente', 'Pontos de Fuga', 'Rio de Janeiro'];
+    // Repete 3× para o loop parecer infinito
+    const repeated = [...items, ...items, ...items];
+    track.innerHTML = repeated.map(t => `<span class="stripe-item">${t}</span>`).join('');
+  }
+  renderStripe();
+
 /* ── HERO SLIDESHOW ──
    Filmes marcados com hero:true no array films ── */
 

@@ -513,7 +513,8 @@
       "heroLabelPt": "Em destaque · 2025",
       "heroLabelEn": "Featured · 2025",
       "gridTitlePt": "Produções recentes",
-      "gridTitleEn": "Recent productions"
+      "gridTitleEn": "Recent productions",
+      "stripeItems": ["Cinema Brasileiro Independente", "Pontos de Fuga", "Produções desde 2018", "Rio de Janeiro", "Histórias que importam"]
     },
     "historia": {
       "teamEyebrowPt": "Quem faz acontecer",

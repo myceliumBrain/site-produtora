@@ -568,8 +568,9 @@ footer {
 .section-stripe {
   overflow: hidden;
   padding: 28px 0;
-  background: var(--gold);      /* laranja queimado — o maior impacto visual */
-  border: none;
+  background: transparent;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .stripe-track {
@@ -586,7 +587,7 @@ footer {
   font-weight: 300;
   font-style: italic;
   letter-spacing: 0.05em;
-  color: rgba(245, 238, 223, 0.88);
+  color: var(--dim);
   display: flex;
   align-items: center;
   gap: 28px;
@@ -595,7 +596,7 @@ footer {
 .stripe-item::before {
   content: '◆';
   font-size: 7px;
-  color: rgba(245, 238, 223, 0.4);
+  color: var(--grey);
   font-style: normal;
 }
 

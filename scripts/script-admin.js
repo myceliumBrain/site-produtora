@@ -712,6 +712,13 @@ function renderPagPrincipal() {
       <div class="field"><label>Subtítulo PT</label><input id="m-manifestoSub"   value="${esc(m.manifestoSub)}"></div>
       <div class="field"><label>Subtítulo EN</label><input id="m-manifestoSubEn" value="${esc(m.manifestoSubEn)}"></div>
     </div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Texto que rola</span></div>
+    <div id="stripeItemsList">${renderStripeItems(ix.stripeItems || [])}</div>
+    <div class="tags-input-row" style="margin-top:8px">
+      <input id="stripeItemInput" placeholder="novo item…"
+             onkeydown="if(event.key==='Enter'){addStripeItem();event.preventDefault()}">
+      <button class="btn btn-secondary btn-small" onclick="addStripeItem()">+ adicionar</button>
+    </div>
     <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Hero</span></div>
     <div class="fields-grid">
       <div class="field"><label>Label PT</label><input id="ix-heroLabelPt" value="${esc(ix.heroLabelPt||'')}"></div>
@@ -1010,6 +1017,32 @@ function removeTag(type, idx, ti) {
   }
 }
 
+/* ── STRIPE ITEMS ── */
+function renderStripeItems(items) {
+  if (!items.length) return '<p class="makingoff-empty">nenhum item ainda</p>';
+  return items.map((t, i) => `
+    <span class="tag-badge">${esc(t)}
+      <button onclick="removeStripeItem(${i})">×</button>
+    </span>`).join('');
+}
+
+function addStripeItem() {
+  const input = document.getElementById('stripeItemInput');
+  const val = input.value.trim();
+  if (!val) return;
+  if (!data.pagesData.index) data.pagesData.index = {};
+  if (!Array.isArray(data.pagesData.index.stripeItems)) data.pagesData.index.stripeItems = [];
+  data.pagesData.index.stripeItems.push(val);
+  document.getElementById('stripeItemsList').innerHTML = renderStripeItems(data.pagesData.index.stripeItems);
+  input.value = '';
+}
+
+function removeStripeItem(i) {
+  if (!data.pagesData.index || !data.pagesData.index.stripeItems) return;
+  data.pagesData.index.stripeItems.splice(i, 1);
+  document.getElementById('stripeItemsList').innerHTML = renderStripeItems(data.pagesData.index.stripeItems);
+}
+
 /* ══════════════════════════════════════════════════════════
    COLLECT ALL
 ══════════════════════════════════════════════════════════ */
@@ -1057,6 +1090,7 @@ function collectAll() {
     const el = document.getElementById('ix-' + f);
     if (el) data.pagesData.index[f] = el.value;
   });
+  // stripeItems são geridos diretamente em data.pagesData.index.stripeItems via add/removeStripeItem
   if (!data.pagesData.historia) data.pagesData.historia = {};
   ['teamEyebrowPt','teamEyebrowEn','festivaisEyebrowPt','festivaisEyebrowEn',
    'marcosEyebrowPt','marcosEyebrowEn','parceirosEyebrowPt','parceirosEyebrowEn'].forEach(f => {
