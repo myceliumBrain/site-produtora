@@ -45,13 +45,28 @@
     <p class="filme-trailer__label">assista ao trailer:</p>
     <video class="filme-trailer__video" id="filmeTrailerVideo" controls preload="metadata"></video>
   </div>
-  <div class="filme-trailer reveal reveal-delay-2" id="filmeMakingOff" style="display:none">
+  <div class="filme-gallery-section reveal reveal-delay-2" id="filmeFotografias" style="display:none">
+    <p class="filme-trailer__label">fotografias:</p>
+    <div class="filme-gallery" id="filmeFotografiasGrid"></div>
+  </div>
+  <div class="filme-gallery-section reveal reveal-delay-2" id="filmeMakingOff" style="display:none">
     <p class="filme-trailer__label">making off:</p>
-    <video class="filme-trailer__video" id="filmeMakingOffVideo" controls preload="metadata"></video>
+    <div class="filme-gallery" id="filmeMakingOffGrid"></div>
   </div>
 </div>
 
   </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Fechar">✕</button>
+    <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Anterior">&#8592;</button>
+    <div class="lightbox__img-wrap">
+      <img class="lightbox__img" id="lightboxImg" src="" alt="">
+    </div>
+    <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Próxima">&#8594;</button>
+    <div class="lightbox__counter" id="lightboxCounter"></div>
+  </div>
 
   <!-- MENU OVERLAY -->
   <div class="menu-overlay" id="menuOverlay">
