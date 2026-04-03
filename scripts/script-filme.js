@@ -56,6 +56,16 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     document.getElementById('filmeTags').innerHTML =
       tags.map(t => `<span class="tag">${t}</span>`).join('');
 
+    // trailer
+    const trailerWrap = document.getElementById('filmeTrailer');
+    const trailerVideo = document.getElementById('filmeTrailerVideo');
+    if (f.videoTrailer) {
+      trailerVideo.src = f.videoTrailer;
+      trailerWrap.style.display = '';
+    } else {
+      trailerWrap.style.display = 'none';
+    }
+
     observeReveal();
   }
 
