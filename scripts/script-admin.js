@@ -506,7 +506,7 @@ function renderFilms() {
           ${imgField('film', i, 'imgPortrait',  'Imagem retrato (vertical)',   f.imgPortrait)}
           ${imgField('film', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape)}
           <hr class="fields-divider">
-          ${videoFieldWithUrl('film', i, 'videoHover',   'Preview',  f.videoHover||'',   'recomendado máx 15 segundos')}
+          ${previewField('film', i, f.videoHover||'')}
           <hr class="fields-divider">
           ${trailersField('film', i, f.videoTrailers)}
           <hr class="fields-divider">
@@ -586,7 +586,7 @@ function renderOtherProductions() {
           ${imgField('other', i, 'imgPortrait',  'Imagem retrato (vertical)',    f.imgPortrait||'')}
           ${imgField('other', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape||'')}
           <hr class="fields-divider">
-          ${videoFieldWithUrl('other', i, 'videoHover',   'Preview',  f.videoHover||'',   'recomendado máx 15 segundos')}
+          ${previewField('other', i, f.videoHover||'')}
           <hr class="fields-divider">
           ${trailersField('other', i, f.videoTrailers)}
           <hr class="fields-divider">
@@ -1281,6 +1281,85 @@ async function uploadVideoFile(fileInput, targetFieldId, previewId) {
 async function removeVideoAsset(fieldId, previewId) {
   await removeAsset(fieldId, previewId);
   setVideoExclusive(fieldId, null);
+}
+
+/* ── PREVIEW — campo único (URL ou arquivo) ── */
+function previewField(dataAttr, idx, currentVal) {
+  return `
+    <div class="field full">
+      <label>Preview<span class="field-note">recomendado máx 15 segundos</span></label>
+      <div id="preview-content-${dataAttr}-${idx}">
+        ${renderPreviewContent(dataAttr, idx, currentVal)}
+      </div>
+    </div>`;
+}
+
+function renderPreviewContent(dataAttr, idx, currentVal) {
+  if (!currentVal) {
+    return `<p class="makingoff-empty">nenhum preview ainda</p>
+      <div style="text-align:center;margin-top:0.75rem">
+        <button class="btn btn-secondary btn-small" onclick="showPreviewSlot('${dataAttr}',${idx})">+ adicionar preview</button>
+      </div>`;
+  }
+  const fieldId   = `img-${dataAttr}-${idx}-videoHover`;
+  const previewId = `prev-${dataAttr}-${idx}-videoHover`;
+  const hasEmbed  = isEmbedUrl(currentVal);
+  const hasFile   = currentVal && !hasEmbed;
+  const btnText   = hasFile ? '↑ substituir' : '↑ enviar arquivo';
+  return `
+    <input type="hidden" id="${fieldId}" data-${dataAttr}="${idx}" data-key="videoHover" value="${esc(currentVal)}">
+    <div class="video-option${hasFile ? ' video-option--disabled' : ''}" id="opt-url-${fieldId}">
+      <span class="video-option__label">URL</span>
+      <input type="text" id="url-${fieldId}" class="video-url-input"
+             placeholder="YouTube ou Vimeo…"
+             value="${esc(hasEmbed ? currentVal : '')}"
+             ${hasFile ? 'disabled' : ''}
+             oninput="syncVideoUrl(this,'${fieldId}','${previewId}')">
+    </div>
+    <div class="video-field-sep">ou</div>
+    <div class="video-option${hasEmbed ? ' video-option--disabled' : ''}" id="opt-file-${fieldId}">
+      <span class="video-option__label">Arquivo</span>
+      <div class="img-field-row">
+        <video id="${previewId}" class="img-field-thumb"
+               src="${esc(hasFile ? currentVal : '')}"
+               style="${hasFile ? '' : 'display:none'}" muted></video>
+        <div class="asset-btns">
+          <label class="upload-label">
+            <span class="upload-label-text">${btnText}</span>
+            <input type="file" accept="video/mp4,video/*" ${hasEmbed ? 'disabled' : ''}
+                   onchange="uploadVideoFile(this,'${fieldId}','${previewId}')">
+          </label>
+          <span class="field-note" style="margin-left:0">máximo 100 MB</span>
+          ${hasFile ? `
+          <a class="btn btn-small asset-btn-dl" href="${esc(currentVal)}" download target="_blank">↓ baixar</a>` : ''}
+        </div>
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:0.5rem">
+      <button class="btn btn-danger btn-small" onclick="removePreview('${dataAttr}',${idx})">✕ remover preview</button>
+    </div>`;
+}
+
+function showPreviewSlot(dataAttr, idx) {
+  const content = document.getElementById(`preview-content-${dataAttr}-${idx}`);
+  if (content) content.innerHTML = renderPreviewContent(dataAttr, idx, '');
+}
+
+async function removePreview(dataAttr, idx) {
+  if (!confirm('Remover este preview do GitHub?')) return;
+  const source  = dataAttr === 'film' ? data.films : dataAttr === 'other' ? data.otherProductions : data.upcomingFilms;
+  const fieldId = `img-${dataAttr}-${idx}-videoHover`;
+  const field   = document.getElementById(fieldId);
+  const url     = field ? field.value : (source[idx].videoHover || '');
+  const rawBase = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
+  if (url && url.startsWith(rawBase)) {
+    const path = url.replace(rawBase, '').split('?')[0];
+    try { const f = await ghGet(path); await ghDelete(path, f.sha, `assets: remove ${path}`); } catch {}
+  }
+  source[idx].videoHover = '';
+  const content = document.getElementById(`preview-content-${dataAttr}-${idx}`);
+  if (content) content.innerHTML = renderPreviewContent(dataAttr, idx, '');
+  toast('Preview removido.', 'ok');
 }
 
 /* ── TRAILERS — lista de trailers (URL ou arquivo) ── */
