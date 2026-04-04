@@ -115,6 +115,11 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     }
     renderCrewSection('filmeFichaTecnica', 'filmeFichaTecnicaBody', f.fichatecnica);
     renderCrewSection('filmeElenco',       'filmeElencoBody',       f.elenco);
+    const crewSection = document.getElementById('filmeCrewSection');
+    if (crewSection) {
+      const hasCrew = (f.fichatecnica && f.fichatecnica.length) || (f.elenco && f.elenco.length);
+      crewSection.style.display = hasCrew ? '' : 'none';
+    }
 
     // fotografias
     const fotosWrap = document.getElementById('filmeFotografias');
@@ -231,9 +236,19 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 });
 
 function toggleCrewCollapse(id) {
-  const wrap  = document.getElementById(id);
+  const wrap = document.getElementById(id);
   if (!wrap) return;
-  const open  = wrap.classList.toggle('open');
+  const open = wrap.classList.toggle('open');
+  // fecha o outro collapse no mesmo container
+  if (open) {
+    wrap.parentElement.querySelectorAll('.filme-collapse.open').forEach(el => {
+      if (el !== wrap) {
+        el.classList.remove('open');
+        const a = el.querySelector('.filme-collapse__arrow');
+        if (a) a.textContent = '∨';
+      }
+    });
+  }
   const arrow = wrap.querySelector('.filme-collapse__arrow');
   if (arrow) arrow.textContent = open ? '∧' : '∨';
 }

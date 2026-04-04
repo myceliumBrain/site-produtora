@@ -251,14 +251,17 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
    [9]  TRAILER
    ───────────────────────────────────────────────────────────────── */
 
-.filme-trailer {
-  margin-top: 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
+.filme-trailer-container {
   width: 100%;
   max-width: 840px;
+  margin-top: 32px;
+}
+
+.filme-trailer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
 }
 
 .filme-trailer__label {
@@ -292,10 +295,18 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 }
 
 /* ── FICHA TÉCNICA / ELENCO ── */
-.filme-collapse {
+.filme-crew-section {
   width: 100%;
   max-width: 840px;
   margin-top: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 2rem;
+  align-items: start;
+}
+
+.filme-collapse {
+  width: 100%;
 }
 
 .filme-collapse__toggle {
@@ -500,6 +511,7 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   .filme-body          { padding: 40px var(--pad-mob) 56px; }
   .filme-info          { position: static; align-items: center; margin-top: 40px; }
   .filme-info__tags    { align-items: center; }
+  .filme-crew-section  { grid-template-columns: 1fr; gap: 2rem 0; }
   footer               { padding: 40px var(--pad-mob) 24px; }
   .footer-top          { flex-direction: column; gap: 40px; }
   .footer-links        { flex-wrap: wrap; gap: 32px; }
