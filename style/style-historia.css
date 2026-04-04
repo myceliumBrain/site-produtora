@@ -292,8 +292,8 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 
 .historia-member {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  grid-template-columns: minmax(200px, 320px) 1fr;
+  gap: 64px;
   align-items: center;
 }
 
@@ -303,6 +303,7 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 .historia-member__img-wrap {
   position: relative;
   aspect-ratio: 3 / 4;
+  max-height: 400px;
   overflow: hidden;
   background: var(--grey);
 }
