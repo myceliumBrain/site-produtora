@@ -325,6 +325,12 @@ a, button { cursor: pointer !important; }
   gap: 1rem;
 }
 .fields-grid .full { grid-column: 1 / -1; }
+.fields-divider {
+  grid-column: 1 / -1;
+  border: none;
+  border-top: 1px solid var(--border-f);
+  margin: 0.5rem 0;
+}
 
 /* ── CARD ACTIONS ── */
 .card-actions {
@@ -488,6 +494,13 @@ a, button { cursor: pointer !important; }
   text-transform: uppercase;
   text-align: center;
   margin: 4px 0;
+}
+
+/* ── TRAILER SLOTS ── */
+.trailer-slot + .trailer-slot {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-f);
 }
 
 /* ── MAKING OFF GALLERY ── */

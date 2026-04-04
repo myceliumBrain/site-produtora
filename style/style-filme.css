@@ -283,6 +283,10 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   background: var(--border);
 }
 
+.filme-trailer__item + .filme-trailer__item {
+  margin-top: 2rem;
+}
+
 .filme-trailer__video {
   width: 100%;
   display: block;

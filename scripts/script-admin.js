@@ -467,6 +467,10 @@ function reorderBtns(idx, total, moveUpFn, moveDnFn) {
 ══════════════════════════════════════════════════════════ */
 function renderFilms() {
   const films = data.films || [];
+  // migrate legacy videoTrailer string → videoTrailers array
+  films.forEach(f => {
+    if (!Array.isArray(f.videoTrailers)) f.videoTrailers = f.videoTrailer ? [f.videoTrailer] : [];
+  });
   document.getElementById('filmsCount').textContent = films.length;
   document.getElementById('filmsPanelCount').textContent = films.length + ' filmes';
   document.getElementById('filmsList').innerHTML = films.map((f, i) => `
@@ -501,8 +505,11 @@ function renderFilms() {
           <div class="field full"><label>Sinopse EN</label><textarea data-film="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
           ${imgField('film', i, 'imgPortrait',  'Imagem retrato (vertical)',   f.imgPortrait)}
           ${imgField('film', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape)}
+          <hr class="fields-divider">
           ${videoFieldWithUrl('film', i, 'videoHover',   'Preview',  f.videoHover||'',   'recomendado máx 15 segundos')}
-          ${videoFieldWithUrl('film', i, 'videoTrailer', 'Trailer',  f.videoTrailer||'')}
+          <hr class="fields-divider">
+          ${trailersField('film', i, f.videoTrailers)}
+          <hr class="fields-divider">
           ${fotografiasField('film', i, f.fotografias)}
           ${makingOffField('film', i, f.makingOff)}
           <div class="field full">
@@ -530,7 +537,7 @@ function moveFilm(fromIdx, toIdx) {
 function addFilm() {
   data.films.push({ title:'', titleEn:'', director:'', year:'', genre:'Drama',
     hero:false, synopsis:'', synopsisEn:'', tags:[], imgPortrait:'', imgLandscape:'',
-    videoHover:'', videoTrailer:'', videoMakingOff:'', fotografias:[], makingOff:[] });
+    videoHover:'', videoTrailers:[], videoMakingOff:'', fotografias:[], makingOff:[] });
   renderFilms();
   const idx = data.films.length - 1;
   toggleCard(`film-card-${idx}`);
@@ -548,6 +555,10 @@ function removeFilm(i) {
 ══════════════════════════════════════════════════════════ */
 function renderOtherProductions() {
   const items = data.otherProductions || [];
+  // migrate legacy videoTrailer string → videoTrailers array
+  items.forEach(f => {
+    if (!Array.isArray(f.videoTrailers)) f.videoTrailers = f.videoTrailer ? [f.videoTrailer] : [];
+  });
   document.getElementById('otherPanelCount').textContent = items.length + ' itens';
   document.getElementById('otherProductionsList').innerHTML = items.map((f, i) => `
     <div class="card" id="other-card-${i}">
@@ -574,8 +585,11 @@ function renderOtherProductions() {
           <div class="field full"><label>Sinopse EN</label><textarea data-other="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
           ${imgField('other', i, 'imgPortrait',  'Imagem retrato (vertical)',    f.imgPortrait||'')}
           ${imgField('other', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape||'')}
+          <hr class="fields-divider">
           ${videoFieldWithUrl('other', i, 'videoHover',   'Preview',  f.videoHover||'',   'recomendado máx 15 segundos')}
-          ${videoFieldWithUrl('other', i, 'videoTrailer', 'Trailer',  f.videoTrailer||'')}
+          <hr class="fields-divider">
+          ${trailersField('other', i, f.videoTrailers)}
+          <hr class="fields-divider">
           ${fotografiasField('other', i, f.fotografias)}
           ${makingOffField('other', i, f.makingOff)}
         </div>
@@ -595,7 +609,7 @@ function addOtherProduction() {
   if (!data.otherProductions) data.otherProductions = [];
   data.otherProductions.push({ title:'', titleEn:'', director:'', year:'', genre:'',
     synopsis:'', synopsisEn:'', imgPortrait:'', imgLandscape:'',
-    videoHover:'', videoTrailer:'', fotografias:[], makingOff:[] });
+    videoHover:'', videoTrailers:[], fotografias:[], makingOff:[] });
   renderOtherProductions();
   const idx = data.otherProductions.length - 1;
   toggleCard(`other-card-${idx}`);
@@ -1267,6 +1281,191 @@ async function uploadVideoFile(fileInput, targetFieldId, previewId) {
 async function removeVideoAsset(fieldId, previewId) {
   await removeAsset(fieldId, previewId);
   setVideoExclusive(fieldId, null);
+}
+
+/* ── TRAILERS — lista de trailers (URL ou arquivo) ── */
+function getTrailerSource(dataAttr) {
+  return dataAttr === 'film' ? data.films
+       : dataAttr === 'other' ? data.otherProductions
+       : data.upcomingFilms;
+}
+
+function trailersField(dataAttr, idx, trailers) {
+  const items = Array.isArray(trailers) ? trailers : [];
+  return `
+    <div class="field full">
+      <label>Trailers</label>
+      <div id="trailers-list-${dataAttr}-${idx}">
+        ${items.length
+          ? items.map((url, s) => renderTrailerSlot(dataAttr, idx, s, url)).join('')
+          : '<p class="makingoff-empty">nenhum trailer ainda</p>'}
+      </div>
+      <div style="text-align:center;margin-top:0.75rem">
+        <button class="btn btn-secondary btn-small" onclick="addTrailerSlot('${dataAttr}',${idx})">+ adicionar trailer</button>
+      </div>
+    </div>`;
+}
+
+function renderTrailerSlot(dataAttr, idx, slotIdx, currentVal) {
+  const slotId    = `trailer-${dataAttr}-${idx}-${slotIdx}`;
+  const previewId = `tprev-${dataAttr}-${idx}-${slotIdx}`;
+  const hasEmbed  = isEmbedUrl(currentVal);
+  const hasFile   = currentVal && !hasEmbed;
+  const btnText   = hasFile ? '↑ substituir' : '↑ enviar arquivo';
+  return `
+    <div class="trailer-slot" id="${slotId}">
+      <div class="video-option${hasFile ? ' video-option--disabled' : ''}" id="ts-url-${slotId}">
+        <span class="video-option__label">URL</span>
+        <input type="text" class="video-url-input"
+               placeholder="YouTube ou Vimeo…"
+               value="${esc(hasEmbed ? currentVal : '')}"
+               ${hasFile ? 'disabled' : ''}
+               oninput="syncTrailerUrl(this,'${dataAttr}',${idx},${slotIdx})">
+      </div>
+      <div class="video-field-sep">ou</div>
+      <div class="video-option${hasEmbed ? ' video-option--disabled' : ''}" id="ts-file-${slotId}">
+        <span class="video-option__label">Arquivo</span>
+        <div class="img-field-row">
+          <video id="${previewId}" class="img-field-thumb"
+                 src="${esc(hasFile ? currentVal : '')}"
+                 style="${hasFile ? '' : 'display:none'}" muted></video>
+          <div class="asset-btns">
+            <label class="upload-label">
+              <span class="upload-label-text">${btnText}</span>
+              <input type="file" accept="video/mp4,video/*" ${hasEmbed ? 'disabled' : ''}
+                     onchange="uploadTrailerFileSlot(this,'${dataAttr}',${idx},${slotIdx})">
+            </label>
+            <span class="field-note" style="margin-left:0">máximo 100 MB</span>
+            ${hasFile ? `
+            <a class="btn btn-small asset-btn-dl" href="${esc(currentVal)}" download target="_blank">↓ baixar</a>
+            <button class="btn btn-danger btn-small" onclick="removeTrailerFileSlot('${dataAttr}',${idx},${slotIdx})">✕ remover</button>` : ''}
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right;margin-top:0.5rem">
+        <button class="btn btn-danger btn-small" onclick="removeTrailerSlot('${dataAttr}',${idx},${slotIdx})">✕ remover trailer</button>
+      </div>
+    </div>`;
+}
+
+function setTrailerExclusive(slotId, active) {
+  const urlOpt  = document.getElementById('ts-url-'  + slotId);
+  const fileOpt = document.getElementById('ts-file-' + slotId);
+  const urlInp  = urlOpt  ? urlOpt.querySelector('input[type="text"]')  : null;
+  const fileInp = fileOpt ? fileOpt.querySelector('input[type="file"]') : null;
+  if (active === 'url') {
+    urlOpt?.classList.remove('video-option--disabled');
+    fileOpt?.classList.add('video-option--disabled');
+    if (fileInp) fileInp.disabled = true;
+    if (urlInp)  urlInp.disabled  = false;
+  } else if (active === 'file') {
+    fileOpt?.classList.remove('video-option--disabled');
+    urlOpt?.classList.add('video-option--disabled');
+    if (urlInp)  urlInp.disabled  = true;
+    if (fileInp) fileInp.disabled = false;
+  } else {
+    urlOpt?.classList.remove('video-option--disabled');
+    fileOpt?.classList.remove('video-option--disabled');
+    if (urlInp)  urlInp.disabled  = false;
+    if (fileInp) fileInp.disabled = false;
+  }
+}
+
+function syncTrailerUrl(input, dataAttr, idx, slotIdx) {
+  const source = getTrailerSource(dataAttr);
+  if (!Array.isArray(source[idx].videoTrailers)) source[idx].videoTrailers = [];
+  const val = input.value.trim();
+  source[idx].videoTrailers[slotIdx] = val;
+  setTrailerExclusive(`trailer-${dataAttr}-${idx}-${slotIdx}`, val ? 'url' : null);
+}
+
+function addTrailerSlot(dataAttr, idx) {
+  const source = getTrailerSource(dataAttr);
+  if (!Array.isArray(source[idx].videoTrailers)) source[idx].videoTrailers = [];
+  source[idx].videoTrailers.push('');
+  const list = document.getElementById(`trailers-list-${dataAttr}-${idx}`);
+  if (list) list.innerHTML = source[idx].videoTrailers.map((u, s) => renderTrailerSlot(dataAttr, idx, s, u)).join('');
+}
+
+async function removeTrailerSlot(dataAttr, idx, slotIdx) {
+  const source  = getTrailerSource(dataAttr);
+  const url     = source[idx].videoTrailers[slotIdx];
+  const rawBase = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
+  if (url && url.startsWith(rawBase) && !isEmbedUrl(url)) {
+    if (!confirm('Remover este trailer e o arquivo do GitHub?')) return;
+    const path = url.replace(rawBase, '').split('?')[0];
+    try { const f = await ghGet(path); await ghDelete(path, f.sha, `assets: remove ${path}`); } catch {}
+  }
+  source[idx].videoTrailers.splice(slotIdx, 1);
+  const list = document.getElementById(`trailers-list-${dataAttr}-${idx}`);
+  if (list) list.innerHTML = source[idx].videoTrailers.length
+    ? source[idx].videoTrailers.map((u, s) => renderTrailerSlot(dataAttr, idx, s, u)).join('')
+    : '<p class="makingoff-empty">nenhum trailer ainda</p>';
+}
+
+async function uploadTrailerFileSlot(fileInput, dataAttr, idx, slotIdx) {
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  const label = fileInput.closest('label');
+  const span  = label.querySelector('.upload-label-text');
+  span.textContent = '…';
+  label.style.pointerEvents = 'none';
+
+  const source = getTrailerSource(dataAttr);
+  if (!Array.isArray(source[idx].videoTrailers)) source[idx].videoTrailers = [];
+
+  const ext      = file.name.split('.').pop().toLowerCase();
+  const nameEl   = document.querySelector(`[data-${dataAttr}="${idx}"][data-key="title"]`)
+                || document.querySelector(`[data-${dataAttr}="${idx}"][data-key="name"]`);
+  const baseName = (nameEl && nameEl.value.trim())
+    ? nameEl.value.trim().replace(/\s+/g, '_').replace(/[/\\?#%*:|"<>]/g, '').slice(0, 80)
+    : Math.floor(Math.random() * 1e6).toString();
+  const suffix   = slotIdx > 0 ? `_${slotIdx}` : '';
+  const newPath  = `assets/filmes/trailers/${baseName}${suffix}_t.${ext}`;
+  const rawBase  = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
+
+  // Remove arquivo anterior se for arquivo (não URL embed)
+  const oldUrl = source[idx].videoTrailers[slotIdx];
+  if (oldUrl && oldUrl.startsWith(rawBase) && !isEmbedUrl(oldUrl)) {
+    const oldPath = oldUrl.replace(rawBase, '').split('?')[0];
+    try { const f = await ghGet(oldPath); await ghDelete(oldPath, f.sha, `assets: remove ${oldPath}`); } catch {}
+  }
+
+  try {
+    const base64 = await new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload  = e => res(e.target.result.split(',')[1]);
+      r.onerror = rej;
+      r.readAsDataURL(file);
+    });
+    await ghPutBinary(newPath, base64, `assets: upload ${newPath}`);
+    source[idx].videoTrailers[slotIdx] = `${rawBase}${newPath}`;
+    // Re-render para atualizar botões download/remover
+    const list = document.getElementById(`trailers-list-${dataAttr}-${idx}`);
+    if (list) list.innerHTML = source[idx].videoTrailers.map((u, s) => renderTrailerSlot(dataAttr, idx, s, u)).join('');
+    toast('Trailer enviado!', 'ok');
+  } catch (err) {
+    toast(`Erro no upload: ${err.message}`, 'err');
+    span.textContent = '↑ enviar arquivo';
+    label.style.pointerEvents = '';
+  }
+  fileInput.value = '';
+}
+
+async function removeTrailerFileSlot(dataAttr, idx, slotIdx) {
+  if (!confirm('Remover este arquivo do GitHub?')) return;
+  const source  = getTrailerSource(dataAttr);
+  const url     = source[idx].videoTrailers[slotIdx];
+  const rawBase = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
+  if (url && url.startsWith(rawBase)) {
+    const path = url.replace(rawBase, '').split('?')[0];
+    try { const f = await ghGet(path); await ghDelete(path, f.sha, `assets: remove ${path}`); } catch {}
+  }
+  source[idx].videoTrailers[slotIdx] = '';
+  const list = document.getElementById(`trailers-list-${dataAttr}-${idx}`);
+  if (list) list.innerHTML = source[idx].videoTrailers.map((u, s) => renderTrailerSlot(dataAttr, idx, s, u)).join('');
+  toast('Arquivo removido.', 'ok');
 }
 
 /* ── FOTOGRAFIAS — galeria de múltiplas imagens ── */

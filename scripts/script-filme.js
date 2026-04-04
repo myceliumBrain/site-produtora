@@ -67,26 +67,34 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     document.getElementById('filmeTags').innerHTML =
       tags.map(t => `<span class="tag">${t}</span>`).join('');
 
-    // trailer
-    const trailerWrap   = document.getElementById('filmeTrailer');
-    const trailerEmbed  = document.getElementById('filmeTrailerEmbed');
-    const trailerIframe = document.getElementById('filmeTrailerIframe');
-    const trailerVideo  = document.getElementById('filmeTrailerVideo');
-    const embedUrl      = toEmbedUrl(f.videoTrailer);
-    if (embedUrl) {
-      trailerIframe.src        = embedUrl;
-      trailerEmbed.style.display = '';
-      trailerVideo.style.display = 'none';
-      trailerVideo.src           = '';
-      trailerWrap.style.display  = '';
-    } else if (f.videoTrailer) {
-      trailerVideo.src           = f.videoTrailer;
-      trailerVideo.style.display = '';
-      trailerEmbed.style.display = 'none';
-      trailerIframe.src          = '';
-      trailerWrap.style.display  = '';
+    // trailers (suporta array videoTrailers e legado videoTrailer)
+    const allTrailers = (f.videoTrailers && f.videoTrailers.length)
+      ? f.videoTrailers.filter(Boolean)
+      : f.videoTrailer ? [f.videoTrailer] : [];
+    const trailersContainer = document.getElementById('filmeTrailersContainer');
+    if (allTrailers.length) {
+      const label = allTrailers.length === 1 ? 'trailer:' : 'trailers:';
+      const items = allTrailers.map(url => {
+        const embedUrl = toEmbedUrl(url);
+        if (embedUrl) {
+          return `<div class="filme-trailer__item">
+            <div class="filme-trailer__embed">
+              <iframe src="${embedUrl}" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" frameborder="0"></iframe>
+            </div>
+          </div>`;
+        } else {
+          return `<div class="filme-trailer__item">
+            <video class="filme-trailer__video" src="${url}" controls preload="metadata"></video>
+          </div>`;
+        }
+      }).join('');
+      trailersContainer.innerHTML = `<div class="filme-trailer reveal reveal-delay-2">
+        <p class="filme-trailer__label">${label}</p>
+        ${items}
+      </div>`;
+      trailersContainer.style.display = '';
     } else {
-      trailerWrap.style.display = 'none';
+      trailersContainer.style.display = 'none';
     }
 
     // fotografias
