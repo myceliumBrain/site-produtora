@@ -334,44 +334,20 @@
     ],
     "team": [
       {
-        "name": "Felipe Drummond",
+        "name": "XXXXXXXX XXXXXXXXXX",
         "role": "Diretor",
         "roleEn": "Director",
-        "img": "",
-        "bio": "Cineasta e fotógrafo carioca, Felipe transita entre o documentário e a ficção com a mesma naturalidade. <em>Sombra Branca</em> é seu segundo longa-metragem e estreia em 2025.",
-        "bioEn": "A filmmaker and photographer from Rio, Felipe moves between documentary and fiction with equal ease. <em>Sombra Branca</em> is his second feature film, premiering in 2025."
+        "img": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/equipe/XXXXXXXX_XXXXXXXXXX_p.jpeg",
+        "bio": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        "bioEn": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
       },
       {
-        "name": "Ana Luiza Morais",
+        "name": "YYYYYYYYYYYYY",
         "role": "Diretora",
         "roleEn": "Director",
-        "img": "",
-        "bio": "Formada pela ECA-USP, Ana Luiza dirige desde 2015 com olhar voltado para as margens do Brasil. Seu longa de estreia, <em>Última Fronteira</em>, foi selecionado para o Festival de Brasília em 2025.",
-        "bioEn": "Graduated from ECA-USP, Ana Luiza has been directing since 2015 with a focus on the margins of Brazil. Her debut feature, <em>Última Fronteira</em>, was selected for the Brasília Film Festival in 2025."
-      },
-      {
-        "name": "Carla Menezes",
-        "role": "Diretora",
-        "roleEn": "Director",
-        "img": "",
-        "bio": "Carla Menezes é especialista em documentário social e tem quatro filmes premiados em festivais nacionais. Atualmente dirige <em>Bruma</em>, seu primeiro projeto de ficção.",
-        "bioEn": "Carla Menezes specializes in social documentary and has four award-winning films at national festivals. She is currently directing <em>Bruma</em>, her first fiction project."
-      },
-      {
-        "name": "Eduardo Braga",
-        "role": "Diretor",
-        "roleEn": "Director",
-        "img": "",
-        "bio": "Eduardo Braga vem do teatro e traz ao cinema uma direção de atores visceral e precisa. <em>Corpo Fechado</em>, atualmente em pós-produção, é seu trabalho mais ambicioso até hoje.",
-        "bioEn": "Eduardo Braga comes from theater and brings visceral, precise actor direction to cinema. <em>Corpo Fechado</em>, currently in post-production, is his most ambitious work to date."
-      },
-      {
-        "name": "Renata Pires",
-        "role": "Diretora",
-        "roleEn": "Director",
-        "img": "",
-        "bio": "Roteirista antes de diretora, Renata Pires traz para a câmera a precisão das palavras. <em>O Intervalo</em> é seu longa de estreia, atualmente em fase de desenvolvimento.",
-        "bioEn": "A screenwriter before a director, Renata Pires brings the precision of words to the camera. <em>O Intervalo</em> is her debut feature, currently in development."
+        "img": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/equipe/YYYYYYYYYYYYY_p.jpg",
+        "bio": "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+        "bioEn": "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"
       }
     ],
     "parceiros": [
