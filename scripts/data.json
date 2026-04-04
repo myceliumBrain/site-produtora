@@ -297,39 +297,18 @@
     ],
     "marcos": [
       {
-        "year": "2018",
+        "year": "2013",
         "title": "Fundação",
         "titleEn": "Foundation",
         "text": "A Pontos de Fuga é fundada no Rio de Janeiro por um grupo de cineastas comprometidos com o cinema independente brasileiro.",
         "textEn": "Pontos de Fuga is founded in Rio de Janeiro by a group of filmmakers committed to Brazilian independent cinema."
       },
       {
-        "year": "2019",
-        "title": "Primeiro longa",
-        "titleEn": "First feature",
-        "text": "Produção do primeiro longa-metragem da casa, <em>Fogo Baixo</em>, dirigido por Camila Reis. Selecionado para o Festival de Gramado.",
-        "textEn": "Production of the first feature film, <em>Fogo Baixo</em>, directed by Camila Reis. Selected for the Gramado Film Festival."
-      },
-      {
-        "year": "2021",
-        "title": "Prêmio ANCINE",
-        "titleEn": "ANCINE Award",
-        "text": "<em>Deriva</em>, de André Castilho, recebe o prêmio de Melhor Direção no Festival de Cinema Brasileiro de Miami.",
-        "textEn": "<em>Deriva</em>, by André Castilho, receives the Best Direction award at the Brazilian Film Festival of Miami."
-      },
-      {
-        "year": "2023",
-        "title": "Expansão",
-        "titleEn": "Expansion",
-        "text": "A produtora expande seu catálogo para o documentário, com <em>Cerrado</em> e <em>Vento Cru</em> sendo exibidos em festivais internacionais na Europa e América Latina.",
-        "textEn": "The company expands its catalog to documentary, with <em>Cerrado</em> and <em>Vento Cru</em> being shown at international festivals in Europe and Latin America."
-      },
-      {
-        "year": "2025",
+        "year": "2026",
         "title": "Hoje",
         "titleEn": "Today",
-        "text": "Com mais de 14 títulos no catálogo e três projetos em produção simultânea, a Pontos de Fuga consolida-se como uma das produtoras independentes mais ativas do Brasil.",
-        "textEn": "With more than 14 titles in the catalog and three projects in simultaneous production, Pontos de Fuga establishes itself as one of the most active independent production companies in Brazil."
+        "text": "Com mais de X títulos no catálogo XXXXXXXXXXXXXXX",
+        "textEn": "With more than X titles in the catalog XXXXXXXXXXXXXXX"
       }
     ],
     "team": [
