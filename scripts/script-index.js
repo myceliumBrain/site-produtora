@@ -216,6 +216,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         }
       }
     }, () => {
+      applyI18n();
       goToSlide(0);
       renderIdentity();
       renderPreview();
