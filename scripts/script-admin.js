@@ -709,8 +709,6 @@ function renderPagPrincipal() {
     <div class="fields-grid">
       <div class="field full"><label>Frase principal PT</label><input id="m-identityStatement"   value="${esc(m.identityStatement)}"></div>
       <div class="field full"><label>Frase principal EN</label><input id="m-identityStatementEn" value="${esc(m.identityStatementEn)}"></div>
-      <div class="field"><label>Subtítulo PT</label><input id="m-manifestoSub"   value="${esc(m.manifestoSub)}"></div>
-      <div class="field"><label>Subtítulo EN</label><input id="m-manifestoSubEn" value="${esc(m.manifestoSubEn)}"></div>
     </div>
     <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Texto Carrossel</span></div>
     <div id="stripeItemsList">${renderStripeItems(ix.stripeItems || [])}</div>
@@ -1063,7 +1061,7 @@ function collectAll() {
     data.upcomingFilms[i][key] = el.value;
   });
   ['eyebrow','eyebrowEn','title1','title1En','title2','title2En','p1','p1En','p2','p2En',
-   'identityStatement','identityStatementEn','manifestoSub','manifestoSubEn']
+   'identityStatement','identityStatementEn']
     .forEach(f => {
       const el = document.getElementById('m-' + f);
       if (el) data.historiaData.manifesto[f] = el.value;

@@ -149,9 +149,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     const m = historiaData.manifesto;
     if (!m) return;
     const tagline = document.querySelector('.identity-tagline');
-    const sub     = document.querySelector('.identity-sub');
     if (tagline) tagline.textContent = lang === 'en' ? m.identityStatementEn : m.identityStatement;
-    if (sub)     sub.textContent     = lang === 'en' ? m.manifestoSubEn      : m.manifestoSub;
   }
 
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
