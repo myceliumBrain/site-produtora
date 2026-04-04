@@ -13,7 +13,8 @@
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Um_Dia_Antes_de_Todos_os_Outros_p.png",
       "imgLandscape": "",
       "videoHover": "",
-      "videoTrailer": ""
+      "videoTrailer": "",
+      "videoTrailers": []
     },
     {
       "title": "O Amor Dá Voltas",
@@ -44,6 +45,9 @@
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_foto_1775246854242_2.jpg",
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_foto_1775246860692_3.jpg",
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/O_Amor_Dá_Voltas/O_Amor_Dá_Voltas_foto_1775246863481_4.jpg"
+      ],
+      "videoTrailers": [
+        "https://www.youtube.com/watch?v=pGffEe96PHY"
       ]
     },
     {
@@ -62,6 +66,9 @@
       "videoTrailer": "https://vimeo.com/483286217",
       "makingOff": [
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/makingoff/Amor_de_Bicho/Amor_de_Bicho_mo_1775244695846_0.jpg"
+      ],
+      "videoTrailers": [
+        "https://vimeo.com/483286217"
       ]
     },
     {
@@ -90,6 +97,9 @@
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328018126_8.jpg",
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328021779_9.jpg",
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328025582_10.jpg"
+      ],
+      "videoTrailers": [
+        "https://www.youtube.com/watch?v=9zZw9-9UTx0"
       ]
     },
     {
@@ -110,6 +120,9 @@
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei_foto_1775328233934_0.jpg",
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei_foto_1775328234929_1.jpg",
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei_foto_1775328235857_2.png"
+      ],
+      "videoTrailers": [
+        "https://www.youtube.com/watch?v=wQER5RBU6n4"
       ]
     },
     {
@@ -128,6 +141,9 @@
       "videoTrailer": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/trailers/Arte_Brasileira_Quadro_a_Quadro_p.mp4",
       "makingOff": [
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/makingoff/Arte_Brasileira_Quadro_a_Quadro/Arte_Brasileira_Quadro_a_Quadro_mo_1775244549871_0.webp"
+      ],
+      "videoTrailers": [
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/trailers/Arte_Brasileira_Quadro_a_Quadro_p.mp4"
       ]
     },
     {
@@ -143,7 +159,10 @@
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Zanine_-_Ser_do_Arquitetar_p.png",
       "imgLandscape": "",
       "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Zanine_-_Ser_do_Arquitetar_p.mp4",
-      "videoTrailer": "https://www.youtube.com/watch?v=8WqXMpC6njo"
+      "videoTrailer": "https://www.youtube.com/watch?v=8WqXMpC6njo",
+      "videoTrailers": [
+        "https://www.youtube.com/watch?v=8WqXMpC6njo"
+      ]
     },
     {
       "title": "Design Brasileiro",
@@ -161,7 +180,8 @@
       "videoTrailer": "",
       "fotografias": [
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Design_Brasileiro/Design_Brasileiro_foto_1775328543053_0.tiff"
-      ]
+      ],
+      "videoTrailers": []
     }
   ],
   "upcomingFilms": [
@@ -434,7 +454,10 @@
       "genre": "Peça Teatral",
       "synopsis": "A Ordem do Mundo\nPeça Teatral\n\nMonólogo de Drica Moraes, no papel da responsável por organizar todos os fatos que ocorrem no planeta, catalogando e arquivando recortes de manchetes e notícias.\n\nTexto de Patrícia Melo e direção de Aderbal Freire Filho.\n\nFicou em cartaz onde? Por quanto tempo? \n",
       "synopsisEn": "A monologue by Drica Moraes, in the role of the person responsible for organizing all the events that occur on the planet, cataloging and archiving clippings of headlines and news. Text by Patrícia Melo and directed by Aderbal Freire Filho.",
-      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/A_Ordem_do_Mundo_p.png"
+      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/A_Ordem_do_Mundo_p.png",
+      "videoTrailers": [],
+      "imgLandscape": "",
+      "videoHover": ""
     },
     {
       "title": "Confronto",
@@ -444,7 +467,10 @@
       "genre": "",
       "synopsis": "Livre adaptação teatral de Domingos Oliveira do livro \"Elite da Tropa\", de Luiz Eduardo Soares.",
       "synopsisEn": "A free theatrical adaptation by Domingos Oliveira of the book \"Elite da Tropa\" by Luiz Eduardo Soares.",
-      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Confronto_p.jpg"
+      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Confronto_p.jpg",
+      "videoTrailers": [],
+      "imgLandscape": "",
+      "videoHover": ""
     },
     {
       "title": "Castelos de Areia",
@@ -454,7 +480,10 @@
       "genre": "",
       "synopsis": "Exposição da artista visual, crítica de arte e escritora Katia Canton. Com curadoria de Adriana Rede e expografia de José Marton, a mostra reúne mais de 80 obras que tratam de sonhos e desejos, da impermanência da vida e da potência do imponderável.",
       "synopsisEn": "Exhibition by visual artist, art critic, and writer Katia Canton. Curated by Adriana Rede and with exhibition design by José Marton, the show brings together more than 80 works that deal with dreams and desires, the impermanence of life, and the power of the imponderable.",
-      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Castelos_de_Areia_p.png"
+      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Castelos_de_Areia_p.png",
+      "videoTrailers": [],
+      "imgLandscape": "",
+      "videoHover": ""
     },
     {
       "title": "O Trem da História",
@@ -464,7 +493,13 @@
       "genre": "",
       "synopsis": "Uma exposição interativa voltada para crianças e adolescentes. A mostra revela diversos períodos da história da arte através da réplica de obras importantes, que se encontram nos principais museus do país.",
       "synopsisEn": "An interactive exhibition aimed at children and teenagers. The show reveals various periods in art history through replicas of important works found in the country's main museums.",
-      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/O_Trem_da_História_p.png"
+      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/O_Trem_da_História_p.png",
+      "videoTrailers": [
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/trailers/O_Trem_da_História_t.mp4",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/trailers/O_Trem_da_História_1_t.mp4"
+      ],
+      "imgLandscape": "",
+      "videoHover": ""
     }
   ],
   "pagesData": {
