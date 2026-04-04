@@ -326,22 +326,15 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 
 .historia-member:hover .historia-member__img { transform: scale(1.04); }
 
-/* Overlay: gradiente burnt orange suave em vez de preto frio */
 .historia-member__img-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(200, 59, 24, 0.35) 0%,
-    transparent 60%
-  );
-  pointer-events: none;
+  content: none;
 }
 
 .historia-member__info {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
 }
 
 /* Role: burnt orange maiúsculo */
@@ -364,6 +357,7 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   color: var(--black);
   margin-bottom: 32px;
   letter-spacing: -0.02em;
+  overflow-wrap: break-word;
 }
 
 .historia-member__bio {
@@ -372,6 +366,7 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   font-weight: 300;
   line-height: 1.75;
   color: rgba(28, 23, 20, 0.52);
+  overflow-wrap: break-word;
 }
 
 .historia-member__bio em {
