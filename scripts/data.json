@@ -48,6 +48,62 @@
       ],
       "videoTrailers": [
         "https://www.youtube.com/watch?v=pGffEe96PHY"
+      ],
+      "fichatecnica": [
+        {
+          "role": "Produção",
+          "name": "Pontos de Fuga e Neanderthal MB"
+        },
+        {
+          "role": "Coprodução",
+          "name": "Globo Filmes"
+        },
+        {
+          "role": "Distribuição",
+          "name": "Imagem Filmes"
+        },
+        {
+          "role": "Produtores",
+          "name": "Nathalie Felippe e Marcos Bernstein"
+        },
+        {
+          "role": "Produtores Associados",
+          "name": "Carlos Diegues, Marc Bechar e Leonardo Domingues"
+        },
+        {
+          "role": "Roteiro",
+          "name": "Marcos Bernstein, Marc Bechar e Victor Atherino"
+        },
+        {
+          "role": "Direção de Fotografia",
+          "name": "Gustavo Hadba, ABC e Lula Cerri"
+        },
+        {
+          "role": "Produção Executiva",
+          "name": "Nathalie Felippe e Antonio Irivan"
+        }
+      ],
+      "elenco": [
+        {
+          "role": "André",
+          "name": "Igor Angelkorte"
+        },
+        {
+          "role": "Dani",
+          "name": "Cleo"
+        },
+        {
+          "role": "Beta",
+          "name": "Juliana Didone"
+        },
+        {
+          "role": "Marcos",
+          "name": "Pablo Sanábio"
+        },
+        {
+          "role": "Sérgio",
+          "name": "Klebber Toledo"
+        }
       ]
     },
     {
