@@ -59,7 +59,7 @@
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Amor_de_Bicho_p.png",
       "imgLandscape": "",
       "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Amor_de_Bicho_v.mp4",
-      "videoTrailer": "",
+      "videoTrailer": "https://vimeo.com/483286217",
       "makingOff": [
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/makingoff/Amor_de_Bicho/Amor_de_Bicho_mo_1775244695846_0.jpg"
       ]
@@ -77,7 +77,20 @@
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Simonal_p.jpeg",
       "imgLandscape": "",
       "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Simonal_p.mp4",
-      "videoTrailer": ""
+      "videoTrailer": "https://www.youtube.com/watch?v=9zZw9-9UTx0",
+      "fotografias": [
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327988455_0.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327989670_1.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327990635_2.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327997925_3.png",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328000218_4.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328006913_5.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328010753_6.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328011660_7.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328018126_8.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328021779_9.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328025582_10.jpg"
+      ]
     },
     {
       "title": "Simonal - Ninguém Sabe o Duro Que Dei",
