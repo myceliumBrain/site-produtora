@@ -101,6 +101,13 @@ async function ghPut(path, content, sha, message) {
 }
 
 async function ghPutBinary(path, base64Content, message) {
+  // Se o arquivo já existir no caminho de destino, o GitHub exige o sha para atualizar
+  let sha;
+  try { sha = (await ghGet(path)).sha; } catch { /* arquivo novo — sha não necessário */ }
+
+  const body = { message, content: base64Content, branch: BRANCH };
+  if (sha) body.sha = sha;
+
   const res = await fetch(
     `https://api.github.com/repos/${REPO}/contents/${path}`,
     {
@@ -110,7 +117,7 @@ async function ghPutBinary(path, base64Content, message) {
         Accept: 'application/vnd.github.v3+json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ message, content: base64Content, branch: BRANCH })
+      body: JSON.stringify(body)
     }
   );
   if (!res.ok) { const e = await res.json(); throw new Error(e.message || `PUT → ${res.status}`); }
