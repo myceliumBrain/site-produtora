@@ -103,9 +103,14 @@
       "synopsisEn": "Based on the life of singer and songwriter Wilson Simonal, the film portrays the artist's success during the 1960s and 1970s in a career full of highs and lows.",
       "tags": [],
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei_p.png",
-      "imgLandscape": "",
+      "imgLandscape": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/paisagens/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei_l.jpg",
       "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei_p.mp4",
-      "videoTrailer": ""
+      "videoTrailer": "https://www.youtube.com/watch?v=wQER5RBU6n4",
+      "fotografias": [
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei_foto_1775328233934_0.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei_foto_1775328234929_1.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei/Simonal_-_Ninguém_Sabe_o_Duro_Que_Dei_foto_1775328235857_2.png"
+      ]
     },
     {
       "title": "Arte Brasileira Quadro a Quadro",
@@ -138,7 +143,7 @@
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Zanine_-_Ser_do_Arquitetar_p.png",
       "imgLandscape": "",
       "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Zanine_-_Ser_do_Arquitetar_p.mp4",
-      "videoTrailer": ""
+      "videoTrailer": "https://www.youtube.com/watch?v=8WqXMpC6njo"
     },
     {
       "title": "Design Brasileiro",
@@ -153,7 +158,10 @@
       "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Design_Brasileiro_p.png",
       "imgLandscape": "",
       "videoHover": "",
-      "videoTrailer": ""
+      "videoTrailer": "",
+      "fotografias": [
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Design_Brasileiro/Design_Brasileiro_foto_1775328543053_0.tiff"
+      ]
     }
   ],
   "upcomingFilms": [
