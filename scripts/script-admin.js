@@ -572,7 +572,12 @@ function renderOtherProductions() {
           <div class="field full"><label>Gênero</label><input data-other="${i}" data-key="genre" value="${esc(f.genre)}"></div>
           <div class="field full"><label>Sinopse PT</label><textarea data-other="${i}" data-key="synopsis">${esc(f.synopsis)}</textarea></div>
           <div class="field full"><label>Sinopse EN</label><textarea data-other="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
-          ${imgField('other', i, 'imgPortrait', 'Imagem retrato', f.imgPortrait)}
+          ${imgField('other', i, 'imgPortrait',  'Imagem retrato (vertical)',    f.imgPortrait||'')}
+          ${imgField('other', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape||'')}
+          ${videoFieldWithUrl('other', i, 'videoHover',   'Preview',  f.videoHover||'',   'recomendado máx 15 segundos')}
+          ${videoFieldWithUrl('other', i, 'videoTrailer', 'Trailer',  f.videoTrailer||'')}
+          ${fotografiasField('other', i, f.fotografias)}
+          ${makingOffField('other', i, f.makingOff)}
         </div>
         <div class="card-actions">
           <button class="btn btn-danger btn-small" onclick="removeOtherProduction(${i})">Remover</button>
@@ -589,7 +594,8 @@ function moveOtherProduction(fromIdx, toIdx) {
 function addOtherProduction() {
   if (!data.otherProductions) data.otherProductions = [];
   data.otherProductions.push({ title:'', titleEn:'', director:'', year:'', genre:'',
-    synopsis:'', synopsisEn:'', imgPortrait:'' });
+    synopsis:'', synopsisEn:'', imgPortrait:'', imgLandscape:'',
+    videoHover:'', videoTrailer:'', fotografias:[], makingOff:[] });
   renderOtherProductions();
   const idx = data.otherProductions.length - 1;
   toggleCard(`other-card-${idx}`);
@@ -1208,6 +1214,7 @@ function videoFieldWithUrl(dataAttr, idx, key, labelText, currentVal, note = '')
               <input type="file" accept="video/mp4,video/*" ${hasEmbed ? 'disabled' : ''}
                      onchange="uploadVideoFile(this,'${fieldId}','${previewId}')">
             </label>
+            <span class="field-note" style="margin-left:0">máximo 100 MB</span>
             ${hasFile ? `
             <a class="btn btn-small asset-btn-dl" href="${esc(currentVal)}" download target="_blank">↓ baixar</a>
             <button class="btn btn-danger btn-small" onclick="removeVideoAsset('${fieldId}','${previewId}')">✕ remover</button>` : ''}
@@ -1267,12 +1274,12 @@ function fotografiasField(dataAttr, idx, currentImages) {
   const images = Array.isArray(currentImages) ? currentImages : [];
   return `
     <div class="field full">
-      <label>Fotografias (imagens)</label>
+      <label>Fotografias (imagem / still)</label>
       <div class="makingoff-gallery" id="fotografias-gallery-${dataAttr}-${idx}">
         ${renderFotografiasItems(dataAttr, idx, images)}
       </div>
       <label class="upload-label" style="margin-top:10px">
-        <span class="upload-label-text">↑ adicionar imagem(ns)</span>
+        <span class="upload-label-text">↑ adicionar imagem(s)</span>
         <input type="file" accept="image/*" multiple onchange="uploadFotografias(this,'${dataAttr}',${idx})">
       </label>
     </div>`;
@@ -1298,7 +1305,7 @@ async function uploadFotografias(fileInput, dataAttr, idx) {
   const span  = label.querySelector('.upload-label-text');
   label.style.pointerEvents = 'none';
 
-  const source = dataAttr === 'film' ? data.films : data.upcomingFilms;
+  const source = dataAttr === 'film' ? data.films : dataAttr === 'other' ? data.otherProductions : data.upcomingFilms;
   if (!Array.isArray(source[idx].fotografias)) source[idx].fotografias = [];
 
   const rawBase = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
@@ -1329,7 +1336,7 @@ async function uploadFotografias(fileInput, dataAttr, idx) {
 
   const gallery = document.getElementById(`fotografias-gallery-${dataAttr}-${idx}`);
   if (gallery) gallery.innerHTML = renderFotografiasItems(dataAttr, idx, source[idx].fotografias);
-  span.textContent = '↑ adicionar imagem(ns)';
+  span.textContent = '↑ adicionar imagem(s)';
   label.style.pointerEvents = '';
   fileInput.value = '';
   toast('Imagens enviadas!', 'ok');
@@ -1337,7 +1344,7 @@ async function uploadFotografias(fileInput, dataAttr, idx) {
 
 async function removeFotografia(dataAttr, idx, imgIdx) {
   if (!confirm('Remover esta fotografia do GitHub?')) return;
-  const source = dataAttr === 'film' ? data.films : data.upcomingFilms;
+  const source = dataAttr === 'film' ? data.films : dataAttr === 'other' ? data.otherProductions : data.upcomingFilms;
   const url    = source[idx].fotografias[imgIdx];
   const rawBase = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
   if (url && url.startsWith(rawBase)) {
@@ -1363,7 +1370,7 @@ function makingOffField(dataAttr, idx, currentImages) {
         ${renderMakingOffItems(dataAttr, idx, images)}
       </div>
       <label class="upload-label" style="margin-top:10px">
-        <span class="upload-label-text">↑ adicionar imagem(ns)</span>
+        <span class="upload-label-text">↑ adicionar imagem(s)</span>
         <input type="file" accept="image/*" multiple onchange="uploadMakingOffImages(this,'${dataAttr}',${idx})">
       </label>
     </div>`;
@@ -1389,7 +1396,7 @@ async function uploadMakingOffImages(fileInput, dataAttr, idx) {
   const span  = label.querySelector('.upload-label-text');
   label.style.pointerEvents = 'none';
 
-  const source = dataAttr === 'film' ? data.films : data.upcomingFilms;
+  const source = dataAttr === 'film' ? data.films : dataAttr === 'other' ? data.otherProductions : data.upcomingFilms;
   if (!Array.isArray(source[idx].makingOff)) source[idx].makingOff = [];
 
   const rawBase = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
@@ -1420,7 +1427,7 @@ async function uploadMakingOffImages(fileInput, dataAttr, idx) {
 
   const gallery = document.getElementById(`makingoff-gallery-${dataAttr}-${idx}`);
   if (gallery) gallery.innerHTML = renderMakingOffItems(dataAttr, idx, source[idx].makingOff);
-  span.textContent = '↑ adicionar imagem(ns)';
+  span.textContent = '↑ adicionar imagem(s)';
   label.style.pointerEvents = '';
   fileInput.value = '';
   toast('Imagens enviadas!', 'ok');
@@ -1428,7 +1435,7 @@ async function uploadMakingOffImages(fileInput, dataAttr, idx) {
 
 async function removeMakingOffImage(dataAttr, idx, imgIdx) {
   if (!confirm('Remover esta imagem do GitHub?')) return;
-  const source = dataAttr === 'film' ? data.films : data.upcomingFilms;
+  const source = dataAttr === 'film' ? data.films : dataAttr === 'other' ? data.otherProductions : data.upcomingFilms;
   const url    = source[idx].makingOff[imgIdx];
   const rawBase = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
   if (url && url.startsWith(rawBase)) {
@@ -1488,13 +1495,14 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
   const isTrailer   = targetFieldId.includes('videoTrailer');
   const isLandscape = targetFieldId.includes('imgLandscape');
   const keySuffix   = isLandscape ? '_l' : '_p';
-  const folder      = dataAttr === 'team'                  ? 'assets/equipe'
-                    : dataAttr === 'parceiro'               ? 'assets/parceiros'
-                    : dataAttr === 'festival'               ? 'assets/festivais'
-                    : isPreview                             ? 'assets/filmes/previews'
-                    : isTrailer                             ? 'assets/filmes/trailers'
-                    : isLandscape && dataAttr === 'film'    ? 'assets/filmes/paisagens'
-                    : dataAttr === 'film'                   ? 'assets/filmes/retratos'
+  const isFilmLike  = dataAttr === 'film' || dataAttr === 'other';
+  const folder      = dataAttr === 'team'     ? 'assets/equipe'
+                    : dataAttr === 'parceiro' ? 'assets/parceiros'
+                    : dataAttr === 'festival' ? 'assets/festivais'
+                    : isPreview               ? 'assets/filmes/previews'
+                    : isTrailer               ? 'assets/filmes/trailers'
+                    : isLandscape && isFilmLike ? 'assets/filmes/paisagens'
+                    : isFilmLike              ? 'assets/filmes/retratos'
                     : 'assets/filmes';
   const newPath   = `${folder}/${baseName}${keySuffix}.${ext}`;
 

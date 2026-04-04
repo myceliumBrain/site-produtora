@@ -313,7 +313,7 @@ a, button { cursor: pointer !important; }
               border-color 0.2s ease;
 }
 .card.open .card-body {
-  max-height: 1800px;
+  max-height: 9999px;
   padding: 1.25rem;
   border-top-color: var(--border-f);
 }
