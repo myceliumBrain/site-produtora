@@ -97,6 +97,25 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       trailersContainer.style.display = 'none';
     }
 
+    // ficha técnica e elenco
+    function renderCrewSection(wrapId, bodyId, items) {
+      const wrap = document.getElementById(wrapId);
+      const body = document.getElementById(bodyId);
+      if (!wrap || !body) return;
+      if (items && items.length) {
+        body.innerHTML = items.map(item => `
+          <div class="filme-crew-row">
+            <span class="filme-crew-role">${item.role || ''}</span>
+            <span class="filme-crew-name">${item.name || ''}</span>
+          </div>`).join('');
+        wrap.style.display = '';
+      } else {
+        wrap.style.display = 'none';
+      }
+    }
+    renderCrewSection('filmeFichaTecnica', 'filmeFichaTecnicaBody', f.fichatecnica);
+    renderCrewSection('filmeElenco',       'filmeElencoBody',       f.elenco);
+
     // fotografias
     const fotosWrap = document.getElementById('filmeFotografias');
     const fotosGrid = document.getElementById('filmeFotografiasGrid');
@@ -210,3 +229,11 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     renderFilme();
   });
 });
+
+function toggleCrewCollapse(id) {
+  const wrap  = document.getElementById(id);
+  if (!wrap) return;
+  const open  = wrap.classList.toggle('open');
+  const arrow = wrap.querySelector('.filme-collapse__arrow');
+  if (arrow) arrow.textContent = open ? '∧' : '∨';
+}

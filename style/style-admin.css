@@ -496,6 +496,18 @@ a, button { cursor: pointer !important; }
   margin: 4px 0;
 }
 
+/* ── CREW (FICHA TÉCNICA / ELENCO) ── */
+.crew-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+.crew-row input {
+  width: 100%;
+}
+
 /* ── TRAILER SLOTS ── */
 .trailer-slot + .trailer-slot {
   margin-top: 1rem;

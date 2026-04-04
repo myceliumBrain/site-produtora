@@ -150,6 +150,10 @@ async function loadData(tok) {
 }
 
 async function saveData(commitMsg) {
+  // Busca o sha atual do arquivo antes de salvar — evita conflito 409
+  // quando uploads de assets ou outra sessão fizeram commits após o login
+  const current = await ghGet(FILE);
+  fileSHA = current.sha;
   const result = await ghPut(FILE, JSON.stringify(data, null, 2), fileSHA, commitMsg);
   fileSHA = result.content.sha;
 }
@@ -508,6 +512,8 @@ function renderFilms() {
             </label>
             <span class="field-note" style="margin-left:0">necessário ter imagem paisagem (horizontal)</span>
           </div>
+          ${crewField('ficha',  'film', i, f.fichatecnica||[], 'Ficha Técnica')}
+          ${crewField('elenco', 'film', i, f.elenco||[],       'Elenco')}
           <div class="field full"><label>Sinopse PT</label><textarea data-film="${i}" data-key="synopsis">${esc(f.synopsis)}</textarea></div>
           <div class="field full"><label>Sinopse EN</label><textarea data-film="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
           ${imgField('film', i, 'imgPortrait',  'Imagem retrato (vertical)',   f.imgPortrait)}
@@ -543,8 +549,9 @@ function moveFilm(fromIdx, toIdx) {
 
 function addFilm() {
   data.films.push({ title:'', titleEn:'', director:'', year:'', genre:'Drama',
-    hero:false, synopsis:'', synopsisEn:'', tags:[], imgPortrait:'', imgLandscape:'',
-    videoHover:'', videoTrailers:[], videoMakingOff:'', fotografias:[], makingOff:[] });
+    hero:false, synopsis:'', synopsisEn:'', fichatecnica:[], elenco:[], tags:[],
+    imgPortrait:'', imgLandscape:'', videoHover:'', videoTrailers:[],
+    videoMakingOff:'', fotografias:[], makingOff:[] });
   renderFilms();
   const idx = data.films.length - 1;
   toggleCard(`film-card-${idx}`);
@@ -588,6 +595,8 @@ function renderOtherProductions() {
           <div class="field"><label>Diretor</label><input data-other="${i}" data-key="director" value="${esc(f.director)}"></div>
           <div class="field"><label>Ano</label><input data-other="${i}" data-key="year" value="${esc(f.year)}"></div>
           <div class="field full"><label>Gênero</label><input data-other="${i}" data-key="genre" value="${esc(f.genre)}"></div>
+          ${crewField('ficha',  'other', i, f.fichatecnica||[], 'Ficha Técnica')}
+          ${crewField('elenco', 'other', i, f.elenco||[],       'Elenco')}
           <div class="field full"><label>Sinopse PT</label><textarea data-other="${i}" data-key="synopsis">${esc(f.synopsis)}</textarea></div>
           <div class="field full"><label>Sinopse EN</label><textarea data-other="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
           ${imgField('other', i, 'imgPortrait',  'Imagem retrato (vertical)',    f.imgPortrait||'')}
@@ -615,8 +624,9 @@ function moveOtherProduction(fromIdx, toIdx) {
 function addOtherProduction() {
   if (!data.otherProductions) data.otherProductions = [];
   data.otherProductions.push({ title:'', titleEn:'', director:'', year:'', genre:'',
-    synopsis:'', synopsisEn:'', imgPortrait:'', imgLandscape:'',
-    videoHover:'', videoTrailers:[], fotografias:[], makingOff:[] });
+    synopsis:'', synopsisEn:'', fichatecnica:[], elenco:[],
+    imgPortrait:'', imgLandscape:'', videoHover:'', videoTrailers:[],
+    fotografias:[], makingOff:[] });
   renderOtherProductions();
   const idx = data.otherProductions.length - 1;
   toggleCard(`other-card-${idx}`);
@@ -1288,6 +1298,57 @@ async function uploadVideoFile(fileInput, targetFieldId, previewId) {
 async function removeVideoAsset(fieldId, previewId) {
   await removeAsset(fieldId, previewId);
   setVideoExclusive(fieldId, null);
+}
+
+/* ── FICHA TÉCNICA / ELENCO ── */
+function crewField(section, dataAttr, idx, items, labelText) {
+  const list = Array.isArray(items) ? items : [];
+  return `
+    <div class="field full">
+      <label>${labelText}</label>
+      <div id="${section}-list-${dataAttr}-${idx}">
+        ${renderCrewItems(section, dataAttr, idx, list)}
+      </div>
+      <button class="btn btn-secondary btn-small" style="margin-top:0.5rem"
+              onclick="addCrewItem('${section}','${dataAttr}',${idx})">+ adicionar</button>
+    </div>`;
+}
+
+function renderCrewItems(section, dataAttr, idx, items) {
+  if (!items.length) return '<p class="makingoff-empty">nenhum integrante ainda</p>';
+  return items.map((item, j) => `
+    <div class="crew-row">
+      <input type="text" placeholder="Função" value="${esc(item.role||'')}"
+             oninput="updateCrewItem('${section}','${dataAttr}',${idx},${j},'role',this.value)">
+      <input type="text" placeholder="Nome" value="${esc(item.name||'')}"
+             oninput="updateCrewItem('${section}','${dataAttr}',${idx},${j},'name',this.value)">
+      <button class="btn btn-danger btn-small" onclick="removeCrewItem('${section}','${dataAttr}',${idx},${j})">✕</button>
+    </div>`).join('');
+}
+
+function updateCrewItem(section, dataAttr, idx, j, field, val) {
+  const source = getTrailerSource(dataAttr);
+  const key    = section === 'ficha' ? 'fichatecnica' : 'elenco';
+  if (!Array.isArray(source[idx][key])) source[idx][key] = [];
+  if (!source[idx][key][j]) source[idx][key][j] = { role:'', name:'' };
+  source[idx][key][j][field] = val;
+}
+
+function addCrewItem(section, dataAttr, idx) {
+  const source = getTrailerSource(dataAttr);
+  const key    = section === 'ficha' ? 'fichatecnica' : 'elenco';
+  if (!Array.isArray(source[idx][key])) source[idx][key] = [];
+  source[idx][key].push({ role:'', name:'' });
+  const list = document.getElementById(`${section}-list-${dataAttr}-${idx}`);
+  if (list) list.innerHTML = renderCrewItems(section, dataAttr, idx, source[idx][key]);
+}
+
+function removeCrewItem(section, dataAttr, idx, j) {
+  const source = getTrailerSource(dataAttr);
+  const key    = section === 'ficha' ? 'fichatecnica' : 'elenco';
+  source[idx][key].splice(j, 1);
+  const list = document.getElementById(`${section}-list-${dataAttr}-${idx}`);
+  if (list) list.innerHTML = renderCrewItems(section, dataAttr, idx, source[idx][key]);
 }
 
 /* ── PREVIEW — campo único (URL ou arquivo) ── */
