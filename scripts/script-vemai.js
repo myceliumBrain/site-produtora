@@ -97,6 +97,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       }
     }
   }, () => {
+    applyI18n();
     updateStatement();
     renderFilmes();
     observeReveal();
