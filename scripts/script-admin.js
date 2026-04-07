@@ -714,8 +714,8 @@ function renderPagHistoria() {
   document.getElementById('pagHistoriaForm').innerHTML = `
     <div class="panel-header" style="margin-top:0"><span class="panel-title" style="font-size:14px">Cabeçalho da página</span></div>
     <div class="fields-grid">
-      <div class="field"><label>Eyebrow PT</label><input id="m-eyebrow"   value="${esc(m.eyebrow)}"></div>
-      <div class="field"><label>Eyebrow EN</label><input id="m-eyebrowEn" value="${esc(m.eyebrowEn)}"></div>
+      <div class="field"><label>Etiqueta PT</label><input id="m-eyebrow"   value="${esc(m.eyebrow)}"></div>
+      <div class="field"><label>Etiqueta EN</label><input id="m-eyebrowEn" value="${esc(m.eyebrowEn)}"></div>
       <div class="field"><label>Título linha 1 PT</label><input id="m-title1"   value="${esc(m.title1)}"></div>
       <div class="field"><label>Título linha 1 EN</label><input id="m-title1En" value="${esc(m.title1En)}"></div>
       <div class="field"><label>Título linha 2 PT</label><input id="m-title2"   value="${esc(m.title2)}"></div>
@@ -725,7 +725,7 @@ function renderPagHistoria() {
       <div class="field full"><label>Parágrafo 2 PT</label><textarea id="m-p2">${esc(m.p2)}</textarea></div>
       <div class="field full"><label>Parágrafo 2 EN</label><textarea id="m-p2En">${esc(m.p2En)}</textarea></div>
     </div>
-    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Eyebrows das seções</span></div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Etiquetas das seções</span></div>
     <div class="fields-grid">
       <div class="field"><label>Equipe PT</label><input id="h-teamEyebrowPt"      value="${esc(h.teamEyebrowPt||'')}"></div>
       <div class="field"><label>Equipe EN</label><input id="h-teamEyebrowEn"      value="${esc(h.teamEyebrowEn||'')}"></div>
@@ -739,13 +739,17 @@ function renderPagHistoria() {
 }
 
 function renderPagPrincipal() {
-  const m = data.historiaData.manifesto;
   const ix = (data.pagesData && data.pagesData.index) || {};
   document.getElementById('pagPrincipalForm').innerHTML = `
-    <div class="panel-header" style="margin-top:0"><span class="panel-title" style="font-size:14px">Bloco de identidade</span></div>
+    <div class="panel-header" style="margin-top:0"><span class="panel-title" style="font-size:14px">Banner principal</span></div>
     <div class="fields-grid">
-      <div class="field full"><label>Frase principal PT</label><input id="m-identityStatement"   value="${esc(m.identityStatement)}"></div>
-      <div class="field full"><label>Frase principal EN</label><input id="m-identityStatementEn" value="${esc(m.identityStatementEn)}"></div>
+      <div class="field"><label>Etiqueta PT</label><input id="ix-heroLabelPt" value="${esc(ix.heroLabelPt||'')}"></div>
+      <div class="field"><label>Etiqueta EN</label><input id="ix-heroLabelEn" value="${esc(ix.heroLabelEn||'')}"></div>
+    </div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Grid de produções recentes</span></div>
+    <div class="fields-grid">
+      <div class="field"><label>Título PT</label><input id="ix-gridTitlePt" value="${esc(ix.gridTitlePt||'')}"></div>
+      <div class="field"><label>Título EN</label><input id="ix-gridTitleEn" value="${esc(ix.gridTitleEn||'')}"></div>
     </div>
     <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Texto Carrossel</span></div>
     <div id="stripeItemsList">${renderStripeItems(ix.stripeItems || [])}</div>
@@ -754,22 +758,12 @@ function renderPagPrincipal() {
              onkeydown="if(event.key==='Enter'){addStripeItem();event.preventDefault()}">
       <button class="btn btn-secondary btn-small" onclick="addStripeItem()">+ adicionar</button>
     </div>
-    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Hero</span></div>
-    <div class="fields-grid">
-      <div class="field"><label>Label PT</label><input id="ix-heroLabelPt" value="${esc(ix.heroLabelPt||'')}"></div>
-      <div class="field"><label>Label EN</label><input id="ix-heroLabelEn" value="${esc(ix.heroLabelEn||'')}"></div>
-    </div>
-    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Grid de produções recentes</span></div>
-    <div class="fields-grid">
-      <div class="field"><label>Título PT</label><input id="ix-gridTitlePt" value="${esc(ix.gridTitlePt||'')}"></div>
-      <div class="field"><label>Título EN</label><input id="ix-gridTitleEn" value="${esc(ix.gridTitleEn||'')}"></div>
-    </div>
-    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Bloco CTA (fale conosco)</span></div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Seção "Fale conosco"</span></div>
     <div class="fields-grid">
       <div class="field full"><label>Título PT</label><input id="ix-ctaTitlePt" value="${esc(ix.ctaTitlePt||'')}"></div>
       <div class="field full"><label>Título EN</label><input id="ix-ctaTitleEn" value="${esc(ix.ctaTitleEn||'')}"></div>
-      <div class="field full"><label>Corpo PT</label><textarea id="ix-ctaBodyPt">${esc(ix.ctaBodyPt||'')}</textarea></div>
-      <div class="field full"><label>Corpo EN</label><textarea id="ix-ctaBodyEn">${esc(ix.ctaBodyEn||'')}</textarea></div>
+      <div class="field full"><label>Texto PT</label><textarea id="ix-ctaBodyPt">${esc(ix.ctaBodyPt||'')}</textarea></div>
+      <div class="field full"><label>Texto EN</label><textarea id="ix-ctaBodyEn">${esc(ix.ctaBodyEn||'')}</textarea></div>
     </div>`;
 }
 
@@ -786,8 +780,8 @@ function renderPagContato() {
   const c = (data.pagesData && data.pagesData.contato) || {};
   document.getElementById('pagContatoForm').innerHTML = `
     <div class="fields-grid">
-      <div class="field"><label>Eyebrow PT</label><input id="pc-eyebrowPt" value="${esc(c.eyebrowPt||'')}"></div>
-      <div class="field"><label>Eyebrow EN</label><input id="pc-eyebrowEn" value="${esc(c.eyebrowEn||'')}"></div>
+      <div class="field"><label>Etiqueta PT</label><input id="pc-eyebrowPt" value="${esc(c.eyebrowPt||'')}"></div>
+      <div class="field"><label>Etiqueta EN</label><input id="pc-eyebrowEn" value="${esc(c.eyebrowEn||'')}"></div>
       <div class="field"><label>Título PT</label><input id="pc-titlePt" value="${esc(c.titlePt||'')}"></div>
       <div class="field"><label>Título EN</label><input id="pc-titleEn" value="${esc(c.titleEn||'')}"></div>
       <div class="field full"><label>Subtítulo PT</label><textarea id="pc-subPt">${esc(c.subPt||'')}</textarea></div>
@@ -800,8 +794,8 @@ function renderPagVemai() {
   const v = (data.pagesData && data.pagesData.vemai) || {};
   document.getElementById('pagVemaiForm').innerHTML = `
     <div class="fields-grid">
-      <div class="field"><label>Eyebrow PT</label><input id="pv-eyebrowPt" value="${esc(v.eyebrowPt||'')}"></div>
-      <div class="field"><label>Eyebrow EN</label><input id="pv-eyebrowEn" value="${esc(v.eyebrowEn||'')}"></div>
+      <div class="field"><label>Etiqueta PT</label><input id="pv-eyebrowPt" value="${esc(v.eyebrowPt||'')}"></div>
+      <div class="field"><label>Etiqueta EN</label><input id="pv-eyebrowEn" value="${esc(v.eyebrowEn||'')}"></div>
       <div class="field"><label>Título PT</label><input id="pv-titlePt" value="${esc(v.titlePt||'')}"></div>
       <div class="field"><label>Título EN</label><input id="pv-titleEn" value="${esc(v.titleEn||'')}"></div>
       <div class="field full"><label>Frase PT <span class="field-note">aceita HTML — ex: Ele &lt;em&gt;acontece&lt;/em&gt;</span></label><textarea id="pv-statementPt">${esc(v.statementPt||'')}</textarea></div>
@@ -1097,8 +1091,7 @@ function collectAll() {
     if (!data.upcomingFilms[i]) return;
     data.upcomingFilms[i][key] = el.value;
   });
-  ['eyebrow','eyebrowEn','title1','title1En','title2','title2En','p1','p1En','p2','p2En',
-   'identityStatement','identityStatementEn']
+  ['eyebrow','eyebrowEn','title1','title1En','title2','title2En','p1','p1En','p2','p2En']
     .forEach(f => {
       const el = document.getElementById('m-' + f);
       if (el) data.historiaData.manifesto[f] = el.value;
