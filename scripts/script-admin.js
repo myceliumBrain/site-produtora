@@ -343,6 +343,7 @@ function closeAdmDrawer() {
    RENDER ALL
 ══════════════════════════════════════════════════════════ */
 function renderAll() {
+  if (!data.siteData) data.siteData = {};
   renderFilms();
   renderOtherProductions();
   renderUpcoming();
@@ -516,8 +517,8 @@ function renderFilms() {
           ${crewField('elenco', 'film', i, f.elenco||[],       'Elenco')}
           <div class="field full"><label>Sinopse PT</label><textarea data-film="${i}" data-key="synopsis">${esc(f.synopsis)}</textarea></div>
           <div class="field full"><label>Sinopse EN</label><textarea data-film="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
-          ${imgField('film', i, 'imgPortrait',  'Imagem retrato (vertical)',   f.imgPortrait)}
-          ${imgField('film', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape)}
+          ${imgField('film', i, 'imgPortrait',  'Imagem retrato (vertical)',   f.imgPortrait,  'recomendado 800 × 1067 px · proporção 3:4 · usado nos cards (4 colunas desktop / 2 mobile)')}
+          ${imgField('film', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape, 'recomendado 1920 × 1080 px · proporção 16:9 · obrigatório para aparecer no hero e featured')}
           <hr class="fields-divider">
           ${previewField('film', i, f.videoHover||'')}
           <hr class="fields-divider">
@@ -599,8 +600,8 @@ function renderOtherProductions() {
           ${crewField('elenco', 'other', i, f.elenco||[],       'Elenco')}
           <div class="field full"><label>Sinopse PT</label><textarea data-other="${i}" data-key="synopsis">${esc(f.synopsis)}</textarea></div>
           <div class="field full"><label>Sinopse EN</label><textarea data-other="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
-          ${imgField('other', i, 'imgPortrait',  'Imagem retrato (vertical)',    f.imgPortrait||'')}
-          ${imgField('other', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape||'')}
+          ${imgField('other', i, 'imgPortrait',  'Imagem retrato (vertical)',    f.imgPortrait||'',  'recomendado 800 × 1067 px · proporção 3:4 · usado nos cards (4 colunas desktop / 2 mobile)')}
+          ${imgField('other', i, 'imgLandscape', 'Imagem paisagem (horizontal)', f.imgLandscape||'', 'recomendado 1920 × 1080 px · proporção 16:9 · usado na seção destaque em mobile')}
           <hr class="fields-divider">
           ${previewField('other', i, f.videoHover||'')}
           <hr class="fields-divider">
@@ -677,8 +678,8 @@ function renderUpcoming() {
           </div>
           <div class="field full"><label>Sinopse PT</label><textarea data-upcoming="${i}" data-key="synopsis">${esc(f.synopsis)}</textarea></div>
           <div class="field full"><label>Sinopse EN</label><textarea data-upcoming="${i}" data-key="synopsisEn">${esc(f.synopsisEn)}</textarea></div>
-          ${imgField('upcoming', i, 'imgPortrait',  'Imagem retrato',  f.imgPortrait)}
-          ${imgField('upcoming', i, 'imgLandscape', 'Imagem paisagem', f.imgLandscape)}
+          ${imgField('upcoming', i, 'imgPortrait',  'Imagem retrato',  f.imgPortrait,  'recomendado 800 × 1067 px · proporção 3:4 · usado nos cards e seção "Em produção"')}
+          ${imgField('upcoming', i, 'imgLandscape', 'Imagem paisagem', f.imgLandscape, 'recomendado 1920 × 1080 px · proporção 16:9 · usado na seção destaque em mobile')}
         </div>
         <div class="card-actions">
           <button class="btn btn-danger btn-small" onclick="removeUpcoming(${i})">Remover</button>
@@ -740,8 +741,14 @@ function renderPagHistoria() {
 
 function renderPagPrincipal() {
   const ix = (data.pagesData && data.pagesData.index) || {};
+  const sd = data.siteData || {};
   document.getElementById('pagPrincipalForm').innerHTML = `
-    <div class="panel-header" style="margin-top:0"><span class="panel-title" style="font-size:14px">Banner principal</span></div>
+    <div class="panel-header" style="margin-top:0"><span class="panel-title" style="font-size:14px">Identidade visual</span></div>
+    <div class="fields-grid">
+      ${imgField('sitedata', 0, 'logoUrl', 'Logo do site', sd.logoUrl || '',
+        'PNG ou SVG com fundo transparente · altura recomendada 56–80 px · exibido a 28 px de altura no header')}
+    </div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Banner principal</span></div>
     <div class="fields-grid">
       <div class="field"><label>Etiqueta PT</label><input id="ix-heroLabelPt" value="${esc(ix.heroLabelPt||'')}"></div>
       <div class="field"><label>Etiqueta EN</label><input id="ix-heroLabelEn" value="${esc(ix.heroLabelEn||'')}"></div>
@@ -829,7 +836,7 @@ function renderFestivais() {
         <div class="fields-grid">
           <div class="field"><label>Nome</label><input data-festival="${i}" data-key="name" value="${esc(f.name)}"></div>
           <div class="field"><label>Ano</label><input data-festival="${i}" data-key="year" value="${esc(f.year)}"></div>
-          ${imgField('festival', i, 'logo', 'Logo', f.logo)}
+          ${imgField('festival', i, 'logo', 'Logo', f.logo, 'recomendado PNG com fundo transparente · altura mín. 72 px · largura proporcional · exibido com altura máx. 36 px na grade')}
         </div>
         <div class="card-actions">
           <button class="btn btn-danger btn-small" onclick="removeFestival(${i})">Remover</button>
@@ -934,7 +941,7 @@ function renderTeam() {
           <div class="field"></div>
           <div class="field"><label>Cargo PT</label><input data-team="${i}" data-key="role"   value="${esc(m.role)}"></div>
           <div class="field"><label>Cargo EN</label><input data-team="${i}" data-key="roleEn" value="${esc(m.roleEn)}"></div>
-          ${imgField('team', i, 'img', 'Foto', m.img)}
+          ${imgField('team', i, 'img', 'Foto', m.img, 'recomendado 600 × 800 px · proporção 3:4 (desktop) · em mobile recorta automaticamente para 4:3 · max. 320 px de largura exibida')}
           <div class="field full"><label>Bio PT (aceita &lt;em&gt;)</label><textarea data-team="${i}" data-key="bio">${esc(m.bio)}</textarea></div>
           <div class="field full"><label>Bio EN (aceita &lt;em&gt;)</label><textarea data-team="${i}" data-key="bioEn">${esc(m.bioEn)}</textarea></div>
         </div>
@@ -992,7 +999,7 @@ function renderParceiros() {
         <div class="card-body">
           <div class="fields-grid">
             <div class="field full"><label>Nome</label><input data-parceiro="${i}" data-key="name" value="${esc(p.name)}"></div>
-            ${imgField('parceiro', i, 'logo', 'Logo', p.logo)}
+            ${imgField('parceiro', i, 'logo', 'Logo', p.logo, 'recomendado PNG com fundo transparente · proporção ~3:1 (horizontal) · mín. 200 px de largura')}
           </div>
         </div>
       </div>`).join('') +
@@ -1076,6 +1083,10 @@ function removeStripeItem(i) {
    COLLECT ALL
 ══════════════════════════════════════════════════════════ */
 function collectAll() {
+  if (!data.siteData) data.siteData = {};
+  document.querySelectorAll('[data-sitedata]').forEach(el => {
+    data.siteData[el.dataset.key] = el.value;
+  });
   document.querySelectorAll('[data-film]').forEach(el => {
     const i = +el.dataset.film, key = el.dataset.key;
     if (!data.films[i]) return;
@@ -1152,7 +1163,7 @@ function collectAll() {
 ══════════════════════════════════════════════════════════ */
 
 /* Gera o HTML do campo de imagem — só upload, sem input de URL */
-function imgField(dataAttr, idx, key, labelText, currentVal) {
+function imgField(dataAttr, idx, key, labelText, currentVal, hint = '') {
   const fieldId   = `img-${dataAttr}-${idx}-${key}`;
   const previewId = `prev-${dataAttr}-${idx}-${key}`;
   const btnText   = currentVal ? '↑ substituir' : '↑ enviar';
@@ -1174,6 +1185,7 @@ function imgField(dataAttr, idx, key, labelText, currentVal) {
           <button class="btn btn-danger btn-small" onclick="removeAsset('${fieldId}','${previewId}')">✕ remover</button>` : ''}
         </div>
       </div>
+      ${hint ? `<p class="img-size-hint">${hint}</p>` : ''}
     </div>`;
 }
 
@@ -1348,7 +1360,7 @@ function removeCrewItem(section, dataAttr, idx, j) {
 function previewField(dataAttr, idx, currentVal) {
   return `
     <div class="field full">
-      <label>Preview<span class="field-note">recomendado máx 15 segundos</span></label>
+      <label>Preview<span class="field-note">máx 15 s · proporção 3:4 (retrato) · mesmo formato da imagem de capa</span></label>
       <div id="preview-content-${dataAttr}-${idx}">
         ${renderPreviewContent(dataAttr, idx, currentVal)}
       </div>
@@ -1396,7 +1408,8 @@ function renderPreviewContent(dataAttr, idx, currentVal) {
         </div>
       </div>
     </div>
-    <div style="text-align:right;margin-top:0.5rem">
+    <p class="img-size-hint" style="margin-bottom:0.25rem">arquivo: proporção 3:4 (retrato) · mesmo recorte da imagem de capa · máx. 100 MB · formato MP4</p>
+    <div style="text-align:right;margin-top:0.25rem">
       <button class="btn btn-danger btn-small" onclick="removePreview('${dataAttr}',${idx})">✕ remover preview</button>
     </div>`;
 }
@@ -1482,7 +1495,8 @@ function renderTrailerSlot(dataAttr, idx, slotIdx, currentVal) {
           </div>
         </div>
       </div>
-      <div style="text-align:right;margin-top:0.5rem">
+      <p class="img-size-hint" style="margin-bottom:0.25rem">arquivo: recomendado 1920 × 1080 px · proporção 16:9 · máx. 100 MB · formatos MP4/MOV</p>
+      <div style="text-align:right;margin-top:0.25rem">
         <button class="btn btn-danger btn-small" onclick="removeTrailerSlot('${dataAttr}',${idx},${slotIdx})">✕ remover trailer</button>
       </div>
     </div>`;
@@ -1621,6 +1635,7 @@ function fotografiasField(dataAttr, idx, currentImages) {
         <span class="upload-label-text">↑ adicionar imagem(s)</span>
         <input type="file" accept="image/*" multiple onchange="uploadFotografias(this,'${dataAttr}',${idx})">
       </label>
+      <p class="img-size-hint">recomendado 1600 × 1200 px · proporção 4:3 · exibidas em galeria na página do filme</p>
     </div>`;
 }
 
@@ -1712,6 +1727,7 @@ function makingOffField(dataAttr, idx, currentImages) {
         <span class="upload-label-text">↑ adicionar imagem(s)</span>
         <input type="file" accept="image/*" multiple onchange="uploadMakingOffImages(this,'${dataAttr}',${idx})">
       </label>
+      <p class="img-size-hint">recomendado 1600 × 1200 px · proporção 4:3 · exibidas em galeria na página do filme</p>
     </div>`;
 }
 
@@ -1827,15 +1843,17 @@ async function uploadImage(fileInput, targetFieldId, previewId) {
   const nameEl    = document.querySelector(`[data-${dataAttr}="${idx}"][data-key="title"]`)
                  || document.querySelector(`[data-${dataAttr}="${idx}"][data-key="name"]`);
   const titleRaw  = nameEl ? nameEl.value.trim() : '';
-  const baseName  = titleRaw
-    ? titleRaw.replace(/\s+/g, '_').replace(/[/\\?#%*:|"<>]/g, '').slice(0, 80)
-    : Math.floor(Math.random() * 1e6).toString();
+  const baseName  = dataAttr === 'sitedata' ? 'logo_site'
+    : titleRaw
+      ? titleRaw.replace(/\s+/g, '_').replace(/[/\\?#%*:|"<>]/g, '').slice(0, 80)
+      : Math.floor(Math.random() * 1e6).toString();
   const isPreview   = targetFieldId.includes('videoHover');
   const isTrailer   = targetFieldId.includes('videoTrailer');
   const isLandscape = targetFieldId.includes('imgLandscape');
   const keySuffix   = isLandscape ? '_l' : '_p';
   const isFilmLike  = dataAttr === 'film' || dataAttr === 'other';
-  const folder      = dataAttr === 'team'     ? 'assets/equipe'
+  const folder      = dataAttr === 'sitedata' ? 'assets/logo'
+                    : dataAttr === 'team'     ? 'assets/equipe'
                     : dataAttr === 'parceiro' ? 'assets/parceiros'
                     : dataAttr === 'festival' ? 'assets/festivais'
                     : isPreview               ? 'assets/filmes/previews'

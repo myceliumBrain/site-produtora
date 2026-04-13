@@ -412,6 +412,21 @@ a, button { cursor: pointer !important; }
 .add-parceiro-row { display: flex; gap: 0.5rem; align-items: flex-end; }
 .add-parceiro-row .field { flex: 1; margin: 0; }
 
+/* ── IMAGE SIZE HINT ── */
+.img-size-hint {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-top: 0.4rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+.img-size-hint::before {
+  content: '▸ ';
+  opacity: 0.5;
+}
+
 /* ── IMAGE UPLOAD ── */
 .img-field-row {
   display: flex;

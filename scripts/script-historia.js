@@ -73,7 +73,6 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
     /* ── PARCEIROS ── */
     const parceiros = d.parceiros || [];
-    const parceirosFillerCount = (3 - (parceiros.length % 3)) % 3;
     document.querySelector('.historia-parceiros__grid').innerHTML =
       parceiros.map(p => {
         const name = typeof p === 'string' ? p : (p.name || '');
@@ -81,11 +80,39 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         return logo
           ? `<div class="historia-parceiro"><img src="${logo}" alt="${name}" style="max-height:48px;object-fit:contain;opacity:0.5;transition:opacity 0.3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5"></div>`
           : `<div class="historia-parceiro">${name}</div>`;
-      }).join('') +
-      '<div class="historia-parceiro historia-parceiro--filler"></div>'.repeat(parceirosFillerCount);
+      }).join('');
+    updateParceirosFiller(parceiros.length);
 
     observeReveal(0.15);
   }
+
+  /* ── PARCEIROS: fillers responsivos ── */
+  function parceirosCols() {
+    return window.innerWidth <= 480 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+  }
+  function updateParceirosFiller(count) {
+    const grid = document.querySelector('.historia-parceiros__grid');
+    if (!grid) return;
+    grid.querySelectorAll('.historia-parceiro--filler').forEach(el => el.remove());
+    const cols = parceirosCols();
+    const rem  = count % cols;
+    const n    = rem === 0 ? 0 : cols - rem;
+    for (let i = 0; i < n; i++) {
+      const div = document.createElement('div');
+      div.className = 'historia-parceiro historia-parceiro--filler';
+      grid.appendChild(div);
+    }
+  }
+  let _parceirosResizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(_parceirosResizeTimer);
+    _parceirosResizeTimer = setTimeout(() => {
+      const grid = document.querySelector('.historia-parceiros__grid');
+      if (!grid) return;
+      const count = grid.querySelectorAll('.historia-parceiro:not(.historia-parceiro--filler)').length;
+      updateParceirosFiller(count);
+    }, 120);
+  });
 
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
   window.updateDOM = function() {

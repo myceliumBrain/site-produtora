@@ -138,6 +138,15 @@ document.getElementById('langBtn').addEventListener('click', () => {
   });
 });
 
+/* ── LOGO DINÂMICO ──
+   Substitui o src da logo se siteData.logoUrl estiver definido no data.json ── */
+dataReady.then(() => {
+  if (siteData && siteData.logoUrl) {
+    const logoImg = document.querySelector('.logo-img');
+    if (logoImg) logoImg.src = siteData.logoUrl;
+  }
+});
+
 /*HIDE HEADER AFTER SCROLL*/
 
 var lastScrollTop = 0;

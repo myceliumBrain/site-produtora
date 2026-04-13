@@ -15,6 +15,7 @@ let upcomingFilms    = [];
 let historiaData     = {};
 let otherProductions = [];
 let pagesData        = {};
+let siteData         = {};
 
 const dataReady = fetch('scripts/data.json')
   .then(res => {
@@ -27,6 +28,7 @@ const dataReady = fetch('scripts/data.json')
     historiaData     = json.historiaData;
     otherProductions = json.otherProductions || [];
     pagesData        = json.pagesData        || {};
+    siteData         = json.siteData         || {};
   })
   .catch(err => {
     console.error('[pontos de fuga] Falha ao carregar dados:', err);
