@@ -2,8 +2,6 @@
    script-contato.js
    Lógica exclusiva da página contato.html
    Depende de: i18next, script-shared.js
-
-   Uso principal: EMAILJS
    ============================================================ */
 
 dataReady.then(() => {
@@ -12,27 +10,7 @@ dataReady.then(() => {
   const form     = document.getElementById('contactForm');
   const feedback = document.getElementById('formFeedback');
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const lang = i18next.language;
-
-    // Validação básica
-    const nome     = form.nome.value.trim();
-    const email    = form.email.value.trim();
-    const assunto  = form.assunto.value.trim();
-    const mensagem = form.mensagem.value.trim();
-
-    if (!nome || !email || !assunto || !mensagem) {
-      feedback.textContent = lang === 'en'
-        ? 'Please fill in all required fields.'
-        : 'Preencha todos os campos obrigatórios.';
-      feedback.className = 'form-feedback error';
-      return;
-    }
-
-    // E-MAIL JS
-  emailjs.init('Rq3NnSh6M4ep2ARq_'); // public key (emailjs)
+  emailjs.init('Rq3NnSh6M4ep2ARq_');
 
   form.addEventListener('submit', e => {
     e.preventDefault();
@@ -51,16 +29,23 @@ dataReady.then(() => {
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      feedback.textContent = lang === 'en' ? 'Invalid e-mail address.' : 'E-mail inválido.';
+      feedback.className = 'form-feedback error';
+      return;
+    }
+
     const btn = form.querySelector('.btn-submit');
     btn.disabled = true;
     btn.style.opacity = '0.5';
 
-    emailjs.send('service_2yrzyqh', 'template_lg3h37e', { //service_id | template_id (emailJS)
-      nome:      nome,
-      email:     email,
-      telefone:  form.telefone.value.trim() || '—',
-      assunto:   assunto,
-      mensagem:  mensagem,
+    emailjs.send('service_2yrzyqh', 'template_lg3h37e', {
+      nome,
+      email,
+      telefone: form.telefone.value.trim() || '—',
+      assunto,
+      mensagem,
     })
     .then(() => {
       feedback.textContent = lang === 'en'
@@ -80,43 +65,12 @@ dataReady.then(() => {
       btn.style.opacity = '1';
     });
   });
-  });
-
-
-  /* FORMA ALTERNATIVA (ABRE O E-MAIL COM AS INFO PREENCHIDAS)*/
-
-  // form.addEventListener('submit', e => {
-  //   e.preventDefault();
-
-  //   const lang     = i18next.language;
-  //   const nome     = form.nome.value.trim();
-  //   const email    = form.email.value.trim();
-  //   const telefone = form.telefone.value.trim();
-  //   const assunto  = form.assunto.value.trim();
-  //   const mensagem = form.mensagem.value.trim();
-
-  //   if (!nome || !email || !assunto || !mensagem) {
-  //     feedback.textContent = lang === 'en'
-  //       ? 'Please fill in all required fields.'
-  //       : 'Preencha todos os campos obrigatórios.';
-  //     feedback.className = 'form-feedback error';
-  //     return;
-  //   }
-
-  //   const corpo = `Nome: ${nome}\nE-mail: ${email}\nTelefone: ${telefone || '—'}\n\n${mensagem}`;
-
-  //   const mailto = `mailto:tenoriopha@gmail.com`
-  //     + `?subject=${encodeURIComponent(assunto + ' — 000 Filmes')}`
-  //     + `&body=${encodeURIComponent(corpo)}`;
-
-  //   window.location.href = mailto;
-  // });
 
 
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
   window.updateDOM = function() {
     applyI18n();
-  }
+  };
 
 
   /* ── i18next ── */
@@ -161,8 +115,13 @@ dataReady.then(() => {
   }, () => {
     // Atualiza link do WhatsApp com o número do data.json
     const waLink = document.getElementById('whatsappLink');
-    if (waLink && pagesData.contato && pagesData.contato.whatsapp) {
-      waLink.href = `https://wa.me/${pagesData.contato.whatsapp}`;
+    if (waLink) {
+      if (pagesData.contato && pagesData.contato.whatsapp) {
+        waLink.href = `https://wa.me/${pagesData.contato.whatsapp}`;
+        waLink.style.display = '';
+      } else {
+        waLink.style.display = 'none';
+      }
     }
     observeReveal();
     updateDOM();

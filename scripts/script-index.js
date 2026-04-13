@@ -66,7 +66,9 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
   }
 
   dots.forEach(d => d.addEventListener('click', () => goToSlide(+d.dataset.index)));
-  setInterval(() => goToSlide((currentSlide + 1) % heroFilms.length), 5000);
+  if (heroFilms.length > 1) {
+    setInterval(() => goToSlide((currentSlide + 1) % heroFilms.length), 5000);
+  }
 
 
   /* ── PREVIEW GRID ──

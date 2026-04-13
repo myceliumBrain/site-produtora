@@ -78,7 +78,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         const name = typeof p === 'string' ? p : (p.name || '');
         const logo = typeof p === 'object' && p.logo ? p.logo : '';
         return logo
-          ? `<div class="historia-parceiro"><img src="${logo}" alt="${name}" style="max-height:48px;object-fit:contain;opacity:0.5;transition:opacity 0.3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5"></div>`
+          ? `<div class="historia-parceiro"><img src="${logo}" alt="${name}" class="parceiro-logo-img"></div>`
           : `<div class="historia-parceiro">${name}</div>`;
       }).join('');
     updateParceirosFiller(parceiros.length);

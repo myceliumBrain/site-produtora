@@ -10,10 +10,13 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     const params = new URLSearchParams(window.location.search);
     const idx    = params.get('i');
     const src    = params.get('src');
+    const n      = parseInt(idx, 10);
+    if (isNaN(n) || n < 0) return null;
     const source = src === 'upcoming' ? upcomingFilms
                  : src === 'other'    ? otherProductions
                  :                      films;
-    return source[parseInt(idx)] || null;
+    if (n >= source.length) return null;
+    return source[n];
   }
 
   function toEmbedUrl(url) {

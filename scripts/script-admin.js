@@ -161,7 +161,44 @@ async function saveData(commitMsg) {
 /* ══════════════════════════════════════════════════════════
    LOGIN
 ══════════════════════════════════════════════════════════ */
+/* ── BRUTE-FORCE PROTECTION ── */
+const LOGIN_KEY     = 'pf_login_attempts';
+const MAX_ATTEMPTS  = 5;
+const LOCKOUT_MS    = 15 * 60 * 1000; // 15 min
+
+function getLoginState() {
+  try { return JSON.parse(localStorage.getItem(LOGIN_KEY)) || {}; } catch { return {}; }
+}
+function setLoginState(s) { localStorage.setItem(LOGIN_KEY, JSON.stringify(s)); }
+
+function checkLockout() {
+  const s = getLoginState();
+  if (s.lockedUntil && Date.now() < s.lockedUntil) {
+    const mins = Math.ceil((s.lockedUntil - Date.now()) / 60000);
+    return `Muitas tentativas. Aguarde ${mins} min.`;
+  }
+  return null;
+}
+
+function recordFailedAttempt() {
+  const s = getLoginState();
+  s.attempts = (s.attempts || 0) + 1;
+  if (s.attempts >= MAX_ATTEMPTS) {
+    s.lockedUntil = Date.now() + LOCKOUT_MS;
+    s.attempts = 0;
+  }
+  setLoginState(s);
+}
+
+function clearLoginState() { localStorage.removeItem(LOGIN_KEY); }
+
 async function doLogin() {
+  const lockMsg = checkLockout();
+  if (lockMsg) {
+    document.getElementById('loginErr').textContent = lockMsg;
+    return;
+  }
+
   const password = document.getElementById('passwordInput').value.trim();
   if (!password) return;
 
@@ -188,8 +225,14 @@ async function doLogin() {
       if (decryptedToken) break;
     }
 
-    if (!decryptedToken) throw new Error('Senha incorreta.');
+    if (!decryptedToken) {
+      recordFailedAttempt();
+      const remaining = MAX_ATTEMPTS - (getLoginState().attempts || 0);
+      const lockMsg2 = checkLockout();
+      throw new Error(lockMsg2 || `Senha incorreta. ${remaining > 0 ? remaining + ' tentativa(s) restante(s).' : ''}`);
+    }
 
+    clearLoginState();
     TOKEN = decryptedToken;
     showApp();
 
@@ -351,6 +394,7 @@ function renderAll() {
   renderPagPrincipal();
   renderPagProducoes();
   renderPagContato();
+  renderLinks();
   renderPagVemai();
   renderFestivais();
   renderMarcos();
@@ -1079,6 +1123,65 @@ function removeStripeItem(i) {
   document.getElementById('stripeItemsList').innerHTML = renderStripeItems(data.pagesData.index.stripeItems);
 }
 
+/* ── LINKS (redes sociais / links globais) ── */
+function renderLinks() {
+  const links = (data.siteData && data.siteData.socialLinks) || [];
+  document.getElementById('linksForm').innerHTML = `
+    <p style="opacity:0.5;font-size:0.75rem;margin-bottom:1.5rem;line-height:1.6">
+      Estes links aparecem no rodapé e no menu de todas as páginas do site.<br>
+      O <strong>Nome</strong> é o texto exibido; o <strong>Link</strong> é a URL completa.
+    </p>
+    <div id="socialLinksList">${renderSocialLinksList(links)}</div>
+    <div class="tags-input-row" style="margin-top:12px;gap:8px">
+      <input id="socialLinkLabel" placeholder="Nome (ex: Instagram)" style="flex:1;min-width:0"
+             onkeydown="if(event.key==='Enter'){addSocialLink();event.preventDefault()}">
+      <input id="socialLinkUrl" placeholder="URL (ex: https://instagram.com/…)" style="flex:2;min-width:0"
+             onkeydown="if(event.key==='Enter'){addSocialLink();event.preventDefault()}">
+      <button class="btn btn-secondary btn-small" onclick="addSocialLink()">+ adicionar</button>
+    </div>`;
+}
+
+function renderSocialLinksList(links) {
+  if (!links.length) return '<p class="makingoff-empty">nenhum link ainda</p>';
+  return '<div style="display:flex;flex-direction:column;gap:6px">' +
+    links.map((l, i) => `
+      <div style="display:flex;gap:8px;align-items:center">
+        <input placeholder="Nome" value="${esc(l.label||'')}"
+               oninput="updateSocialLink(${i},'label',this.value)"
+               style="flex:1;min-width:0">
+        <input placeholder="URL" value="${esc(l.url||'')}"
+               oninput="updateSocialLink(${i},'url',this.value)"
+               style="flex:2;min-width:0">
+        <button class="btn btn-ghost btn-small" onclick="removeSocialLink(${i})" title="remover">✕</button>
+      </div>`).join('') +
+    '</div>';
+}
+
+function addSocialLink() {
+  const labelEl = document.getElementById('socialLinkLabel');
+  const urlEl   = document.getElementById('socialLinkUrl');
+  const label   = labelEl.value.trim();
+  const url     = urlEl.value.trim();
+  if (!label || !url) return;
+  if (!data.siteData) data.siteData = {};
+  if (!Array.isArray(data.siteData.socialLinks)) data.siteData.socialLinks = [];
+  data.siteData.socialLinks.push({ label, url });
+  document.getElementById('socialLinksList').innerHTML = renderSocialLinksList(data.siteData.socialLinks);
+  labelEl.value = '';
+  urlEl.value   = '';
+}
+
+function removeSocialLink(i) {
+  if (!data.siteData || !Array.isArray(data.siteData.socialLinks)) return;
+  data.siteData.socialLinks.splice(i, 1);
+  document.getElementById('socialLinksList').innerHTML = renderSocialLinksList(data.siteData.socialLinks);
+}
+
+function updateSocialLink(i, key, value) {
+  if (!data.siteData || !Array.isArray(data.siteData.socialLinks)) return;
+  if (data.siteData.socialLinks[i]) data.siteData.socialLinks[i][key] = value;
+}
+
 /* ══════════════════════════════════════════════════════════
    COLLECT ALL
 ══════════════════════════════════════════════════════════ */
@@ -1130,6 +1233,7 @@ function collectAll() {
     if (el) data.pagesData.index[f] = el.value;
   });
   // stripeItems são geridos diretamente em data.pagesData.index.stripeItems via add/removeStripeItem
+  // socialLinks são geridos diretamente em data.siteData.socialLinks via add/remove/updateSocialLink
   if (!data.pagesData.historia) data.pagesData.historia = {};
   ['teamEyebrowPt','teamEyebrowEn','festivaisEyebrowPt','festivaisEyebrowEn',
    'marcosEyebrowPt','marcosEyebrowEn','parceirosEyebrowPt','parceirosEyebrowEn'].forEach(f => {

@@ -16,7 +16,7 @@ const COMMON_I18N = {
     'menu.upcoming': 'Vem aí', 'menu.upcoming.count': 'Em produção',
     'menu.history': 'Nossa história', 'menu.history.count': 'Sobre',
     'menu.contact': 'Contato', 'menu.contact.count': 'fale com a gente',
-    'footer.col1': 'Navegação', 'footer.copy': '© 2025 - PONTOS DE FUGA',
+    'footer.col1': 'Navegação', 'footer.copy': '© 2026 - PONTOS DE FUGA',
   },
   en: {
     'nav.home': 'Home',
@@ -25,7 +25,7 @@ const COMMON_I18N = {
     'menu.upcoming': 'Coming Soon', 'menu.upcoming.count': 'In Production',
     'menu.history': 'Our Story', 'menu.history.count': 'About',
     'menu.contact': 'Contact', 'menu.contact.count': 'get in touch',
-    'footer.col1': 'Navigation', 'footer.copy': '© 2025 - PONTOS DE FUGA',
+    'footer.col1': 'Navigation', 'footer.copy': '© 2026 - PONTOS DE FUGA',
   }
 };
 
@@ -114,26 +114,20 @@ menuOverlay.addEventListener('click', e => {
   if (e.target === menuOverlay) closeMenu();
 });
 
+// Fecha o menu ao clicar em qualquer link de navegação
+menuOverlay.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', closeMenu);
+});
+
 
 
 /* ── BOTÃO DE IDIOMA ──
-   Cada página define sua própria updateDOM().
-   Este handler chama updateDOM() após a troca de idioma,
-   então basta cada script-[página].js declarar essa função. ── */
-function initLangBtn() {
-  document.getElementById('langBtn').addEventListener('click', () => {
-    const next = i18next.language === 'pt' ? 'en' : 'pt';
-    i18next.changeLanguage(next, () => {
-      if (typeof window.updateDOM === 'function') window.updateDOM();
-      document.getElementById('langBtn').textContent = next === 'pt' ? 'EN' : 'PT';
-    });
-  });
-}
-
+   Cada página define sua própria updateDOM() como window.updateDOM.
+   Este handler chama updateDOM() após a troca de idioma. ── */
 document.getElementById('langBtn').addEventListener('click', () => {
   const next = i18next.language === 'pt' ? 'en' : 'pt';
   i18next.changeLanguage(next, () => {
-    updateDOM();
+    if (typeof window.updateDOM === 'function') window.updateDOM();
     document.getElementById('langBtn').textContent = next === 'pt' ? 'EN' : 'PT';
   });
 });
@@ -145,6 +139,16 @@ dataReady.then(() => {
     const logoImg = document.querySelector('.logo-img');
     if (logoImg) logoImg.src = siteData.logoUrl;
   }
+
+  // Renderiza links sociais no footer e no menu overlay
+  const links = siteData && Array.isArray(siteData.socialLinks) ? siteData.socialLinks : [];
+  const linksHtml = links
+    .filter(l => l.label && l.url)
+    .map(l => `<a href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`)
+    .join('');
+  document.querySelectorAll('.footer-social, .menu-social').forEach(el => {
+    el.innerHTML = linksHtml;
+  });
 });
 
 /*HIDE HEADER AFTER SCROLL*/

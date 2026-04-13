@@ -32,4 +32,13 @@ const dataReady = fetch('scripts/data.json')
   })
   .catch(err => {
     console.error('[pontos de fuga] Falha ao carregar dados:', err);
+    // Exibe mensagem de erro visível para o usuário em páginas públicas.
+    // O admin tem tratamento próprio — só aplica se houver .page ou main no DOM.
+    const target = document.querySelector('.page, main, .filme-page');
+    if (target && !document.getElementById('app')) {
+      target.innerHTML =
+        '<p style="padding:120px 48px;font-family:monospace;opacity:0.5">' +
+        'Erro ao carregar dados. Tente recarregar a página.</p>';
+    }
+    throw err; // re-throw para que páginas possam capturar via .catch() se necessário
   });
