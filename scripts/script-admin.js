@@ -68,10 +68,10 @@ async function decryptToken(entry, password) {
    GITHUB API (sem token ainda — só para carregar o JSON)
 ══════════════════════════════════════════════════════════ */
 async function ghGet(path) {
-  const headers = { Accept: 'application/vnd.github.v3+json' };
+  const headers = { Accept: 'application/vnd.github.v3+json', 'Cache-Control': 'no-cache' };
   if (TOKEN) headers.Authorization = `token ${TOKEN}`;
   const res = await fetch(
-    `https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}`,
+    `https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}&_=${Date.now()}`,
     { headers }
   );
   if (!res.ok) throw new Error(`GET ${path} → ${res.status}`);
