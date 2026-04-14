@@ -43,6 +43,22 @@ a {
   text-decoration: none;
 }
 
+/* A1 — foco de teclado visível (WCAG 2.4.7) */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* A2 — respeita preferência por menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 
 
 /* ── HEADER ── */
@@ -145,6 +161,7 @@ header {
   position: fixed;
   top: 0; left: 0; bottom: 0;
   width: 50%;
+  max-width: 480px; /* N3 — evita overlay enorme em monitores ultralargos */
   z-index: 99;
   background: var(--black);
   border-right: 1px solid var(--border);
@@ -153,15 +170,33 @@ header {
   display: flex;
   flex-direction: column;
   padding: 80px var(--pad-desk) 48px;
-  height: 100vh; /* garante altura total do viewport */
+  height: 100vh;
 }
 
+/* A3 — botão de fechar visível no menu */
+.menu-close-btn {
+  position: absolute;
+  top: 28px;
+  right: var(--pad-desk);
+  background: none;
+  border: none;
+  color: var(--dim);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.menu-close-btn:hover { color: var(--white); }
+
 @media (max-width: 768px) {
-  .menu-overlay  { 
-    width: 100%; 
-    border-right: none; 
-    padding: 80px var(--pad-mob) 40px; 
+  .menu-overlay {
+    width: 100%;
+    max-width: none;
+    border-right: none;
+    padding: 80px var(--pad-mob) 40px;
   }
+  .menu-close-btn { right: var(--pad-mob); }
 }
 
 .menu-overlay.open { transform: translateX(0); }
@@ -201,6 +236,10 @@ header {
 }
 
 .menu-primary-list a:hover { padding-left: 16px; }
+
+/* N1 — página atual destacada no menu */
+.menu-primary-list a.menu-link--active .menu-item-title { color: var(--gold); }
+.menu-primary-list a.menu-link--active { pointer-events: none; }
 
 .menu-primary-list li:nth-child(1) a:hover { color: var(--gold); }
 .menu-primary-list li:nth-child(2) a:hover { color: var(--amber); }

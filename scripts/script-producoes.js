@@ -53,15 +53,16 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
           ${placeholderSVG()}
           <img class="img-portrait"
                src="${film.imgPortrait}"
-               alt="${title}"
+               alt="${escHtml(title)}"
+               loading="lazy"
                onerror="this.style.display='none'">
-          ${hasVideo ? `<video class="film-card__video" src="${film.videoHover}" muted playsinline preload="none"></video>` : ''}
+          ${hasVideo ? `<video class="film-card__video" src="${film.videoHover}" poster="${film.imgPortrait}" muted playsinline preload="none"></video>` : ''}
         </div>
         <div class="film-card__info">
-          <div class="film-card__title">${title}</div>
+          <div class="film-card__title">${escHtml(title)}</div>
           <div class="film-card__meta">
-            <div class="film-card__dir">${film.director ? `Dir. ${film.director}` : ''}</div>
-            <span class="film-card__year">${film.year}</span>
+            <div class="film-card__dir">${film.director ? `Dir. ${escHtml(film.director)}` : ''}</div>
+            <span class="film-card__year">${escHtml(film.year)}</span>
           </div>
         </div>
       </a>`;
@@ -109,13 +110,13 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       <a href="filme.html?i=${index}&src=other" class="other-card">
         <div class="other-card__img">
           ${placeholderSVG()}
-          <img src="${prod.imgPortrait || ''}" alt="${title}" onerror="this.style.display='none'">
+          <img src="${prod.imgPortrait || ''}" alt="${escHtml(title)}" loading="lazy" onerror="this.style.display='none'">
         </div>
         <div class="other-card__info">
-          <div class="other-card__title">${title}</div>
+          <div class="other-card__title">${escHtml(title)}</div>
           <div class="other-card__meta">
             ${dirHtml}
-            <span class="other-card__year">${prod.year || ''}</span>
+            <span class="other-card__year">${escHtml(prod.year || '')}</span>
           </div>
         </div>
       </a>`;

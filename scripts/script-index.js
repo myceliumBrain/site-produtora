@@ -14,7 +14,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       ['Cinema Brasileiro Independente', 'Pontos de Fuga', 'Rio de Janeiro'];
     // Repete 3× para o loop parecer infinito
     const repeated = [...items, ...items, ...items];
-    track.innerHTML = repeated.map(t => `<span class="stripe-item">${t}</span>`).join('');
+    track.innerHTML = repeated.map(t => `<span class="stripe-item">${escHtml(t)}</span>`).join('');
   }
   renderStripe();
 
@@ -60,7 +60,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     }
 
     // Atualiza texto do hero
-    document.querySelector('.hero-title').innerHTML = title;
+    document.querySelector('.hero-title').textContent = title;
     document.querySelector('.hero-meta').textContent =
       `Dir. ${f.director} · ${f.genre || 'Drama'} · ${f.year}`;
   }
@@ -88,14 +88,15 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
             ${placeholderSVG(48, 0.6)}
             <img class="preview-card__img-portrait"
                 src="${f.imgPortrait}"
-                alt="${lang === 'en' ? f.titleEn : f.title}"
+                alt="${escHtml(lang === 'en' ? f.titleEn : f.title)}"
+                loading="lazy"
                 onerror="this.style.display='none'">
           </div>
           <div class="preview-card__overlay"></div>
           <div class="preview-card__info">
-            <div class="preview-card__year">${f.year}</div>
-            <div class="preview-card__title">${lang === 'en' ? f.titleEn : f.title}</div>
-            <div class="preview-card__dir">Dir. ${f.director}</div>
+            <div class="preview-card__year">${escHtml(f.year)}</div>
+            <div class="preview-card__title">${escHtml(lang === 'en' ? f.titleEn : f.title)}</div>
+            <div class="preview-card__dir">Dir. ${escHtml(f.director)}</div>
           </div>
         </a>`;
     }).join('');
@@ -133,10 +134,10 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         <li class="upcoming-item reveal ${delay}">
           <a href="filme.html?src=upcoming&i=${i}" class="upcoming-item__link">
             <span class="upcoming-item__num">${num}</span>
-            <span class="upcoming-item__title">${title}</span>
+            <span class="upcoming-item__title">${escHtml(title)}</span>
             <div class="upcoming-item__meta">
-              <div>Dir. ${f.director}</div>
-              <div class="upcoming-item__status">${status}</div>
+              <div>Dir. ${escHtml(f.director)}</div>
+              <div class="upcoming-item__status">${escHtml(status)}</div>
             </div>
           </a>
         </li>`;

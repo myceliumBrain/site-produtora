@@ -15,8 +15,8 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       lang === 'en' ? d.manifesto.eyebrowEn : d.manifesto.eyebrow;
 
     document.querySelector('.historia-manifesto__title').innerHTML = `
-      ${lang === 'en' ? d.manifesto.title1En : d.manifesto.title1}<br>
-      <em>${lang === 'en' ? d.manifesto.title2En : d.manifesto.title2}</em>`;
+      ${escHtml(lang === 'en' ? d.manifesto.title1En : d.manifesto.title1)}<br>
+      <em>${escHtml(lang === 'en' ? d.manifesto.title2En : d.manifesto.title2)}</em>`;
 
     const [p1, p2] = document.querySelectorAll('.historia-manifesto__body p');
     p1.textContent = lang === 'en' ? d.manifesto.p1En : d.manifesto.p1;
@@ -36,9 +36,9 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     document.querySelector('.historia-festivais__grid').innerHTML =
       festivais.map(f => `
         <div class="historia-festival">
-          ${f.logo ? `<img src="${f.logo}" alt="${f.name}">` : ''}
-          <span class="historia-festival__name">${f.name}</span>
-          ${f.year ? `<span class="historia-festival__year">${f.year}</span>` : ''}
+          ${f.logo ? `<img src="${f.logo}" alt="${escHtml(f.name)}">` : ''}
+          <span class="historia-festival__name">${escHtml(f.name)}</span>
+          ${f.year ? `<span class="historia-festival__year">${escHtml(f.year)}</span>` : ''}
         </div>`
       ).join('') +
       '<div class="historia-festival historia-festival--filler"></div>'.repeat(festivaisFillerCount);
@@ -47,10 +47,10 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     document.querySelector('.historia-marcos__list').innerHTML =
       d.marcos.map(m => `
         <div class="historia-marco reveal">
-          <span class="historia-marco__year">${m.year}</span>
+          <span class="historia-marco__year">${escHtml(m.year)}</span>
           <div class="historia-marco__content">
-            <h4 class="historia-marco__title">${lang === 'en' ? m.titleEn : m.title}</h4>
-            <p class="historia-marco__text">${lang === 'en' ? m.textEn : m.text}</p>
+            <h4 class="historia-marco__title">${escHtml(lang === 'en' ? m.titleEn : m.title)}</h4>
+            <p class="historia-marco__text">${escHtml(lang === 'en' ? m.textEn : m.text)}</p>
           </div>
         </div>`
       ).join('');
@@ -61,12 +61,12 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         <div class="historia-member${i % 2 !== 0 ? ' historia-member--reverse' : ''} reveal">
           <div class="historia-member__img-wrap">
             <div class="historia-member__img-bg"></div>
-            <img src="${m.img}" alt="${m.name}" class="historia-member__img" onerror="this.style.display='none'">
+            <img src="${m.img}" alt="${escHtml(m.name)}" class="historia-member__img" loading="lazy" onerror="this.style.display='none'">
           </div>
           <div class="historia-member__info">
-            <span class="historia-member__role">${lang === 'en' ? m.roleEn : m.role}</span>
-            <h3 class="historia-member__name">${m.name}</h3>
-            <p class="historia-member__bio">${lang === 'en' ? m.bioEn : m.bio}</p>
+            <span class="historia-member__role">${escHtml(lang === 'en' ? m.roleEn : m.role)}</span>
+            <h3 class="historia-member__name">${escHtml(m.name)}</h3>
+            <p class="historia-member__bio">${escHtml(lang === 'en' ? m.bioEn : m.bio)}</p>
           </div>
         </div>`
       ).join('');
@@ -78,8 +78,8 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         const name = typeof p === 'string' ? p : (p.name || '');
         const logo = typeof p === 'object' && p.logo ? p.logo : '';
         return logo
-          ? `<div class="historia-parceiro"><img src="${logo}" alt="${name}" class="parceiro-logo-img"></div>`
-          : `<div class="historia-parceiro">${name}</div>`;
+          ? `<div class="historia-parceiro"><img src="${logo}" alt="${escHtml(name)}" class="parceiro-logo-img" loading="lazy"></div>`
+          : `<div class="historia-parceiro">${escHtml(name)}</div>`;
       }).join('');
     updateParceirosFiller(parceiros.length);
 
@@ -104,7 +104,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     }
   }
   let _parceirosResizeTimer;
-  window.addEventListener('resize', () => {
+  function _parceirosResizeHandler() {
     clearTimeout(_parceirosResizeTimer);
     _parceirosResizeTimer = setTimeout(() => {
       const grid = document.querySelector('.historia-parceiros__grid');
@@ -112,7 +112,10 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       const count = grid.querySelectorAll('.historia-parceiro:not(.historia-parceiro--filler)').length;
       updateParceirosFiller(count);
     }, 120);
-  });
+  }
+  // Q1 — usa referência nomeada para evitar listeners duplicados ao trocar idioma
+  window.removeEventListener('resize', _parceirosResizeHandler);
+  window.addEventListener('resize', _parceirosResizeHandler);
 
   /* ── updateDOM (chamada pelo script-shared ao trocar idioma) ── */
   window.updateDOM = function() {

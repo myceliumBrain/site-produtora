@@ -37,8 +37,11 @@ const dataReady = fetch('scripts/data.json')
     const target = document.querySelector('.page, main, .filme-page');
     if (target && !document.getElementById('app')) {
       target.innerHTML =
-        '<p style="padding:120px 48px;font-family:monospace;opacity:0.5">' +
-        'Erro ao carregar dados. Tente recarregar a página.</p>';
+        '<div style="padding:120px 48px;display:flex;flex-direction:column;gap:16px;max-width:480px">' +
+        '<p style="font-family:monospace;font-size:0.8rem;opacity:0.5">Erro ao carregar o catálogo.</p>' +
+        '<p style="font-size:0.85rem;opacity:0.4;line-height:1.6">Verifique sua conexão ou tente novamente.</p>' +
+        '<button onclick="location.reload()" style="font-family:monospace;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;background:none;border:1px solid rgba(240,236,228,0.25);color:inherit;padding:8px 16px;cursor:pointer;width:fit-content">Recarregar</button>' +
+        '</div>';
     }
     throw err; // re-throw para que páginas possam capturar via .catch() se necessário
   });

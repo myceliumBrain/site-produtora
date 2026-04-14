@@ -90,7 +90,7 @@ async function ghPut(path, content, sha, message) {
       },
       body: JSON.stringify({
         message,
-        content: btoa(unescape(encodeURIComponent(content))),
+        content: btoa(String.fromCharCode(...new TextEncoder().encode(content))),
         sha,
         branch: BRANCH
       })
@@ -146,7 +146,9 @@ async function loadData(tok) {
   if (tok) TOKEN = tok;
   const file = await ghGet(FILE);
   fileSHA = file.sha;
-  data = JSON.parse(decodeURIComponent(escape(atob(file.content.replace(/\n/g, '')))));
+  const raw = atob(file.content.replace(/\n/g, ''));
+  const bytes = Uint8Array.from(raw, c => c.charCodeAt(0));
+  data = JSON.parse(new TextDecoder().decode(bytes));
 }
 
 async function saveData(commitMsg) {

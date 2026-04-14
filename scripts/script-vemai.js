@@ -27,16 +27,16 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
               : ''}
           </div>
           <div class="vemai-filme__info">
-            <div class="vemai-filme__status">${status}</div>
-            <h2 class="vemai-filme__title">${title}</h2>
+            <div class="vemai-filme__status">${escHtml(status)}</div>
+            <h2 class="vemai-filme__title">${escHtml(title)}</h2>
             <div class="vemai-filme__meta">
-              ${genre} &nbsp;·&nbsp; ${f.year}
+              ${escHtml(genre)} &nbsp;·&nbsp; ${escHtml(f.year)}
             </div>
-            <p class="vemai-filme__synopsis">${synopsis}</p>
+            <p class="vemai-filme__synopsis">${escHtml(synopsis)}</p>
             <div class="vemai-filme__tags">
-              <span class="vemai-filme__tag">${genre}</span>
-              <span class="vemai-filme__tag">${f.year}</span>
-              <span class="vemai-filme__tag">${status}</span>
+              <span class="vemai-filme__tag">${escHtml(genre)}</span>
+              <span class="vemai-filme__tag">${escHtml(f.year)}</span>
+              <span class="vemai-filme__tag">${escHtml(status)}</span>
             </div>
           </div>
         </a>`;
@@ -53,7 +53,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     const lang = i18next.language;
     const v = pagesData.vemai || {};
     const text = lang === 'en' ? v.statementEn : v.statementPt;
-    if (text) el.innerHTML = text;
+    if (text) el.textContent = text;
   }
 
   window.updateDOM = function() {

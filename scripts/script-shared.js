@@ -7,6 +7,16 @@
 /* ── PALETA CÍCLICA COMPARTILHADA ── */
 const PALETTE = ['#c9a84c', '#c4622d', '#6b8f71', '#8b1a1a'];
 
+/* ── ESCAPE HTML (S1 — previne XSS em templates innerHTML) ── */
+function escHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 /* ── RECURSOS i18n COMUNS (menu + footer) ── */
 const COMMON_I18N = {
   pt: {
@@ -83,6 +93,22 @@ function closeMenu() {
 
 menuBtn.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
 
+/* A3 — botão X injetado para fechar o menu */
+const menuCloseBtn = document.createElement('button');
+menuCloseBtn.className = 'menu-close-btn';
+menuCloseBtn.setAttribute('aria-label', 'Fechar menu');
+menuCloseBtn.textContent = '✕';
+menuCloseBtn.addEventListener('click', closeMenu);
+menuOverlay.insertBefore(menuCloseBtn, menuOverlay.firstChild);
+
+/* N1 — destaca a página atual no menu overlay */
+(function markCurrentPage() {
+  const file = window.location.pathname.split('/').pop() || 'index.html';
+  menuOverlay.querySelectorAll('.menu-primary-list a').forEach(link => {
+    if (link.getAttribute('href') === file) link.classList.add('menu-link--active');
+  });
+})();
+
 /* ── COR CÍCLICA DOS BOTÕES DA HEADER NO HOVER ── */
 let headerColorIdx = -1;
 
@@ -129,6 +155,8 @@ document.getElementById('langBtn').addEventListener('click', () => {
   i18next.changeLanguage(next, () => {
     if (typeof window.updateDOM === 'function') window.updateDOM();
     document.getElementById('langBtn').textContent = next === 'pt' ? 'EN' : 'PT';
+    /* A7 — atualiza o atributo lang do documento */
+    document.documentElement.lang = next;
   });
 });
 

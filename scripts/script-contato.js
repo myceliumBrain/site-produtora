@@ -12,6 +12,22 @@ dataReady.then(() => {
 
   emailjs.init('Rq3NnSh6M4ep2ARq_');
 
+  /* F4 — validação em tempo real */
+  const emailRegexLive = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  form.email.addEventListener('input', () => {
+    const val = form.email.value.trim();
+    if (val && !emailRegexLive.test(val)) {
+      form.email.style.borderColor = 'rgba(255,80,80,0.6)';
+    } else {
+      form.email.style.borderColor = '';
+    }
+  });
+  ['nome', 'assunto', 'mensagem'].forEach(name => {
+    form[name].addEventListener('input', () => {
+      form[name].style.borderColor = form[name].value.trim() ? '' : '';
+    });
+  });
+
   form.addEventListener('submit', e => {
     e.preventDefault();
 

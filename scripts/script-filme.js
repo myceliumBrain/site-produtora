@@ -35,16 +35,26 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     const lang = i18next.language;
 
     if (!f) {
-      document.querySelector('.filme-page').innerHTML =
-        '<p style="padding:120px 48px;opacity:0.4">Filme não encontrado.</p>';
+      document.querySelector('.filme-page').innerHTML = `
+        <div style="padding:120px var(--pad-desk);display:flex;flex-direction:column;gap:24px;max-width:480px">
+          <p style="opacity:0.4;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase">Filme não encontrado</p>
+          <p style="opacity:0.6;line-height:1.6">Não conseguimos localizar este filme no catálogo. O link pode estar desatualizado.</p>
+          <a href="producoes.html" style="font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:2px;width:fit-content">← Ver todas as produções</a>
+        </div>`;
       return;
     }
 
     const title    = lang === 'en' ? f.titleEn    : f.title;
     const synopsis = lang === 'en' ? f.synopsisEn : f.synopsis;
 
-    // título da aba
+    // título da aba + meta tags OG (F1)
     document.title = `${title} — pontos de fuga`;
+    const ogImage = f.imgLandscape || f.imgPortrait || '';
+    const ogDesc  = (lang === 'en' ? f.synopsisEn : f.synopsis) || '';
+    document.querySelector('meta[property="og:title"]')       ?.setAttribute('content', `${title} — pontos de fuga`);
+    document.querySelector('meta[property="og:description"]') ?.setAttribute('content', ogDesc.slice(0, 200));
+    document.querySelector('meta[property="og:image"]')       ?.setAttribute('content', ogImage);
+    document.querySelector('meta[name="description"]')        ?.setAttribute('content', ogDesc.slice(0, 160));
 
     // hero bg
     if (f.imgLandscape) {
@@ -68,7 +78,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     // tags
     const tags = f.tags || [f.genre, f.year].filter(Boolean);
     document.getElementById('filmeTags').innerHTML =
-      tags.map(t => `<span class="tag">${t}</span>`).join('');
+      tags.map(t => `<span class="tag">${escHtml(t)}</span>`).join('');
 
     // trailers (suporta array videoTrailers e legado videoTrailer)
     const allTrailers = (f.videoTrailers && f.videoTrailers.length)
@@ -108,8 +118,8 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       if (items && items.length) {
         body.innerHTML = items.map(item => `
           <div class="filme-crew-row">
-            <span class="filme-crew-role">${item.role || ''}</span>
-            <span class="filme-crew-name">${item.name || ''}</span>
+            <span class="filme-crew-role">${escHtml(item.role || '')}</span>
+            <span class="filme-crew-name">${escHtml(item.name || '')}</span>
           </div>`).join('');
         wrap.style.display = '';
       } else {
@@ -194,9 +204,16 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
 
   document.addEventListener('keydown', e => {
     if (!lightbox.classList.contains('open')) return;
-    if (e.key === 'Escape')      lbClose_();
-    if (e.key === 'ArrowLeft'  && lbIndex > 0)                      { lbIndex--; lbShow(); }
-    if (e.key === 'ArrowRight' && lbIndex < lbImages.length - 1)    { lbIndex++; lbShow(); }
+    if (e.key === 'Escape')                                          { lbClose_(); }
+    if ((e.key === 'ArrowLeft'  || e.key === 'ArrowUp')  && lbIndex > 0)                   { lbIndex--; lbShow(); }
+    if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && lbIndex < lbImages.length - 1) { lbIndex++; lbShow(); }
+    if (e.key === 'Tab') {
+      e.preventDefault(); // mantém foco dentro do lightbox
+      const focusables = lightbox.querySelectorAll('button:not([disabled])');
+      const idx = [...focusables].indexOf(document.activeElement);
+      const next = e.shiftKey ? (idx <= 0 ? focusables.length - 1 : idx - 1) : (idx >= focusables.length - 1 ? 0 : idx + 1);
+      focusables[next]?.focus();
+    }
   });
 
   function attachGalleryLightbox(gridId, images) {
