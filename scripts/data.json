@@ -36,24 +36,54 @@
       ],
       "elenco": [
         {
-          "role": "",
+          "role": "Simonal",
           "name": "Fabrício Boliveira"
         },
         {
-          "role": "",
+          "role": "Tereza",
           "name": "Isis Valverde"
         },
         {
-          "role": "",
+          "role": "Carlos Imperial",
           "name": "Leandro Hassum"
         },
         {
-          "role": "",
+          "role": "Santana",
           "name": "Caco Ciocler"
         },
         {
-          "role": "",
+          "role": "Laura Figueredo",
           "name": "Mariana Lima"
+        }
+      ],
+      "fichatecnica": [
+        {
+          "role": "Produtora",
+          "name": "Nathalie Felippe"
+        },
+        {
+          "role": "Produtor",
+          "name": "Carlos Diegues"
+        },
+        {
+          "role": "Roteiro",
+          "name": "Victor Atherino"
+        },
+        {
+          "role": "Roteiro",
+          "name": "Leonardo Domingues"
+        },
+        {
+          "role": "Direção de Fotografia",
+          "name": "Pablo Baião"
+        },
+        {
+          "role": "Direção de Arte",
+          "name": "Yurika Yamasaki"
+        },
+        {
+          "role": "Compositor",
+          "name": "Wilson Simoninha e Max de Castro"
         }
       ]
     },
@@ -236,18 +266,52 @@
       ],
       "elenco": [
         {
-          "role": "",
+          "role": "Marli",
           "name": "Clarissa Pinheiro"
         },
         {
-          "role": "",
+          "role": "Sofia",
           "name": "Marianna Bittencourt"
+        },
+        {
+          "role": "Iara",
+          "name": "Elvira Helena"
         }
       ],
       "fotografias": [
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Um_Dia_Antes_de_Todos_os_Outros/Um_Dia_Antes_de_Todos_os_Outros_foto_1776289493415_0.jpg",
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Um_Dia_Antes_de_Todos_os_Outros/Um_Dia_Antes_de_Todos_os_Outros_foto_1776289523398_0.jpg",
         "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Um_Dia_Antes_de_Todos_os_Outros/Um_Dia_Antes_de_Todos_os_Outros_foto_1776289532586_0.jpg"
+      ],
+      "fichatecnica": [
+        {
+          "role": "Produção",
+          "name": "Nathalie Felippe"
+        },
+        {
+          "role": "Produção",
+          "name": "Valentina Homem"
+        },
+        {
+          "role": "Roteiro",
+          "name": "Jô Bilac"
+        },
+        {
+          "role": "Roteiro",
+          "name": "Fernanda Bond"
+        },
+        {
+          "role": "Roteiro",
+          "name": "Valentina Homem"
+        },
+        {
+          "role": "Direção de Arte",
+          "name": "Elsa Romero e Ianara Elisa"
+        },
+        {
+          "role": "Direção de Fotografia",
+          "name": "Louise Botkay e Amara Barroso"
+        }
       ]
     },
     {
