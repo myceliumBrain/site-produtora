@@ -1,7 +1,11 @@
 {
   "siteData": {
     "logoUrl": "",
-    "socialLinks": []
+    "socialLinks": [],
+    "fontDisplayUrl": "https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&display=swap",
+    "fontDisplayFamily": "Red Hat Mono",
+    "fontUiUrl": "",
+    "fontUiFamily": ""
   },
   "films": [
     {
