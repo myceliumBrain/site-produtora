@@ -5,20 +5,134 @@
   },
   "films": [
     {
-      "title": "Um Dia Antes de Todos os Outros",
-      "titleEn": "Um Dia Antes de Todos os Outros",
-      "director": "Valentina Homem e Fernanda Bond",
-      "year": "2024",
-      "genre": "Longa-Metragem de ficção",
-      "hero": false,
-      "synopsis": "Marli é pega de surpresa com a notícia de que o apartamento da Lara, para quem ela trabalha há vinte anos, foi vendido e aquele será o último dia das duas alí, já que no dia seguinte a idosa será transferida para um asilo. Apesar de atônita com a urgência da mudança, Marli não vê a hora de voltar para a sua terra natal, Olinda. O que ela não espera é receber de Sofia, sua filha adolescente, a noticia mais difícil deste longo dia.",
-      "synopsisEn": "Marli is taken by surprise by the news that Lara's apartment, for whom she has worked for twenty years, has been sold and that this will be their last day there, as the elderly woman will be transferred to a nursing home the following day. Despite being stunned by the urgency of the move, Marli can't wait to return to her hometown, Olinda. What she doesn't expect is to receive the most difficult news of this long day from Sofia, her teenage daughter.",
+      "title": "Simonal",
+      "titleEn": "Simonal",
+      "director": "Leonardo Domingues",
+      "year": "2019",
+      "genre": "Longa-Metragem de Ficção",
+      "hero": true,
+      "synopsis": "Baseado na vida do cantor e compositor Wilson Simonal de Castro, o Simonal (Fabrício Boliveira). O carioca faz sucesso durante as décadas de 1960 e 1970 com uma carreira repleta de altos e baixos que transitaram para além dos palcos. Problemas financeiros e polêmicos posicionamentos durante a ditadura marcam a história do astro.",
+      "synopsisEn": "Based on the life of singer and songwriter Wilson Simonal de Castro, known as Simonal (Fabrício Boliveira). The Rio de Janeiro native achieved success during the 1960s and 1970s with a career full of highs and lows that extended beyond the stage. Financial problems and controversial stances during the dictatorship mark the star's history.",
       "tags": [],
-      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Um_Dia_Antes_de_Todos_os_Outros_p.png",
-      "imgLandscape": "",
+      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Simonal_p.jpeg",
+      "imgLandscape": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/paisagens/Simonal_l.jpg",
+      "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Simonal_p.mp4",
+      "videoTrailer": "https://www.youtube.com/watch?v=9zZw9-9UTx0",
+      "fotografias": [
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327988455_0.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327989670_1.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327990635_2.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327997925_3.png",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328000218_4.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328006913_5.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328010753_6.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328011660_7.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328018126_8.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328021779_9.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328025582_10.jpg"
+      ],
+      "videoTrailers": [
+        "https://www.youtube.com/watch?v=9zZw9-9UTx0"
+      ],
+      "elenco": [
+        {
+          "role": "Simonal",
+          "name": "Fabrício Boliveira"
+        },
+        {
+          "role": "Tereza",
+          "name": "Isis Valverde"
+        },
+        {
+          "role": "Carlos Imperial",
+          "name": "Leandro Hassum"
+        },
+        {
+          "role": "Santana",
+          "name": "Caco Ciocler"
+        },
+        {
+          "role": "Laura Figueredo",
+          "name": "Mariana Lima"
+        }
+      ],
+      "fichatecnica": [
+        {
+          "role": "Produtora",
+          "name": "Nathalie Felippe"
+        },
+        {
+          "role": "Produtor",
+          "name": "Carlos Diegues"
+        },
+        {
+          "role": "Roteiro",
+          "name": "Victor Atherino"
+        },
+        {
+          "role": "Roteiro",
+          "name": "Leonardo Domingues"
+        },
+        {
+          "role": "Direção de Fotografia",
+          "name": "Pablo Baião"
+        },
+        {
+          "role": "Direção de Arte",
+          "name": "Yurika Yamasaki"
+        },
+        {
+          "role": "Compositor",
+          "name": "Wilson Simoninha e Max de Castro"
+        }
+      ]
+    },
+    {
+      "title": "Zico: O Samurai de Quintino",
+      "titleEn": "",
+      "director": "João Wainer",
+      "year": "2026",
+      "genre": "Documentário",
+      "hero": false,
+      "synopsis": "Um olhar original sobre a vida e a carreira de Arthur Antunes Coimbra, Zico, o Samurai de Quintino investiga em diversas dimensões a personalidade única de um maiores jogadores da história do futebol. Navegando pelo arquivo pessoal do craque - até então inédito para o público -, o filme costura histórias e personagens de sua trajetória de ídolo no Flamengo, na Seleção e no Japão. Com a participação de Ronaldo Fenômeno, Maestro Júnior, amigos e família, a descoberta de sua intimidade nos leva a um encontro surpreendente com o Spirit of Zico: uma identidade tão fascinante quanto paradoxal, forjada no subúrbio do Rio de Janeiro, mas com valores e uma disciplina que só os japoneses entenderiam perfeitamente no seu recomeço do outro lado do mundo.",
+      "synopsisEn": "",
+      "fichatecnica": [
+        {
+          "role": "Produção",
+          "name": "Vudoo Filmes"
+        },
+        {
+          "role": "Coprodução",
+          "name": "Globo Filmes"
+        },
+        {
+          "role": "Coprodução",
+          "name": "SporTV"
+        },
+        {
+          "role": "Coprodução",
+          "name": "Pontos de Fuga"
+        },
+        {
+          "role": "Distribuição",
+          "name": "Downtown Filmes"
+        },
+        {
+          "role": "Distribuição",
+          "name": "RioFilme"
+        }
+      ],
+      "elenco": [],
+      "tags": [],
+      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Zico_O_Samurai_de_Quintino_p.jpg",
+      "imgLandscape": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/paisagens/Zico_O_Samurai_de_Quintino_l.png",
       "videoHover": "",
-      "videoTrailer": "",
-      "videoTrailers": []
+      "videoTrailers": [
+        "https://www.youtube.com/watch?v=fxz8_j4x7CM"
+      ],
+      "videoMakingOff": "",
+      "fotografias": [],
+      "makingOff": []
     },
     {
       "title": "O Amor Dá Voltas",
@@ -26,7 +140,7 @@
       "director": "Marcos Bernstein",
       "year": "2022",
       "genre": "Longa-Metragem de ficção",
-      "hero": false,
+      "hero": true,
       "synopsis": "Os encontros e desencontros amorosos de André, um jovem médico que, ao retornar ao Brasil, após mais de um ano cuidando de doentes na África, descobre que havia trocado cartas de amor não com sua namorada de longa data, mas sim com a irmã da moça.",
       "synopsisEn": "The romantic encounters and misadventures of André, a young doctor who, upon returning to Brazil after more than a year caring for patients in Africa, discovers that he had exchanged love letters not with his long-time girlfriend, but with her sister.",
       "tags": [],
@@ -111,58 +225,6 @@
       ]
     },
     {
-      "title": "Amor de Bicho",
-      "titleEn": "Amor de Bicho",
-      "director": "Monica Prinzac",
-      "year": "2020 - 2024",
-      "genre": "Série Documental (2 temporadas)",
-      "hero": false,
-      "synopsis": "A relação sincera de amor, troca e respeito. Uma conexão de descobertas, emoções e transformações. Amor de Bicho revela histórias surpreendentes e únicas entre humanos e animais. Em 10 episódios, a série documental apresenta personagens da vida real e mergulha nesse convívio cheio de afetos e sentimentos, que envolve pessoas, bichos e meio ambiente. \n\nHistórias surpreendentes, emocionantes e divertidas de pessoas e animais que tiveram suas vidas transformadas a partir do convívio. Os bichos podem nos ajudar a contemplar nossa natureza mais autêntica e a encontrar respostas para os problemas cotidianos. A série vai explorar as várias formas de relações e as várias alternativas que bichos e humanos trocam para viverem melhor.\n\nExibido na Tv Mov. Da Uol (Uol Play)\n\nPersonagens: Roched, Santuário Vale da Rainha, Alessandra Luglio, Nina Rocha Kanner, entre outros. \n",
-      "synopsisEn": "A sincere relationship of love, exchange, and respect. A connection of discoveries, emotions, and transformations. \"Animal Love\" reveals surprising and unique stories between humans and animals. In 10 episodes, the documentary series presents real-life characters and delves into this coexistence full of affection and feelings, involving people, animals, and the environment.\n\nSurprising, moving, and fun stories of people and animals whose lives have been transformed through their interaction. Animals can help us contemplate our most authentic nature and find answers to everyday problems. The series will explore the various forms of relationships and the various alternatives that animals and humans exchange to live better lives.\n\nAired on UOL TV (UOL Play)\n\nFeatured by: Roched, Vale da Rainha Sanctuary, Alessandra Luglio, Nina Rocha Kanner, among others.",
-      "tags": [],
-      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Amor_de_Bicho_p.png",
-      "imgLandscape": "",
-      "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Amor_de_Bicho_v.mp4",
-      "videoTrailer": "https://vimeo.com/483286217",
-      "makingOff": [
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/makingoff/Amor_de_Bicho/Amor_de_Bicho_mo_1775244695846_0.jpg"
-      ],
-      "videoTrailers": [
-        "https://vimeo.com/483286217"
-      ]
-    },
-    {
-      "title": "Simonal",
-      "titleEn": "Simonal",
-      "director": "Leonardo Domingues",
-      "year": "2019",
-      "genre": "Longa-Metragem de Ficção",
-      "hero": false,
-      "synopsis": "Baseado na vida do cantor e compositor Wilson Simonal de Castro, o Simonal (Fabrício Boliveira). O carioca faz sucesso durante as décadas de 1960 e 1970 com uma carreira repleta de altos e baixos que transitaram para além dos palcos. Problemas financeiros e polêmicos posicionamentos durante a ditadura marcam a história do astro.",
-      "synopsisEn": "Based on the life of singer and songwriter Wilson Simonal de Castro, known as Simonal (Fabrício Boliveira). The Rio de Janeiro native achieved success during the 1960s and 1970s with a career full of highs and lows that extended beyond the stage. Financial problems and controversial stances during the dictatorship mark the star's history.",
-      "tags": [],
-      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Simonal_p.jpeg",
-      "imgLandscape": "",
-      "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Simonal_p.mp4",
-      "videoTrailer": "https://www.youtube.com/watch?v=9zZw9-9UTx0",
-      "fotografias": [
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327988455_0.jpg",
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327989670_1.jpg",
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327990635_2.jpg",
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775327997925_3.png",
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328000218_4.jpg",
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328006913_5.jpg",
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328010753_6.jpg",
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328011660_7.jpg",
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328018126_8.jpg",
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328021779_9.jpg",
-        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Simonal/Simonal_foto_1775328025582_10.jpg"
-      ],
-      "videoTrailers": [
-        "https://www.youtube.com/watch?v=9zZw9-9UTx0"
-      ]
-    },
-    {
       "title": "Simonal - Ninguém Sabe o Duro Que Dei",
       "titleEn": "Simonal - Ninguém Sabe o Duro Que Dei",
       "director": "Cláudio Manoel, Calvito Leal e Micael Langer",
@@ -186,12 +248,100 @@
       ]
     },
     {
+      "title": "Um Dia Antes de Todos os Outros",
+      "titleEn": "Um Dia Antes de Todos os Outros",
+      "director": "Valentina Homem e Fernanda Bond",
+      "year": "2024",
+      "genre": "Longa-Metragem de ficção",
+      "hero": true,
+      "synopsis": "Marli é pega de surpresa com a notícia de que o apartamento da Lara, para quem ela trabalha há vinte anos, foi vendido e aquele será o último dia das duas alí, já que no dia seguinte a idosa será transferida para um asilo. Apesar de atônita com a urgência da mudança, Marli não vê a hora de voltar para a sua terra natal, Olinda. O que ela não espera é receber de Sofia, sua filha adolescente, a noticia mais difícil deste longo dia.",
+      "synopsisEn": "Marli is taken by surprise by the news that Lara's apartment, for whom she has worked for twenty years, has been sold and that this will be their last day there, as the elderly woman will be transferred to a nursing home the following day. Despite being stunned by the urgency of the move, Marli can't wait to return to her hometown, Olinda. What she doesn't expect is to receive the most difficult news of this long day from Sofia, her teenage daughter.",
+      "tags": [],
+      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Um_Dia_Antes_de_Todos_os_Outros_p.png",
+      "imgLandscape": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/paisagens/Um_Dia_Antes_de_Todos_os_Outros_l.jpg",
+      "videoHover": "",
+      "videoTrailer": "",
+      "videoTrailers": [
+        "https://youtu.be/Sx8v8Mir3CU?si=aMRkWPdL-J_WPxnj"
+      ],
+      "elenco": [
+        {
+          "role": "Marli",
+          "name": "Clarissa Pinheiro"
+        },
+        {
+          "role": "Sofia",
+          "name": "Marianna Bittencourt"
+        },
+        {
+          "role": "Iara",
+          "name": "Elvira Helena"
+        }
+      ],
+      "fotografias": [
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Um_Dia_Antes_de_Todos_os_Outros/Um_Dia_Antes_de_Todos_os_Outros_foto_1776289493415_0.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Um_Dia_Antes_de_Todos_os_Outros/Um_Dia_Antes_de_Todos_os_Outros_foto_1776289523398_0.jpg",
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/fotografias/Um_Dia_Antes_de_Todos_os_Outros/Um_Dia_Antes_de_Todos_os_Outros_foto_1776289532586_0.jpg"
+      ],
+      "fichatecnica": [
+        {
+          "role": "Produção",
+          "name": "Nathalie Felippe"
+        },
+        {
+          "role": "Produção",
+          "name": "Valentina Homem"
+        },
+        {
+          "role": "Roteiro",
+          "name": "Jô Bilac"
+        },
+        {
+          "role": "Roteiro",
+          "name": "Fernanda Bond"
+        },
+        {
+          "role": "Roteiro",
+          "name": "Valentina Homem"
+        },
+        {
+          "role": "Direção de Arte",
+          "name": "Elsa Romero e Ianara Elisa"
+        },
+        {
+          "role": "Direção de Fotografia",
+          "name": "Louise Botkay e Amara Barroso"
+        }
+      ]
+    },
+    {
+      "title": "Amor de Bicho",
+      "titleEn": "Amor de Bicho",
+      "director": "Monica Prinzac",
+      "year": "2020 - 2024",
+      "genre": "Série Documental (2 temporadas)",
+      "hero": false,
+      "synopsis": "A relação sincera de amor, troca e respeito. Uma conexão de descobertas, emoções e transformações. Amor de Bicho revela histórias surpreendentes e únicas entre humanos e animais. Em 10 episódios, a série documental apresenta personagens da vida real e mergulha nesse convívio cheio de afetos e sentimentos, que envolve pessoas, bichos e meio ambiente. \n\nHistórias surpreendentes, emocionantes e divertidas de pessoas e animais que tiveram suas vidas transformadas a partir do convívio. Os bichos podem nos ajudar a contemplar nossa natureza mais autêntica e a encontrar respostas para os problemas cotidianos. A série vai explorar as várias formas de relações e as várias alternativas que bichos e humanos trocam para viverem melhor.\n\nExibido na Tv Mov. Da Uol (Uol Play)\n\nPersonagens: Roched, Santuário Vale da Rainha, Alessandra Luglio, Nina Rocha Kanner, entre outros. \n",
+      "synopsisEn": "A sincere relationship of love, exchange, and respect. A connection of discoveries, emotions, and transformations. \"Animal Love\" reveals surprising and unique stories between humans and animals. In 10 episodes, the documentary series presents real-life characters and delves into this coexistence full of affection and feelings, involving people, animals, and the environment.\n\nSurprising, moving, and fun stories of people and animals whose lives have been transformed through their interaction. Animals can help us contemplate our most authentic nature and find answers to everyday problems. The series will explore the various forms of relationships and the various alternatives that animals and humans exchange to live better lives.\n\nAired on UOL TV (UOL Play)\n\nFeatured by: Roched, Vale da Rainha Sanctuary, Alessandra Luglio, Nina Rocha Kanner, among others.",
+      "tags": [],
+      "imgPortrait": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/retratos/Amor_de_Bicho_p.png",
+      "imgLandscape": "",
+      "videoHover": "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/previews/Amor_de_Bicho_v.mp4",
+      "videoTrailer": "https://vimeo.com/483286217",
+      "makingOff": [
+        "https://raw.githubusercontent.com/myceliumBrain/site-produtora/lite_mode/assets/filmes/makingoff/Amor_de_Bicho/Amor_de_Bicho_mo_1775244695846_0.jpg"
+      ],
+      "videoTrailers": [
+        "https://vimeo.com/483286217"
+      ]
+    },
+    {
       "title": "Arte Brasileira Quadro a Quadro",
       "titleEn": "Arte Brasileira Quadro a Quadro",
       "director": "Marcos Guttmann e Fabiano Maciel",
       "year": "2018 - 2026",
       "genre": "Série Documental (2 temporadas)",
-      "hero": true,
+      "hero": false,
       "synopsis": "Arte Brasileira Quadro a Quadro é uma série de seis episódios que aborda obras de um período não muito conhecido e falado da Arte brasileira, o Pré-Modernismo. Baseada no livro do historiador de arte Rafael Cardoso, \"Arte Brasileira em 25 Quadros\", o programa parte da análise de obras do período de 1790 a 1930 para falar de temas que permeiam a atualidade, como igualdade de gênero, feminismo, racismo, identidade cultural, preservação do meio ambiente, emigração e moralismo na arte, entre outros.\n\nA série foi exibida originalmente pelo canal Arte1 em 2017 e conta com a direção de Marcos Guttmann e Fabiano Maciel. ",
       "synopsisEn": "Brazilian Art Frame by Frame is a six-episode series that explores works from a little-known and rarely discussed period of Brazilian art: Pre-Modernism. Based on the book by art historian Rafael Cardoso, \"Brazilian Art in 25 Frames,\" the program uses the analysis of works from the period 1790 to 1930 to discuss themes that permeate the present day, such as gender equality, feminism, racism, cultural identity, environmental preservation, emigration, and moralism in art, among others.\n\nThe series originally aired on the Arte1 channel in 2017 and is directed by Marcos Guttmann and Fabiano Maciel.",
       "tags": [],
@@ -246,26 +396,13 @@
   ],
   "upcomingFilms": [
     {
-      "title": "Zico",
-      "titleEn": "Zico",
-      "director": "diretor",
-      "status": "dev",
-      "genre": "gênero",
-      "genreEn": "gênero",
-      "year": "forecast year",
-      "synopsis": "exemplo sinopse ",
-      "synopsisEn": "exemple synopsis",
-      "imgPortrait": "",
-      "imgLandscape": ""
-    },
-    {
       "title": "Penhasco",
       "titleEn": "Penhasco",
-      "director": "diretor",
+      "director": "Thiago Greco",
       "status": "filming",
-      "genre": "gênero",
-      "genreEn": "genre",
-      "year": "forecast year",
+      "genre": "Ficção/Thriller",
+      "genreEn": "",
+      "year": "2028",
       "synopsis": "exemplo sinopse ",
       "synopsisEn": "exemple synopsis",
       "imgPortrait": "",
@@ -491,6 +628,12 @@
   },
   "_auth": {
     "tokens": [
+      {
+        "label": "teste",
+        "salt": "9rxjbfEdglLn5ll+rs55qw==",
+        "iv": "lV5JPB8t3CNAl8zD",
+        "data": "Unv46Lcp1ftYpt9g1iWU1ngpETjbpHqREZPsVDMaaiA97leOHm6tPVht24EmT+bL7C6l/bLgEls="
+      }
     ]
   },
   "otherProductions": [
@@ -580,8 +723,8 @@
       "ctaTitleEn": "Want to talk to us?",
       "ctaBodyPt": "Estamos abertos a novos projetos, parcerias e colaborações.",
       "ctaBodyEn": "We are open to new projects, partnerships, and collaborations.",
-      "heroLabelPt": "Em destaque · 2025",
-      "heroLabelEn": "Featured · 2025",
+      "heroLabelPt": "Em destaque · 2026",
+      "heroLabelEn": "Featured · 2026",
       "gridTitlePt": "Produções recentes",
       "gridTitleEn": "Recent productions",
       "stripeItems": [
