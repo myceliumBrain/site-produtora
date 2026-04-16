@@ -163,6 +163,24 @@ document.getElementById('langBtn').addEventListener('click', () => {
 /* ── LOGO DINÂMICO ──
    Substitui o src da logo se siteData.logoUrl estiver definido no data.json ── */
 dataReady.then(() => {
+  // Aplica fontes personalizadas se definidas no siteData
+  const sd = siteData || {};
+  [['fontDisplayUrl', 'fontDisplayFamily', '--font-display'],
+   ['fontUiUrl',      'fontUiFamily',      '--font-ui']
+  ].forEach(([urlKey, familyKey, cssVar]) => {
+    const url    = sd[urlKey];
+    const family = sd[familyKey];
+    if (url) {
+      if (!document.querySelector(`link[href="${url}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = url;
+        document.head.appendChild(link);
+      }
+    }
+    if (family) document.documentElement.style.setProperty(cssVar, family);
+  });
+
   if (siteData && siteData.logoUrl) {
     const logoImg = document.querySelector('.logo-img');
     if (logoImg) logoImg.src = siteData.logoUrl;

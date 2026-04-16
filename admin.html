@@ -6,7 +6,7 @@
   <title>pontos de fuga — Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,600&family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,600&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style/style-base.css">
   <link rel="stylesheet" href="style/style-admin.css">
 </head>
@@ -85,6 +85,7 @@
         <button class="nav-btn" onclick="showPanel('pag-vemai')">Vem aí</button>
         <button class="nav-btn" onclick="showPanel('pag-contato')">Contato</button>
         <span class="sidebar-section">Sistema</span>
+        <button class="nav-btn" onclick="showPanel('tipografia')">Tipografia</button>
         <button class="nav-btn" onclick="showPanel('links')">Links</button>
         <button class="nav-btn" onclick="showPanel('acessos')">Acessos</button>
       </aside>
@@ -172,6 +173,12 @@
         <div class="section-panel" id="panel-pag-contato">
           <div class="panel-header"><span class="panel-title">Contato</span></div>
           <div id="pagContatoForm"></div>
+        </div>
+
+        <!-- ── TIPOGRAFIA ── -->
+        <div class="section-panel" id="panel-tipografia">
+          <div class="panel-header"><span class="panel-title">Tipografia</span></div>
+          <div id="tipografiaForm"></div>
         </div>
 
         <!-- ── LINKS ── -->

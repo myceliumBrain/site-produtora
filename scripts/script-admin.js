@@ -8,6 +8,13 @@ const REPO   = 'myceliumBrain/site-produtora';
 const FILE   = 'scripts/data.json';
 const BRANCH = 'lite_mode';
 
+function escHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+
 let TOKEN   = '';
 let fileSHA = '';
 let data    = {};
@@ -68,7 +75,7 @@ async function decryptToken(entry, password) {
    GITHUB API (sem token ainda — só para carregar o JSON)
 ══════════════════════════════════════════════════════════ */
 async function ghGet(path) {
-  const headers = { Accept: 'application/vnd.github.v3+json', 'Cache-Control': 'no-cache' };
+  const headers = { Accept: 'application/vnd.github.v3+json' };
   if (TOKEN) headers.Authorization = `token ${TOKEN}`;
   const res = await fetch(
     `https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}&_=${Date.now()}`,
@@ -397,6 +404,7 @@ function renderAll() {
   renderPagProducoes();
   renderPagContato();
   renderLinks();
+  renderTipografia();
   renderPagVemai();
   renderFestivais();
   renderMarcos();
@@ -1125,6 +1133,77 @@ function removeStripeItem(i) {
   document.getElementById('stripeItemsList').innerHTML = renderStripeItems(data.pagesData.index.stripeItems);
 }
 
+/* ── TIPOGRAFIA ── */
+function loadFontInAdmin(url) {
+  if (!url || document.querySelector(`link[href="${url}"]`)) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = url;
+  document.head.appendChild(link);
+}
+
+function applyCustomFont(type) {
+  const urlEl    = document.getElementById(type === 'display' ? 'ty-fontDisplayUrl'    : 'ty-fontUiUrl');
+  const familyEl = document.getElementById(type === 'display' ? 'ty-fontDisplayFamily' : 'ty-fontUiFamily');
+  const url    = urlEl?.value.trim();
+  const family = familyEl?.value.trim();
+  if (url)    loadFontInAdmin(url);
+  if (family) document.documentElement.style.setProperty(
+    type === 'display' ? '--font-display' : '--font-ui', family
+  );
+}
+
+function renderTipografia() {
+  const sd = data.siteData || {};
+  // Aplica as fontes salvas na pré-visualização
+  if (sd.fontDisplayUrl)    loadFontInAdmin(sd.fontDisplayUrl);
+  if (sd.fontDisplayFamily) document.documentElement.style.setProperty('--font-display', sd.fontDisplayFamily);
+  if (sd.fontUiUrl)         loadFontInAdmin(sd.fontUiUrl);
+  if (sd.fontUiFamily)      document.documentElement.style.setProperty('--font-ui', sd.fontUiFamily);
+
+  document.getElementById('tipografiaForm').innerHTML = `
+    <p style="opacity:0.5;font-size:0.75rem;margin-bottom:1.5rem;line-height:1.6">
+      Defina as fontes usadas em todo o site.<br>
+      <strong>Display</strong> — títulos, manchetes, menu. &nbsp;
+      <strong>Interface</strong> — corpo de texto, botões, labels.
+    </p>
+    <div class="fields-grid">
+      <div class="field">
+        <label>Display — URL da fonte</label>
+        <input id="ty-fontDisplayUrl" value="${escHtml(sd.fontDisplayUrl || '')}" placeholder="https://fonts.googleapis.com/css2?family=…">
+      </div>
+      <div class="field">
+        <label>Display — font-family CSS</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="ty-fontDisplayFamily" value="${escHtml(sd.fontDisplayFamily || '')}" placeholder="'Fraunces', serif" style="flex:1">
+          <button class="btn btn-secondary btn-small" onclick="applyCustomFont('display')">Aplicar</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Interface — URL da fonte</label>
+        <input id="ty-fontUiUrl" value="${escHtml(sd.fontUiUrl || '')}" placeholder="https://fonts.googleapis.com/css2?family=…">
+      </div>
+      <div class="field">
+        <label>Interface — font-family CSS</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="ty-fontUiFamily" value="${escHtml(sd.fontUiFamily || '')}" placeholder="'Space Grotesk', sans-serif" style="flex:1">
+          <button class="btn btn-secondary btn-small" onclick="applyCustomFont('ui')">Aplicar</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Pré-visualização</span></div>
+    <div style="border:1px solid var(--border);border-radius:6px;padding:2rem;margin-top:0.5rem">
+      <p style="font-family:var(--font-display);font-size:2.5rem;font-weight:300;line-height:1.1;margin-bottom:0.75rem">pontos de fuga</p>
+      <p style="font-family:var(--font-display);font-size:1.1rem;font-style:italic;font-weight:300;margin-bottom:1.5rem;opacity:0.6">Cinema que abre espaço para o que não cabe em palavras</p>
+      <p style="font-family:var(--font-ui);font-size:0.85rem;letter-spacing:0.04em;line-height:1.8;opacity:0.7">Texto de interface · labels · botões · navegação · corpo de texto em parágrafos corridos.</p>
+      <div style="display:flex;gap:12px;margin-top:1.25rem">
+        <span style="font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;border:1px solid var(--border);padding:6px 14px;border-radius:2px">Ver produções</span>
+        <span style="font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;background:var(--gold);color:var(--black);padding:6px 14px;border-radius:2px">Entrar em contato</span>
+      </div>
+    </div>
+  `;
+}
+
 /* ── LINKS (redes sociais / links globais) ── */
 function renderLinks() {
   const links = (data.siteData && data.siteData.socialLinks) || [];
@@ -1192,6 +1271,14 @@ function collectAll() {
   document.querySelectorAll('[data-sitedata]').forEach(el => {
     data.siteData[el.dataset.key] = el.value;
   });
+  const tyDisplayUrl    = document.getElementById('ty-fontDisplayUrl');
+  const tyDisplayFamily = document.getElementById('ty-fontDisplayFamily');
+  const tyUiUrl         = document.getElementById('ty-fontUiUrl');
+  const tyUiFamily      = document.getElementById('ty-fontUiFamily');
+  if (tyDisplayUrl)    data.siteData.fontDisplayUrl    = tyDisplayUrl.value.trim();
+  if (tyDisplayFamily) data.siteData.fontDisplayFamily = tyDisplayFamily.value.trim();
+  if (tyUiUrl)         data.siteData.fontUiUrl         = tyUiUrl.value.trim();
+  if (tyUiFamily)      data.siteData.fontUiFamily      = tyUiFamily.value.trim();
   document.querySelectorAll('[data-film]').forEach(el => {
     const i = +el.dataset.film, key = el.dataset.key;
     if (!data.films[i]) return;
