@@ -1,7 +1,24 @@
 {
   "siteData": {
     "logoUrl": "",
-    "socialLinks": [],
+    "socialLinks": [
+      {
+        "label": "Instagram",
+        "url": "instagram.com"
+      },
+      {
+        "label": "X",
+        "url": "x.com"
+      },
+      {
+        "label": "github",
+        "url": "github.com"
+      },
+      {
+        "label": "google",
+        "url": "google.com"
+      }
+    ],
     "fontDisplayUrl": "https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&display=swap",
     "fontDisplayFamily": "Red Hat Mono",
     "fontUiUrl": "",
