@@ -516,3 +516,37 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   .footer-top          { flex-direction: column; gap: 40px; }
   .footer-links        { flex-wrap: wrap; gap: 32px; }
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   DARK MODE — overrides específicos da página de filme
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Hero usa var(--black) como cor de fundo/gradiente.
+   No dark mode --black vira claro, então fixamos cores do hero. */
+html[data-theme="dark"] .filme-hero__bg {
+  background-color: #0d0b09;
+}
+html[data-theme="dark"] .filme-hero::before {
+  background: linear-gradient(to bottom, transparent, #0d0b09);
+}
+
+/* Header: nesta página começa transparente sobre o hero escuro.
+   --white virou dark, então var(--white) já é correto para o logo/hamburger.
+   Mas a declaração no CSS é color: var(--white) — que agora = dark.
+   Precisamos manter claro para ser legível sobre o hero escuro. */
+html[data-theme="dark"] .logo-btn        { color: #f0ece4; }
+html[data-theme="dark"] .hamburger span  { background: #f0ece4; }
+html[data-theme="dark"] .header-link     { color: rgba(240, 236, 228, 0.7); }
+html[data-theme="dark"] .header--scrolled {
+  background:       rgba(13, 11, 9, 0.72);
+  background-color: rgba(13, 11, 9, 0.72);
+}
+
+html[data-theme="light"] .header--scrolled {
+  background:       rgba(245, 238, 223, 0.72);
+  background-color: rgba(245, 238, 223, 0.72);
+}
+
+/* Body do filme (abaixo do hero) */
+html[data-theme="dark"] .filme-synopsis p { color: rgba(240, 236, 228, 0.68); }

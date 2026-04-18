@@ -72,7 +72,6 @@ header {
   align-items: center;
   padding: 28px var(--pad-desk);
   background-color: var(--black);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* This class will be added by JavaScript when scrolling down */
@@ -406,4 +405,75 @@ footer {
 }
 
 .footer-social a:hover { color: var(--white); }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   MODO ESCURO
+   html[data-theme="dark"] tem especificidade (0,1,1) e supera
+   :root (0,1,0) dos CSS de página — inverte as variáveis-chave
+   automaticamente, sem precisar reescrever cada regra.
+   ══════════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Inversão das variáveis principais */
+  --white:  #0d0b09;                    /* parchment → bg escuro principal */
+  --black:  #f0ece4;                    /* tinta     → texto claro         */
+  --cream:  #131110;                    /* creme     → superfície escura   */
+  --grey:   #282320;                    /* cinza     → cinza escuro quente */
+  --sand:   #1e1a16;                    /* areia     → areia escura        */
+  --border: rgba(240, 236, 228, 0.08);  /* borda sutil clara               */
+  --dim:    rgba(240, 236, 228, 0.38);  /* texto secundário claro          */
+}
+
+/* Transição suave ao trocar de tema (sem sobrescrever o transform do scroll) */
+body   { transition: background-color 0.3s ease, color 0.3s ease; }
+header { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                     background-color 0.3s ease,
+                     border-color 0.3s ease; }
+.menu-overlay { transition: background-color 0.3s ease,
+                             clip-path 0.55s cubic-bezier(0.77,0,0.175,1),
+                             visibility 0s linear 0.55s; }
+
+/* Header: semi-transparente com blur — menos denso que cor sólida */
+html[data-theme="dark"] header {
+  background:        rgba(13, 11, 9, 0.72);
+  background-color:  rgba(13, 11, 9, 0.72);
+  backdrop-filter:        blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+html[data-theme="light"] header {
+  background:        rgba(245, 238, 223, 0.72);
+  background-color:  rgba(245, 238, 223, 0.72);
+  backdrop-filter:        blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* ── Footer: usa var(--black) como fundo escuro no modo claro.
+      Como --black vira claro no dark mode, fixamos cor aqui. ── */
+html[data-theme="dark"] footer {
+  background: #111;
+  border-top-color: rgba(240, 236, 228, 0.08);
+}
+html[data-theme="dark"] .footer-logo           { color: #f0ece4; }
+html[data-theme="dark"] .footer-col h4         { color: rgba(240, 236, 228, 0.35); }
+html[data-theme="dark"] .footer-col a          { color: rgba(240, 236, 228, 0.55); }
+html[data-theme="dark"] .footer-col a:hover    { color: #f0ece4; }
+html[data-theme="dark"] .footer-bottom         { border-top-color: rgba(240, 236, 228, 0.07); }
+html[data-theme="dark"] .footer-copy           { color: rgba(240, 236, 228, 0.2); }
+html[data-theme="dark"] .footer-social a       { color: rgba(240, 236, 228, 0.3); }
+html[data-theme="dark"] .footer-social a:hover { color: #f0ece4; }
+
+/* ── Copyright do menu overlay ── */
+html[data-theme="dark"] .menu-copy  { color: rgba(240, 236, 228, 0.45); }
+html[data-theme="light"] .menu-copy { color: rgba(28, 23, 20, 0.45); }
+
+/* ── Botão fechar menu ── */
+html[data-theme="dark"] .menu-close-btn        { color: rgba(240, 236, 228, 0.35); }
+html[data-theme="dark"] .menu-close-btn:hover  { color: #f0ece4; }
+
+/* ── Tags com fundo ácido: mantém texto escuro para legibilidade ── */
+html[data-theme="dark"] .tag { color: #1c1714; }
 

@@ -32,7 +32,7 @@ const COMMON_I18N = {
     'nav.home': 'Home',
     'menu.home': 'Home', 'menu.home.count': 'Beginning',
     'menu.productions': 'Productions', 'menu.productions.count': '10+',
-    'menu.upcoming': 'Coming Soon', 'menu.upcoming.count': 'In Production',
+    'menu.upcoming': 'Upcoming', 'menu.upcoming.count': 'In Production',
     'menu.history': 'Our Story', 'menu.history.count': 'About',
     'menu.contact': 'Contact', 'menu.contact.count': 'get in touch',
     'footer.col1': 'Navigation', 'footer.copy': '© 2026 - PONTOS DE FUGA',
@@ -196,6 +196,42 @@ dataReady.then(() => {
     el.innerHTML = linksHtml;
   });
 });
+
+/* ── TEMA CLARO / ESCURO ──────────────────────────────────────────
+   Preferência salva em localStorage.
+   Se não houver preferência salva, respeita prefers-color-scheme.
+   ─────────────────────────────────────────────────────────────── */
+(function () {
+  function getTheme() {
+    return localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const btn = document.getElementById('themeBtn');
+    if (btn) btn.textContent = theme === 'dark' ? '☀︎' : '☽';
+  }
+
+  function toggleTheme() {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', next);
+    applyTheme(next);
+  }
+
+  // Aplica tema imediatamente (complemento ao inline script do <head>)
+  applyTheme(getTheme());
+
+  // Segue mudança automática do S.O. somente se o usuário não tiver escolhido manualmente
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+    if (!localStorage.getItem('theme')) applyTheme(e.matches ? 'dark' : 'light');
+  });
+
+  // Botão de toggle
+  const themeBtn = document.getElementById('themeBtn');
+  if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+})();
+
 
 /*HIDE HEADER AFTER SCROLL*/
 

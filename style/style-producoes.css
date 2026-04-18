@@ -189,6 +189,11 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 @media (max-width: 1024px) { .films-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 700px)  { .films-grid { grid-template-columns: repeat(2, 1fr); padding: 16px var(--pad-mob); } }
 
+@media (max-width: 700px) {
+  .film-card__title  { font-size: 13px; line-height: 1.1; }
+  .other-card__title { font-size: 11px; }
+}
+
 .card--wide { grid-column: span 1; }
 .card--tall { grid-row:    span 1; }
 
@@ -308,6 +313,9 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(245, 238, 223, 0.35);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .film-card__year {
@@ -315,6 +323,9 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--acid);
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding-left: 8px;
 }
 
 
@@ -427,6 +438,9 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(245, 238, 223, 0.3);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .other-card__year {
@@ -434,4 +448,26 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--acid);
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding-left: 8px;
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   DARK MODE — overrides específicos de produções
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Sort buttons com rgba hardcoded */
+html[data-theme="dark"] .sort-btn        { color: rgba(240, 236, 228, 0.35); }
+html[data-theme="dark"] .sort-btn.active { color: #f0ece4; border-bottom-color: #c9a84c; }
+html[data-theme="dark"] .sort-btn:hover  { color: #f0ece4; }
+
+/* Títulos dos cards: usam color: var(--white) que no dark mode vira #0d0b09 —
+   texto escuro sobre fundo escuro (#0d0b09) = invisível */
+html[data-theme="dark"] .film-card__title  { color: #f0ece4; }
+html[data-theme="dark"] .other-card__title { color: #f0ece4; }
+
+/* Ano: mantém ácido (já visível no escuro) */
+html[data-theme="dark"] .film-card__year  { color: var(--acid); }
+html[data-theme="dark"] .other-card__year { color: var(--acid); }

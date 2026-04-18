@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="./style/style-base.css">
   <link rel="stylesheet" href="./style/style-vemai.css">
+  <script>(function(){var s=localStorage.getItem('theme'),d=window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',s||(d?'dark':'light'));})();</script>
 </head>
 <body>
 
@@ -25,6 +26,7 @@
       <img src="assets/logo/pontos_de_fuga-matriz_t.png" alt="pontos de fuga" class="logo-img">
     </button>
     <div class="header-right">
+      <button class="header-link" id="themeBtn" aria-label="Alternar tema">☽</button>
       <button class="header-link" id="langBtn">EN</button>
     </div>
   </header>

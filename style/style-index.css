@@ -657,7 +657,7 @@ footer {
 }
 
 @media (max-width: 767px) {
-  .preview-grid { grid-template-columns: repeat(2, 1fr); }
+  .preview-grid { grid-template-columns: repeat(2, 1fr); align-items: start; }
 }
 
 .preview-card {
@@ -736,6 +736,9 @@ footer {
   opacity: 0;
   transform: translateY(6px);
   transition: opacity 0.4s 0.05s, transform 0.4s 0.05s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .preview-card:hover .preview-card__dir { opacity: 1; transform: translateY(0); }
@@ -1015,6 +1018,8 @@ footer {
   .section-cta::before        { left: var(--pad-mob); right: var(--pad-mob); }
 
   .hero-content       { padding: 0 var(--pad-mob) 56px; }
+  .hero-title         { font-size: clamp(30px, 8.5vw, 44px); line-height: 0.95; }
+  .hero-cta .btn-outline { padding: 10px 18px; font-size: 9px; letter-spacing: 0.14em; gap: 8px; }
   .hero-nav           { display: none; }
   .hero-scroll-hint   { display: none; }
 
@@ -1034,8 +1039,11 @@ footer {
     padding: 0 var(--pad-mob);
     gap: 2px;
   }
+  .preview-card__title { font-size: 13px; }
+  .preview-card__info  { padding: 16px 14px; }
   .section-grid-header { padding: 24px var(--pad-mob); }
-  .section-grid       { padding: 0; }
+  .section-grid-title  { font-size: 20px; letter-spacing: -0.01em; }
+  .section-grid        { padding: 0; }
 
   .section-upcoming   { padding: 0 var(--pad-mob) 96px; }
   .upcoming-item__link {
@@ -1048,3 +1056,53 @@ footer {
   .footer-top         { flex-direction: column; gap: 40px; }
   .footer-links       { flex-wrap: wrap; gap: 32px; }
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   DARK MODE — overrides específicos da home
+   As variáveis principais já são invertidas em style-base.css.
+   Aqui corrigimos só elementos com cores hardcoded ou semântica
+   invertida (ex: var(--black) usado como fundo escuro, não texto).
+   ══════════════════════════════════════════════════════════════════ */
+
+/* .section-identity usa var(--black) como fundo escuro de contraste.
+   No dark mode --black vira claro, então fixamos o fundo aqui. */
+html[data-theme="dark"] .section-identity {
+  background: #111;
+}
+
+/* Hero bottom fade: gradiente usa var(--black) que vira claro no dark mode */
+html[data-theme="dark"] .hero-bottom-fade {
+  background: linear-gradient(to bottom, transparent, #0d0b09);
+}
+
+/* Hero: título e botão usam var(--white) que vira escuro no dark mode */
+html[data-theme="dark"] .hero-title                      { color: #f0ece4; }
+html[data-theme="dark"] .hero-dot.active                 { background: #f0ece4; }
+html[data-theme="dark"] .hero-cta .btn-outline           { color: #f0ece4; border-color: rgba(240, 236, 228, 0.3); }
+html[data-theme="dark"] .hero-cta .btn-outline:hover     { color: #f0ece4; border-color: var(--gold); }
+
+/* .section-cta tem bg hardcoded em parchment */
+html[data-theme="dark"] .section-cta        { background: #111; }
+html[data-theme="dark"] .cta-body           { color: rgba(240, 236, 228, 0.5); }
+
+/* btn-cta: background var(--black) vira creme no dark mode — botão invisível */
+html[data-theme="dark"] .btn-cta            { background: #f0ece4; color: #0d0b09; }
+html[data-theme="dark"] .btn-cta:hover      { background: var(--amber); color: #f0ece4; }
+
+/* Featured: cores hardcoded rgba(28,23,20,x) */
+html[data-theme="dark"] .featured-dir       { color: rgba(240, 236, 228, 0.42); }
+html[data-theme="dark"] .featured-synopsis  { color: rgba(240, 236, 228, 0.7); }
+
+/* Grid */
+html[data-theme="dark"] .section-grid-link  { color: rgba(240, 236, 228, 0.38); }
+html[data-theme="dark"] .preview-card__title { color: #f0ece4; }
+
+/* Upcoming: bordas e meta com rgba hardcoded */
+html[data-theme="dark"] .upcoming-item              { border-top-color: rgba(240, 236, 228, 0.08); }
+html[data-theme="dark"] .upcoming-item:last-child   { border-bottom-color: rgba(240, 236, 228, 0.08); }
+html[data-theme="dark"] .upcoming-item:hover        { background: rgba(240, 236, 228, 0.03); }
+html[data-theme="dark"] .upcoming-item__meta        { color: rgba(240, 236, 228, 0.38); }
+
+/* Stripe */
+html[data-theme="dark"] .section-stripe    { border-color: rgba(240, 236, 228, 0.08); }

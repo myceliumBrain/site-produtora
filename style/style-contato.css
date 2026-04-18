@@ -355,3 +355,24 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   .footer-top     { flex-direction: column; gap: 40px; }
   .footer-links   { flex-wrap: wrap; gap: 32px; }
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   DARK MODE — overrides específicos de contato
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Textos com rgba hardcoded */
+html[data-theme="dark"] .contact-sub      { color: rgba(240, 236, 228, 0.48); }
+
+/* Formulário */
+html[data-theme="dark"] .form-field label { color: rgba(240, 236, 228, 0.4); }
+html[data-theme="dark"] .form-field input,
+html[data-theme="dark"] .form-field textarea { color: #f0ece4; }
+html[data-theme="dark"] .form-field input::placeholder,
+html[data-theme="dark"] .form-field textarea::placeholder { color: rgba(240, 236, 228, 0.18); }
+html[data-theme="dark"] .form-row .form-field:first-child { border-right-color: rgba(240,236,228,0.08); }
+
+/* Botões */
+html[data-theme="dark"] .btn-submit        { border-color: rgba(240, 236, 228, 0.28); color: #f0ece4; }
+html[data-theme="dark"] .btn-submit:hover  { border-color: #f0ece4; background: #f0ece4; color: #0d0b09; }
+html[data-theme="dark"] .btn-whatsapp      { color: rgba(240, 236, 228, 0.35); }

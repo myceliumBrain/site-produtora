@@ -528,3 +528,20 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 @media (max-width: 480px) {
   .historia-parceiros__grid { grid-template-columns: 1fr; }
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   DARK MODE — overrides específicos de história
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Texto com rgba(28,23,20,x) hardcoded — inverte para claro */
+html[data-theme="dark"] .historia-manifesto__body p { color: rgba(240, 236, 228, 0.52); }
+html[data-theme="dark"] .historia-marco__text        { color: rgba(240, 236, 228, 0.5); }
+html[data-theme="dark"] .historia-marco__text em     { color: rgba(240, 236, 228, 0.72); }
+html[data-theme="dark"] .historia-divider span       { color: rgba(240, 236, 228, 0.4); }
+html[data-theme="dark"] .historia-member__bio        { color: rgba(240, 236, 228, 0.52); }
+html[data-theme="dark"] .historia-member__bio em     { color: rgba(240, 236, 228, 0.75); }
+html[data-theme="dark"] .historia-festival__name     { color: rgba(240, 236, 228, 0.35); }
+html[data-theme="dark"] .historia-festival__year     { color: rgba(240, 236, 228, 0.2); }
+html[data-theme="dark"] .historia-parceiros__header span { color: rgba(240, 236, 228, 0.3); }
+html[data-theme="dark"] .historia-parceiro           { color: rgba(240, 236, 228, 0.28); }
