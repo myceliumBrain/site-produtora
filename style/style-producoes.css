@@ -458,6 +458,13 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
    DARK MODE — overrides específicos de produções
    ══════════════════════════════════════════════════════════════════ */
 
+/* Fundo da página e do grid: mais claro que os cards (#0d0b09) para criar contraste */
+html[data-theme="dark"] body,
+html[data-theme="dark"] .page,
+html[data-theme="dark"] .films-grid,
+html[data-theme="dark"] .other-grid,
+html[data-theme="dark"] .section-header { background: #1c1714; }
+
 /* Sort buttons com rgba hardcoded */
 html[data-theme="dark"] .sort-btn        { color: rgba(240, 236, 228, 0.35); }
 html[data-theme="dark"] .sort-btn.active { color: #f0ece4; border-bottom-color: #c9a84c; }

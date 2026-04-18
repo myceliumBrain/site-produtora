@@ -1208,32 +1208,43 @@ function renderTipografia() {
 function renderLinks() {
   const links = (data.siteData && data.siteData.socialLinks) || [];
   document.getElementById('linksForm').innerHTML = `
-    <p style="opacity:0.5;font-size:0.75rem;margin-bottom:1.5rem;line-height:1.6">
-      Estes links aparecem no rodapé e no menu de todas as páginas do site.<br>
-      O <strong>Nome</strong> é o texto exibido; o <strong>Link</strong> é a URL completa.
+    <p style="font-family:var(--mono);font-size:0.72rem;color:var(--muted);line-height:1.8;margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border-f)">
+      Estes links aparecem no <strong style="color:var(--white)">rodapé</strong> e no <strong style="color:var(--white)">menu</strong> de todas as páginas do site.<br>
+      O campo <strong style="color:var(--accent)">Nome</strong> é o texto exibido; o campo <strong style="color:var(--accent)">URL</strong> é o endereço completo.
     </p>
+
+    <div style="display:grid;grid-template-columns:1fr 2fr auto;gap:0;margin-bottom:0.25rem">
+      <span style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding:0 0 0.4rem 1rem">Nome</span>
+      <span style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding:0 0 0.4rem 1rem">URL</span>
+      <span></span>
+    </div>
+
     <div id="socialLinksList">${renderSocialLinksList(links)}</div>
-    <div class="tags-input-row" style="margin-top:12px;gap:8px">
-      <input id="socialLinkLabel" placeholder="Nome (ex: Instagram)" style="flex:1;min-width:0"
-             onkeydown="if(event.key==='Enter'){addSocialLink();event.preventDefault()}">
-      <input id="socialLinkUrl" placeholder="URL (ex: https://instagram.com/…)" style="flex:2;min-width:0"
-             onkeydown="if(event.key==='Enter'){addSocialLink();event.preventDefault()}">
-      <button class="btn btn-secondary btn-small" onclick="addSocialLink()">+ adicionar</button>
+
+    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border-f)">
+      <p style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem">Adicionar link</p>
+      <div style="display:grid;grid-template-columns:1fr 2fr auto;gap:8px;align-items:center">
+        <input id="socialLinkLabel" class="adm-input" placeholder="ex: Instagram"
+               onkeydown="if(event.key==='Enter'){addSocialLink();event.preventDefault()}">
+        <input id="socialLinkUrl" class="adm-input" placeholder="ex: https://instagram.com/..."
+               onkeydown="if(event.key==='Enter'){addSocialLink();event.preventDefault()}">
+        <button class="btn btn-secondary btn-small" onclick="addSocialLink()" style="white-space:nowrap">+ adicionar</button>
+      </div>
     </div>`;
 }
 
 function renderSocialLinksList(links) {
-  if (!links.length) return '<p class="makingoff-empty">nenhum link ainda</p>';
-  return '<div style="display:flex;flex-direction:column;gap:6px">' +
+  if (!links.length) return '<p class="makingoff-empty" style="grid-column:1/-1">nenhum link ainda</p>';
+  return '<div style="display:flex;flex-direction:column;gap:4px">' +
     links.map((l, i) => `
-      <div style="display:flex;gap:8px;align-items:center">
-        <input placeholder="Nome" value="${esc(l.label||'')}"
-               oninput="updateSocialLink(${i},'label',this.value)"
-               style="flex:1;min-width:0">
-        <input placeholder="URL" value="${esc(l.url||'')}"
-               oninput="updateSocialLink(${i},'url',this.value)"
-               style="flex:2;min-width:0">
-        <button class="btn btn-ghost btn-small" onclick="removeSocialLink(${i})" title="remover">✕</button>
+      <div style="display:grid;grid-template-columns:1fr 2fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border-f)">
+        <input class="adm-input" placeholder="Nome" value="${esc(l.label||'')}"
+               oninput="updateSocialLink(${i},'label',this.value)">
+        <input class="adm-input" placeholder="URL" value="${esc(l.url||'')}"
+               oninput="updateSocialLink(${i},'url',this.value)">
+        <button class="btn btn-ghost btn-small" onclick="removeSocialLink(${i})" title="remover"
+                style="justify-self:center;padding:0.35rem 0.6rem;opacity:0.5;transition:opacity 0.2s"
+                onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.5'">✕</button>
       </div>`).join('') +
     '</div>';
 }

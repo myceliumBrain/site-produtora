@@ -391,6 +391,22 @@ a, button { cursor: pointer !important; }
 .tags-input-row { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
 .tags-input-row input { flex: 1; }
 
+/* ── INPUTS SOLTOS (fora de .field) — mesmo visual do painel ── */
+.adm-input {
+  background: var(--surface);
+  border: 1px solid var(--border-f);
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  padding: 0.65rem 0.9rem;
+  outline: none;
+  border-radius: 2px;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.adm-input:focus  { border-color: var(--accent); }
+.adm-input::placeholder { color: var(--muted); opacity: 0.6; }
+
 /* ── STATUS CHIPS ── */
 .status-chip {
   font-family: var(--mono);
@@ -654,6 +670,7 @@ a, button { cursor: pointer !important; }
     background: var(--black);
     transform: translateX(-100%);
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto;
   }
 
   .adm-sidebar.open {

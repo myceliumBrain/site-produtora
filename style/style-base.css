@@ -113,13 +113,17 @@ header {
   flex-direction: column;
   gap: 5px;
   width: 22px;
+  padding-bottom: 1px;
 }
 
 .hamburger span {
   display: block;
   height: 1px;
   background: var(--white);
-  transition: all 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.4s cubic-bezier(0.76, 0, 0.24, 1),
+              transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
   transform-origin: center;
 }
 
@@ -159,8 +163,8 @@ header {
 .menu-overlay {
   position: fixed;
   top: 0; left: 0; bottom: 0;
-  width: 50%;
-  max-width: 480px; /* N3 — evita overlay enorme em monitores ultralargos */
+  width: 60%;
+  max-width: 600px;
   z-index: 99;
   background: var(--black);
   border-right: 1px solid var(--border);
@@ -168,7 +172,7 @@ header {
   transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
   display: flex;
   flex-direction: column;
-  padding: 80px var(--pad-desk) 48px;
+  padding: 80px var(--pad-desk) 0;
   height: 100vh;
 }
 
@@ -193,7 +197,7 @@ header {
     width: 100%;
     max-width: none;
     border-right: none;
-    padding: 80px var(--pad-mob) 40px;
+    padding: 80px var(--pad-mob) 32px;
   }
   .menu-close-btn { right: var(--pad-mob); }
 }
@@ -203,7 +207,7 @@ header {
 .menu-body {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  flex: 1;
 }
 
 .menu-primary-list { list-style: none; }
@@ -247,7 +251,7 @@ header {
 
 .menu-item-title {
   font-family: var(--font-display);
-  font-size: clamp(32px, 5vw, 56px);
+  font-size: clamp(24px, 3.5vw, 46px);
   font-weight: 300;
 }
 
@@ -260,19 +264,22 @@ header {
 
 .menu-secondary {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-    bottom: 24px;
-
+  flex-direction: column;
+  margin-top: auto;
+  flex: 0 0 160px;
 }
 
-
-.menu-social { display: flex; gap: 24px; }
+.menu-social {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
 
 .menu-social a {
   color: var(--dim);
   text-decoration: none;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   transition: color 0.3s;
@@ -281,6 +288,10 @@ header {
 .menu-social a:hover { color: var(--white); }
 
 .menu-copy {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 10px;
   letter-spacing: 0.12em;
   color: rgba(240, 236, 228, 0.15);
@@ -288,8 +299,11 @@ header {
 }
 
 @media (max-width: 768px) {
-  .menu-overlay  { width: 100%; border-right: none; padding: 80px var(--pad-mob) 40px; }
+  .menu-overlay  { width: 100%; border-right: none; padding: 80px var(--pad-mob) 0; }
   .menu-tertiary { flex-direction: column; gap: 20px; align-items: flex-start; }
+  .menu-social   { gap: 14px; }
+  .menu-social a { font-size: 11px; letter-spacing: 0.1em; }
+  .menu-copy     { font-size: 10px; letter-spacing: 0.08em; }
 }
 
 
@@ -432,9 +446,8 @@ body   { transition: background-color 0.3s ease, color 0.3s ease; }
 header { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                      background-color 0.3s ease,
                      border-color 0.3s ease; }
-.menu-overlay { transition: background-color 0.3s ease,
-                             clip-path 0.55s cubic-bezier(0.77,0,0.175,1),
-                             visibility 0s linear 0.55s; }
+.menu-overlay { transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1),
+                             background-color 0.3s ease; }
 
 /* Header: semi-transparente com blur — menos denso que cor sólida */
 html[data-theme="dark"] header {
