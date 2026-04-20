@@ -568,7 +568,7 @@ footer {
   display: flex;
   gap: 72px;
   width: max-content;
-  animation: marquee 18s linear infinite;
+  animation: marquee 70s linear infinite;
   white-space: nowrap;
 }
 

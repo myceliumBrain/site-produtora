@@ -554,6 +554,27 @@ footer {
 
 .footer-social { display: flex; gap: 24px; }
 
+@media (max-width: 768px) {
+  .footer-bottom {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .footer-copy {
+    align-self: center;
+  }
+  .footer-social {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .footer-col ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+  .footer-col li { margin-bottom: 0; }
+}
+
 .footer-social a {
   font-size: 10px;
   letter-spacing: 0.14em;

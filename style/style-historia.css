@@ -386,12 +386,13 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-auto-flow: dense;
-  gap: 1px;
-  background: var(--border);
+  gap: 0;
 }
 
 .historia-festival {
   background: var(--white);
+  border: 1px solid rgba(28, 23, 20, 0.12);
+  margin: -1px 0 0 -1px;
   min-height: 80px;
   padding: 16px 20px;
   display: flex;
@@ -543,6 +544,8 @@ html[data-theme="dark"] .historia-divider__line      { border-top-color: rgba(24
 html[data-theme="dark"] .historia-team__line         { border-top-color: rgba(240, 236, 228, 0.2); }
 html[data-theme="dark"] .historia-member__bio        { color: rgba(240, 236, 228, 0.52); }
 html[data-theme="dark"] .historia-member__bio em     { color: rgba(240, 236, 228, 0.75); }
+html[data-theme="dark"] .historia-festival           { border-color: rgba(240, 236, 228, 0.08); background: #1a1614; }
+html[data-theme="dark"] .historia-festival:hover     { background: #222018; }
 html[data-theme="dark"] .historia-festival__name     { color: rgba(240, 236, 228, 0.35); }
 html[data-theme="dark"] .historia-festival__year     { color: rgba(240, 236, 228, 0.2); }
 html[data-theme="dark"] .historia-parceiros__header span { color: rgba(240, 236, 228, 0.3); }
