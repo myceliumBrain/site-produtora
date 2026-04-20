@@ -346,8 +346,8 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 
 .other-divider__line {
   flex: 1;
-  height: 1px;
-  background: var(--border);
+  height: 0;
+  border-top: 1px solid rgba(28, 23, 20, 0.25);
 }
 
 .other-divider__label {
@@ -472,8 +472,9 @@ html[data-theme="dark"] .sort-btn:hover  { color: #f0ece4; }
 
 /* Títulos dos cards: usam color: var(--white) que no dark mode vira #0d0b09 —
    texto escuro sobre fundo escuro (#0d0b09) = invisível */
-html[data-theme="dark"] .film-card__title  { color: #f0ece4; }
-html[data-theme="dark"] .other-card__title { color: #f0ece4; }
+html[data-theme="dark"] .film-card__title   { color: #f0ece4; }
+html[data-theme="dark"] .other-card__title  { color: #f0ece4; }
+html[data-theme="dark"] .other-divider__line { border-top-color: rgba(240, 236, 228, 0.2); }
 
 /* Ano: mantém ácido (já visível no escuro) */
 html[data-theme="dark"] .film-card__year  { color: var(--acid); }

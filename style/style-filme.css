@@ -515,6 +515,7 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   footer               { padding: 40px var(--pad-mob) 24px; }
   .footer-top          { flex-direction: column; gap: 40px; }
   .footer-links        { flex-wrap: wrap; gap: 32px; }
+  .filme-synopsis p    { font-size: 15px; line-height: 1.65; }
 }
 
 
@@ -530,6 +531,7 @@ html[data-theme="dark"] .filme-hero__bg {
 html[data-theme="dark"] .filme-hero::before {
   background: linear-gradient(to bottom, transparent, #0d0b09);
 }
+html[data-theme="dark"] .filme-hero__title { color: #f0ece4; }
 
 /* Header: nesta página começa transparente sobre o hero escuro.
    --white virou dark, então var(--white) já é correto para o logo/hamburger.

@@ -24,7 +24,7 @@ const COMMON_I18N = {
     'menu.home': 'Início', 'menu.home.count': 'Pag. inicial',
     'menu.productions': 'Produções', 'menu.productions.count': '10+',
     'menu.upcoming': 'Vem aí', 'menu.upcoming.count': 'Em produção',
-    'menu.history': 'Nossa história', 'menu.history.count': 'Sobre',
+    'menu.history': 'História', 'menu.history.count': 'Sobre',
     'menu.contact': 'Contato', 'menu.contact.count': 'fale com a gente',
     'footer.col1': 'Navegação', 'footer.copy': '© 2026 - PONTOS DE FUGA',
   },

@@ -1098,10 +1098,11 @@ html[data-theme="dark"] .featured-synopsis  { color: rgba(240, 236, 228, 0.7); }
 html[data-theme="dark"] .section-grid-link  { color: rgba(240, 236, 228, 0.38); }
 html[data-theme="dark"] .preview-card__title { color: #f0ece4; }
 
-/* Upcoming: bordas e meta com rgba hardcoded */
-html[data-theme="dark"] .upcoming-item              { border-top-color: rgba(240, 236, 228, 0.08); }
-html[data-theme="dark"] .upcoming-item:last-child   { border-bottom-color: rgba(240, 236, 228, 0.08); }
-html[data-theme="dark"] .upcoming-item:hover        { background: rgba(240, 236, 228, 0.03); }
+/* Upcoming: fundo diferenciado no dark mode para separar do fundo principal e do CTA */
+html[data-theme="dark"] .section-upcoming           { background: #1e1a16; }
+html[data-theme="dark"] .upcoming-item              { border-top-color: rgba(240, 236, 228, 0.1); }
+html[data-theme="dark"] .upcoming-item:last-child   { border-bottom-color: rgba(240, 236, 228, 0.1); }
+html[data-theme="dark"] .upcoming-item:hover        { background: rgba(240, 236, 228, 0.04); }
 html[data-theme="dark"] .upcoming-item__meta        { color: rgba(240, 236, 228, 0.38); }
 
 /* Stripe */

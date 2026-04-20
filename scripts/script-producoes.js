@@ -171,6 +171,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       pt: {
         translation: {
           ...COMMON_I18N.pt,
+          'nav.portfolio':          'Portfólio',
           'section.title':          (pagesData.producoes && pagesData.producoes.titlePt) || 'Produções',
           'sort.relevance':         'Relevância',
           'sort.recent':            'Recentes',
@@ -180,6 +181,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       en: {
         translation: {
           ...COMMON_I18N.en,
+          'nav.portfolio':          'Portfolio',
           'section.title':          (pagesData.producoes && pagesData.producoes.titleEn) || 'Productions',
           'sort.relevance':         'Relevance',
           'sort.recent':            'Latest',
@@ -188,7 +190,8 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       }
     }
   }, () => {
-    renderGrid();      // renderiza o grid logo após o i18next estar pronto
-    renderOtherGrid(); // renderiza outras produções
+    applyI18n();
+    renderGrid();
+    renderOtherGrid();
   });
 });

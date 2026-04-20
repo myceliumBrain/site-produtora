@@ -12,8 +12,9 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
     if (!track) return;
     const items = (pagesData.index && pagesData.index.stripeItems) ||
       ['Cinema Brasileiro Independente', 'Pontos de Fuga', 'Rio de Janeiro'];
-    // Repete 3× para o loop parecer infinito
-    const repeated = [...items, ...items, ...items];
+    // Repete em número par para que translateX(-50%) faça loop perfeito sem gap
+    const copies = Math.max(8, Math.ceil(window.innerWidth / (items.length * 150)) * 2);
+    const repeated = Array.from({ length: copies }, () => items).flat();
     track.innerHTML = repeated.map(t => `<span class="stripe-item">${escHtml(t)}</span>`).join('');
   }
   renderStripe();

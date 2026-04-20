@@ -255,8 +255,8 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 
 .historia-divider__line {
   flex: 1;
-  height: 1px;
-  background: var(--border);
+  height: 0;
+  border-top: 1px solid rgba(28, 23, 20, 0.25);
 }
 
 .historia-divider span {
@@ -286,8 +286,8 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 
 .historia-team__line {
   flex: 1;
-  height: 1px;
-  background: var(--border);
+  height: 0;
+  border-top: 1px solid rgba(28, 23, 20, 0.25);
 }
 
 .historia-member {
@@ -539,6 +539,8 @@ html[data-theme="dark"] .historia-manifesto__body p { color: rgba(240, 236, 228,
 html[data-theme="dark"] .historia-marco__text        { color: rgba(240, 236, 228, 0.5); }
 html[data-theme="dark"] .historia-marco__text em     { color: rgba(240, 236, 228, 0.72); }
 html[data-theme="dark"] .historia-divider span       { color: rgba(240, 236, 228, 0.4); }
+html[data-theme="dark"] .historia-divider__line      { border-top-color: rgba(240, 236, 228, 0.2); }
+html[data-theme="dark"] .historia-team__line         { border-top-color: rgba(240, 236, 228, 0.2); }
 html[data-theme="dark"] .historia-member__bio        { color: rgba(240, 236, 228, 0.52); }
 html[data-theme="dark"] .historia-member__bio em     { color: rgba(240, 236, 228, 0.75); }
 html[data-theme="dark"] .historia-festival__name     { color: rgba(240, 236, 228, 0.35); }
