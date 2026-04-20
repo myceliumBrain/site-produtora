@@ -231,7 +231,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
   }
 
   i18next.init({
-    lng: 'pt',
+    lng: localStorage.getItem('lang') || 'pt',
     resources: {
       pt: {
         translation: {

@@ -91,7 +91,7 @@ dataReady.then(() => {
 
   /* ── i18next ── */
   i18next.init({
-    lng: 'pt',
+    lng: localStorage.getItem('lang') || 'pt',
     resources: {
       pt: {
         translation: {

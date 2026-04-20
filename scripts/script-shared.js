@@ -147,18 +147,56 @@ menuOverlay.querySelectorAll('a').forEach(link => {
 
 
 
-/* ── BOTÃO DE IDIOMA ──
-   Cada página define sua própria updateDOM() como window.updateDOM.
-   Este handler chama updateDOM() após a troca de idioma. ── */
-document.getElementById('langBtn').addEventListener('click', () => {
-  const next = i18next.language === 'pt' ? 'en' : 'pt';
-  i18next.changeLanguage(next, () => {
-    if (typeof window.updateDOM === 'function') window.updateDOM();
-    document.getElementById('langBtn').textContent = next === 'pt' ? 'EN' : 'PT';
-    /* A7 — atualiza o atributo lang do documento */
-    document.documentElement.lang = next;
+/* ── SELETOR DE IDIOMA (dropdown com bandeiras) ──
+   Cada página define window.updateDOM(); este módulo chama após troca. ── */
+(function () {
+  const FLAGS = {
+    pt: { src: 'https://flagcdn.com/w40/br.png', alt: 'Português' },
+    en: { src: 'https://flagcdn.com/w40/us.png', alt: 'English' },
+  };
+
+  const selector    = document.getElementById('langSelector');
+  const trigger     = document.getElementById('langBtn');
+  const currentFlag = document.getElementById('langCurrentFlag');
+  const optionBtn   = document.getElementById('langOptionBtn');
+  const optionFlag  = document.getElementById('langOptionFlag');
+
+  function syncFlags(activeLang) {
+    const other = activeLang === 'pt' ? 'en' : 'pt';
+    currentFlag.src = FLAGS[activeLang].src;
+    currentFlag.alt = FLAGS[activeLang].alt;
+    optionFlag.src  = FLAGS[other].src;
+    optionFlag.alt  = FLAGS[other].alt;
+    document.documentElement.lang = activeLang;
+  }
+
+  function openDropdown()  { selector.setAttribute('data-open', ''); trigger.setAttribute('aria-expanded', 'true'); }
+  function closeDropdown() { selector.removeAttribute('data-open'); trigger.setAttribute('aria-expanded', 'false'); }
+  function isOpen()        { return selector.hasAttribute('data-open'); }
+
+  /* Atualiza bandeiras ao inicializar com o idioma salvo */
+  i18next.on('initialized', () => syncFlags(i18next.language));
+
+  /* Toggle do dropdown */
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isOpen() ? closeDropdown() : openDropdown();
   });
-});
+
+  /* Troca de idioma ao clicar na bandeira alternativa */
+  optionBtn.addEventListener('click', () => {
+    const next = i18next.language === 'pt' ? 'en' : 'pt';
+    localStorage.setItem('lang', next);
+    closeDropdown();
+    i18next.changeLanguage(next, () => {
+      syncFlags(next);
+      if (typeof window.updateDOM === 'function') window.updateDOM();
+    });
+  });
+
+  /* Fecha ao clicar fora */
+  document.addEventListener('click', () => { if (isOpen()) closeDropdown(); });
+})();
 
 /* ── LOGO DINÂMICO ──
    Substitui o src da logo se siteData.logoUrl estiver definido no data.json ── */
@@ -209,8 +247,6 @@ dataReady.then(() => {
 
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    const btn = document.getElementById('themeBtn');
-    if (btn) btn.textContent = theme === 'dark' ? '☀︎' : '☽';
   }
 
   function toggleTheme() {
