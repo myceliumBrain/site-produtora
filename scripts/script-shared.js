@@ -236,36 +236,19 @@ dataReady.then(() => {
 });
 
 /* ── TEMA CLARO / ESCURO ──────────────────────────────────────────
-   Preferência salva em localStorage.
-   Se não houver preferência salva, respeita prefers-color-scheme.
+   Tema controlado pelo admin via siteData.theme em data.json.
+   localStorage é usado apenas como cache para evitar FOUC.
    ─────────────────────────────────────────────────────────────── */
 (function () {
-  function getTheme() {
-    return localStorage.getItem('theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  }
-
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
   }
 
-  function toggleTheme() {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('theme', next);
-    applyTheme(next);
-  }
-
-  // Aplica tema imediatamente (complemento ao inline script do <head>)
-  applyTheme(getTheme());
-
-  // Segue mudança automática do S.O. somente se o usuário não tiver escolhido manualmente
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
-    if (!localStorage.getItem('theme')) applyTheme(e.matches ? 'dark' : 'light');
-  });
-
-  // Botão de toggle
-  const themeBtn = document.getElementById('themeBtn');
-  if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+  // Aplica o tema definido pelo admin assim que data.json carrega
+  dataReady.then(() => {
+    if (siteData && siteData.theme) applyTheme(siteData.theme);
+  }).catch(() => {});
 })();
 
 

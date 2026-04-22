@@ -376,6 +376,7 @@ function showPanel(name) {
   document.getElementById('panel-' + name).classList.add('active');
   document.querySelector(`[onclick="showPanel('${name}')"]`).classList.add('active');
   if (name === 'acessos') renderAcessos();
+  if (name === 'estilo')  renderEstilo();
   closeAdmDrawer();
 }
 
@@ -404,6 +405,7 @@ function renderAll() {
   renderPagProducoes();
   renderPagContato();
   renderLinks();
+  renderEstilo();
   renderTipografia();
   renderPagVemai();
   renderFestivais();
@@ -1153,6 +1155,48 @@ function applyCustomFont(type) {
   );
 }
 
+/* ── ESTILO (tema dark / light) ── */
+function renderEstilo() {
+  const theme = (data.siteData && data.siteData.theme) || 'dark';
+  document.getElementById('estiloForm').innerHTML = `
+    <p style="opacity:0.5;font-size:0.75rem;margin-bottom:1.5rem;line-height:1.6">
+      Define o tema visual exibido para todos os visitantes do site.<br>
+      A mudança entra em vigor após salvar no GitHub.
+    </p>
+    <div class="fields-grid">
+      <div class="field">
+        <label>Tema do site</label>
+        <div style="display:flex;gap:12px;margin-top:4px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="radio" name="siteTheme" id="theme-dark" value="dark" ${theme === 'dark' ? 'checked' : ''} onchange="previewTheme(this.value)">
+            Escuro (dark)
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="radio" name="siteTheme" id="theme-light" value="light" ${theme === 'light' ? 'checked' : ''} onchange="previewTheme(this.value)">
+            Claro (light)
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Pré-visualização</span></div>
+    <div style="border:1px solid var(--border);border-radius:6px;padding:2rem;margin-top:0.5rem;display:flex;gap:2rem;align-items:center">
+      <div id="estilo-preview-dark" style="flex:1;padding:1.5rem;border-radius:4px;background:#0a0a0a;color:#f0ece4;font-family:var(--font-display);font-size:1.1rem;font-weight:300">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem">pontos de fuga</div>
+        <div style="font-size:0.75rem;opacity:0.5;font-family:var(--font-ui);letter-spacing:0.08em">Tema escuro</div>
+      </div>
+      <div id="estilo-preview-light" style="flex:1;padding:1.5rem;border-radius:4px;background:#f0ece4;color:#0a0a0a;font-family:var(--font-display);font-size:1.1rem;font-weight:300">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem">pontos de fuga</div>
+        <div style="font-size:0.75rem;opacity:0.5;font-family:var(--font-ui);letter-spacing:0.08em">Tema claro</div>
+      </div>
+    </div>
+  `;
+}
+
+function previewTheme(theme) {
+  if (!data.siteData) data.siteData = {};
+  data.siteData.theme = theme;
+}
+
 function renderTipografia() {
   const sd = data.siteData || {};
   // Aplica as fontes salvas na pré-visualização
@@ -1286,6 +1330,8 @@ function collectAll() {
   const tyDisplayFamily = document.getElementById('ty-fontDisplayFamily');
   const tyUiUrl         = document.getElementById('ty-fontUiUrl');
   const tyUiFamily      = document.getElementById('ty-fontUiFamily');
+  const themeRadio = document.querySelector('input[name="siteTheme"]:checked');
+  if (themeRadio) data.siteData.theme = themeRadio.value;
   if (tyDisplayUrl)    data.siteData.fontDisplayUrl    = tyDisplayUrl.value.trim();
   if (tyDisplayFamily) data.siteData.fontDisplayFamily = tyDisplayFamily.value.trim();
   if (tyUiUrl)         data.siteData.fontUiUrl         = tyUiUrl.value.trim();
