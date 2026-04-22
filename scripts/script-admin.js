@@ -1178,7 +1178,7 @@ function renderEstilo() {
         </div>
       </div>
     </div>
-    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Pré-visualização</span></div>
+    <div class="panel-header" style="margin-top:2rem;border-bottom:none;padding-bottom:0"><span class="panel-title" style="font-size:14px">Pré-visualização</span></div>
     <div style="border:1px solid var(--border);border-radius:6px;padding:2rem;margin-top:0.5rem;display:flex;gap:2rem;align-items:center">
       <div id="estilo-preview-dark" style="flex:1;padding:1.5rem;border-radius:4px;background:#0a0a0a;color:#f0ece4;font-family:var(--font-display);font-size:1.1rem;font-weight:300">
         <div style="font-size:1.5rem;margin-bottom:0.5rem">pontos de fuga</div>
@@ -1197,23 +1197,95 @@ function previewTheme(theme) {
   data.siteData.theme = theme;
 }
 
+/* Fontes para títulos, manchetes e nome da produtora no menu */
+const DISPLAY_PRESETS = [
+  { name: 'Red Hat Display', tag: 'padrão', url: 'https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;1,300&display=swap', family: "'Red Hat Display', sans-serif" },
+  { name: 'Fraunces',        url: 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&display=swap', family: "'Fraunces', serif" },
+  { name: 'Playfair Display', url: 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap', family: "'Playfair Display', serif" },
+  { name: 'Cormorant Garamond', url: 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap', family: "'Cormorant Garamond', serif" },
+  { name: 'DM Serif Display', url: 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap', family: "'DM Serif Display', serif" },
+  { name: 'Cinzel',          url: 'https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&display=swap', family: "'Cinzel', serif" },
+  { name: 'Bebas Neue',      url: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap', family: "'Bebas Neue', sans-serif" },
+  { name: 'Josefin Sans',    url: 'https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap', family: "'Josefin Sans', sans-serif" },
+  { name: 'Spectral',        url: 'https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap', family: "'Spectral', serif" },
+  { name: 'Italiana',        url: 'https://fonts.googleapis.com/css2?family=Italiana&display=swap', family: "'Italiana', serif" },
+  { name: 'Bodoni Moda',     url: 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,300&display=swap', family: "'Bodoni Moda', serif" },
+  { name: 'Lora',            url: 'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&display=swap', family: "'Lora', serif" },
+];
+
+/* Fontes para corpo de texto, botões, labels e navegação */
+const UI_PRESETS = [
+  { name: 'Red Hat Text',  tag: 'padrão', url: 'https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300;0,400;0,500;1,300&display=swap', family: "'Red Hat Text', sans-serif" },
+  { name: 'Space Grotesk', url: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&display=swap', family: "'Space Grotesk', sans-serif" },
+  { name: 'Inter',         url: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap', family: "'Inter', sans-serif" },
+  { name: 'Jost',          url: 'https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap', family: "'Jost', sans-serif" },
+  { name: 'DM Sans',       url: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap', family: "'DM Sans', sans-serif" },
+  { name: 'Raleway',       url: 'https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&display=swap', family: "'Raleway', sans-serif" },
+  { name: 'Barlow',        url: 'https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500&display=swap', family: "'Barlow', sans-serif" },
+  { name: 'Lato',          url: 'https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap', family: "'Lato', sans-serif" },
+  { name: 'Karla',         url: 'https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500&display=swap', family: "'Karla', sans-serif" },
+  { name: 'Open Sans',     url: 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap', family: "'Open Sans', sans-serif" },
+  { name: 'Nunito Sans',   url: 'https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500&display=swap', family: "'Nunito Sans', sans-serif" },
+  { name: 'Source Sans 3', url: 'https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500&display=swap', family: "'Source Sans 3', sans-serif" },
+];
+
+function buildFontCards(presets, activeFam, onclickFn) {
+  return presets.map((p, i) => {
+    const active = activeFam === p.family;
+    return `<div class="font-preset-card${active ? ' font-preset-active' : ''}" onclick="${onclickFn}(${i})">
+      <div class="font-preset-sample" style="font-family:${p.family}">${p.sample || 'pontos de fuga'}</div>
+      <div class="font-preset-name">${p.name}</div>
+      ${p.tag ? `<span class="font-preset-tag">${p.tag}</span>` : ''}
+    </div>`;
+  }).join('');
+}
+
 function renderTipografia() {
   const sd = data.siteData || {};
-  // Aplica as fontes salvas na pré-visualização
+  const dispFam = sd.fontDisplayFamily || DISPLAY_PRESETS[0].family;
+  const uiFam   = sd.fontUiFamily      || UI_PRESETS[0].family;
+
   if (sd.fontDisplayUrl)    loadFontInAdmin(sd.fontDisplayUrl);
-  if (sd.fontDisplayFamily) document.documentElement.style.setProperty('--font-display', sd.fontDisplayFamily);
+  if (dispFam)              document.documentElement.style.setProperty('--font-display', dispFam);
   if (sd.fontUiUrl)         loadFontInAdmin(sd.fontUiUrl);
-  if (sd.fontUiFamily)      document.documentElement.style.setProperty('--font-ui', sd.fontUiFamily);
+  if (uiFam)                document.documentElement.style.setProperty('--font-ui', uiFam);
+
+  DISPLAY_PRESETS.forEach(p => loadFontInAdmin(p.url));
+  UI_PRESETS.forEach(p => loadFontInAdmin(p.url));
 
   document.getElementById('tipografiaForm').innerHTML = `
-    <p style="opacity:0.5;font-size:0.75rem;margin-bottom:1.5rem;line-height:1.6">
-      Defina as fontes usadas em todo o site.<br>
-      <strong>Display</strong> — títulos, manchetes, menu. &nbsp;
-      <strong>Interface</strong> — corpo de texto, botões, labels.
-    </p>
+    <style>
+      .font-preset-card{padding:0.9rem 1rem;border-radius:4px;cursor:pointer;border:1px solid var(--border);background:var(--bg-2);transition:border-color .15s,background .15s;position:relative;overflow:hidden}
+      .font-preset-card:hover{border-color:rgba(255,255,255,0.35)}
+      .font-preset-card.font-preset-active{border-color:var(--accent);background:rgba(201,168,76,0.07)}
+      .font-preset-sample{font-size:1.05rem;font-weight:300;line-height:1.2;margin-bottom:0.3rem;color:var(--white)}
+      .font-preset-name{font-size:0.58rem;letter-spacing:0.06em;opacity:0.4;text-transform:uppercase;font-family:var(--mono)}
+      .font-preset-tag{position:absolute;top:6px;right:6px;font-size:0.48rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:var(--black);padding:2px 5px;border-radius:2px;font-family:var(--mono)}
+      .font-type-label{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);margin-bottom:0.5rem}
+      .font-type-desc{font-size:0.72rem;opacity:0.55;line-height:1.5;margin-bottom:0.85rem}
+    </style>
+
+    <div class="panel-header" style="margin-top:0;margin-bottom:0.6rem;border-bottom:none;padding-bottom:0">
+      <span class="panel-title" style="font-size:14px">Display</span>
+    </div>
+    <p class="font-type-desc">Títulos, nome da produtora, manchetes — a fonte que define a <em>personalidade</em> visual do site.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:2rem">
+      ${buildFontCards(DISPLAY_PRESETS, dispFam, 'applyDisplayPreset')}
+    </div>
+
+    <div class="panel-header" style="padding-top:1.25rem;border-top:1px solid var(--border);border-bottom:none;padding-bottom:0;margin-bottom:0.6rem">
+      <span class="panel-title" style="font-size:14px">Interface</span>
+    </div>
+    <p class="font-type-desc">Corpo de texto, botões, labels, navegação — deve ser <em>legível e neutro</em>, sem competir com o display.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:2rem">
+      ${buildFontCards(UI_PRESETS.map(p => ({...p, sample: 'produtora · cinema'})), uiFam, 'applyUiPreset')}
+    </div>
+
+    <div class="panel-header" style="padding-top:1.25rem;border-top:1px solid var(--border);border-bottom:none;padding-bottom:0"><span class="panel-title" style="font-size:14px">Personalizado</span></div>
+    <p class="font-type-desc" style="margin-top:0.4rem">Use qualquer fonte do Google Fonts ou outra URL externa.</p>
     <div class="fields-grid">
       <div class="field">
-        <label>Display — URL da fonte</label>
+        <label>Display — URL</label>
         <input id="ty-fontDisplayUrl" value="${escHtml(sd.fontDisplayUrl || '')}" placeholder="https://fonts.googleapis.com/css2?family=…">
       </div>
       <div class="field">
@@ -1224,7 +1296,7 @@ function renderTipografia() {
         </div>
       </div>
       <div class="field">
-        <label>Interface — URL da fonte</label>
+        <label>Interface — URL</label>
         <input id="ty-fontUiUrl" value="${escHtml(sd.fontUiUrl || '')}" placeholder="https://fonts.googleapis.com/css2?family=…">
       </div>
       <div class="field">
@@ -1235,7 +1307,8 @@ function renderTipografia() {
         </div>
       </div>
     </div>
-    <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Pré-visualização</span></div>
+
+    <div class="panel-header" style="margin-top:2rem;border-bottom:none;padding-bottom:0"><span class="panel-title" style="font-size:14px">Pré-visualização</span></div>
     <div style="border:1px solid var(--border);border-radius:6px;padding:2rem;margin-top:0.5rem">
       <p style="font-family:var(--font-display);font-size:2.5rem;font-weight:300;line-height:1.1;margin-bottom:0.75rem">pontos de fuga</p>
       <p style="font-family:var(--font-display);font-size:1.1rem;font-style:italic;font-weight:300;margin-bottom:1.5rem;opacity:0.6">Cinema que abre espaço para o que não cabe em palavras</p>
@@ -1246,6 +1319,26 @@ function renderTipografia() {
       </div>
     </div>
   `;
+}
+
+function applyDisplayPreset(idx) {
+  const p = DISPLAY_PRESETS[idx];
+  if (!data.siteData) data.siteData = {};
+  data.siteData.fontDisplayUrl    = p.url;
+  data.siteData.fontDisplayFamily = p.family;
+  loadFontInAdmin(p.url);
+  document.documentElement.style.setProperty('--font-display', p.family);
+  renderTipografia();
+}
+
+function applyUiPreset(idx) {
+  const p = UI_PRESETS[idx];
+  if (!data.siteData) data.siteData = {};
+  data.siteData.fontUiUrl    = p.url;
+  data.siteData.fontUiFamily = p.family;
+  loadFontInAdmin(p.url);
+  document.documentElement.style.setProperty('--font-ui', p.family);
+  renderTipografia();
 }
 
 /* ── LINKS (redes sociais / links globais) ── */

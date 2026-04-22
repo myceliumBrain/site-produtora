@@ -19,10 +19,10 @@
         "url": "google.com"
       }
     ],
-    "fontDisplayUrl": "https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&display=swap",
-    "fontDisplayFamily": "Red Hat Mono",
-    "fontUiUrl": "",
-    "fontUiFamily": "",
+    "fontDisplayUrl": "https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;1,300&display=swap",
+    "fontDisplayFamily": "'Red Hat Display', sans-serif",
+    "fontUiUrl": "https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300;0,400;0,500;1,300&display=swap",
+    "fontUiFamily": "'Red Hat Text', sans-serif",
     "theme": "dark"
   },
   "films": [
