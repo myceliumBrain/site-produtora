@@ -23,7 +23,7 @@
     "fontDisplayFamily": "'Red Hat Display', sans-serif",
     "fontUiUrl": "https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300;0,400;0,500;1,300&display=swap",
     "fontUiFamily": "'Red Hat Text', sans-serif",
-    "theme": "dark"
+    "theme": "light"
   },
   "films": [
     {
