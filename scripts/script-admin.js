@@ -1149,10 +1149,13 @@ function applyCustomFont(type) {
   const familyEl = document.getElementById(type === 'display' ? 'ty-fontDisplayFamily' : 'ty-fontUiFamily');
   const url    = urlEl?.value.trim();
   const family = familyEl?.value.trim();
-  if (url)    loadFontInAdmin(url);
-  if (family) document.documentElement.style.setProperty(
-    type === 'display' ? '--font-display' : '--font-ui', family
-  );
+  if (!data.siteData) data.siteData = {};
+  if (url)    { loadFontInAdmin(url); data.siteData[type === 'display' ? 'fontDisplayUrl' : 'fontUiUrl'] = url; }
+  if (family) {
+    document.documentElement.style.setProperty(type === 'display' ? '--font-display' : '--font-ui', family);
+    data.siteData[type === 'display' ? 'fontDisplayFamily' : 'fontUiFamily'] = family;
+  }
+  renderTipografia();
 }
 
 /* ── ESTILO (tema dark / light) ── */
@@ -1199,7 +1202,7 @@ function previewTheme(theme) {
 
 /* Fontes para títulos, manchetes e nome da produtora no menu */
 const DISPLAY_PRESETS = [
-  { name: 'Red Hat Display', tag: 'padrão', url: 'https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;1,300&display=swap', family: "'Red Hat Display', sans-serif" },
+  { name: 'Red Hat Mono', tag: 'padrão', url: 'https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap', family: "'Red Hat Mono', monospace" },
   { name: 'Fraunces',        url: 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&display=swap', family: "'Fraunces', serif" },
   { name: 'Playfair Display', url: 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap', family: "'Playfair Display', serif" },
   { name: 'Cormorant Garamond', url: 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap', family: "'Cormorant Garamond', serif" },
@@ -1215,7 +1218,7 @@ const DISPLAY_PRESETS = [
 
 /* Fontes para corpo de texto, botões, labels e navegação */
 const UI_PRESETS = [
-  { name: 'Red Hat Text',  tag: 'padrão', url: 'https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300;0,400;0,500;1,300&display=swap', family: "'Red Hat Text', sans-serif" },
+  { name: 'Red Hat Mono',  tag: 'padrão', url: 'https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap', family: "'Red Hat Mono', monospace" },
   { name: 'Space Grotesk', url: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&display=swap', family: "'Space Grotesk', sans-serif" },
   { name: 'Inter',         url: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap', family: "'Inter', sans-serif" },
   { name: 'Jost',          url: 'https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap', family: "'Jost', sans-serif" },
@@ -1228,6 +1231,13 @@ const UI_PRESETS = [
   { name: 'Nunito Sans',   url: 'https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500&display=swap', family: "'Nunito Sans', sans-serif" },
   { name: 'Source Sans 3', url: 'https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500&display=swap', family: "'Source Sans 3', sans-serif" },
 ];
+
+let _tyCustomOpen = false;
+
+function _fontName(family, presets) {
+  const match = presets.find(p => p.family === family);
+  return match ? match.name : family.replace(/['"]/g, '').split(',')[0].trim();
+}
 
 function buildFontCards(presets, activeFam, onclickFn) {
   return presets.map((p, i) => {
@@ -1245,44 +1255,36 @@ function renderTipografia() {
   const dispFam = sd.fontDisplayFamily || DISPLAY_PRESETS[0].family;
   const uiFam   = sd.fontUiFamily      || UI_PRESETS[0].family;
 
-  if (sd.fontDisplayUrl)    loadFontInAdmin(sd.fontDisplayUrl);
-  if (dispFam)              document.documentElement.style.setProperty('--font-display', dispFam);
-  if (sd.fontUiUrl)         loadFontInAdmin(sd.fontUiUrl);
-  if (uiFam)                document.documentElement.style.setProperty('--font-ui', uiFam);
+  if (sd.fontDisplayUrl)  loadFontInAdmin(sd.fontDisplayUrl);
+  if (dispFam)            document.documentElement.style.setProperty('--font-display', dispFam);
+  if (sd.fontUiUrl)       loadFontInAdmin(sd.fontUiUrl);
+  if (uiFam)              document.documentElement.style.setProperty('--font-ui', uiFam);
 
   DISPLAY_PRESETS.forEach(p => loadFontInAdmin(p.url));
   UI_PRESETS.forEach(p => loadFontInAdmin(p.url));
 
-  document.getElementById('tipografiaForm').innerHTML = `
-    <style>
-      .font-preset-card{padding:0.9rem 1rem;border-radius:4px;cursor:pointer;border:1px solid var(--border);background:var(--bg-2);transition:border-color .15s,background .15s;position:relative;overflow:hidden}
-      .font-preset-card:hover{border-color:rgba(255,255,255,0.35)}
-      .font-preset-card.font-preset-active{border-color:var(--accent);background:rgba(201,168,76,0.07)}
-      .font-preset-sample{font-size:1.05rem;font-weight:300;line-height:1.2;margin-bottom:0.3rem;color:var(--white)}
-      .font-preset-name{font-size:0.58rem;letter-spacing:0.06em;opacity:0.4;text-transform:uppercase;font-family:var(--mono)}
-      .font-preset-tag{position:absolute;top:6px;right:6px;font-size:0.48rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:var(--black);padding:2px 5px;border-radius:2px;font-family:var(--mono)}
-      .font-type-label{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);margin-bottom:0.5rem}
-      .font-type-desc{font-size:0.72rem;opacity:0.55;line-height:1.5;margin-bottom:0.85rem}
-    </style>
+  const dispIsPreset = DISPLAY_PRESETS.some(p => p.family === dispFam);
+  const uiIsPreset   = UI_PRESETS.some(p => p.family === uiFam);
+  if (!dispIsPreset || !uiIsPreset) _tyCustomOpen = true;
 
-    <div class="panel-header" style="margin-top:0;margin-bottom:0.6rem;border-bottom:none;padding-bottom:0">
-      <span class="panel-title" style="font-size:14px">Display</span>
-    </div>
-    <p class="font-type-desc">Títulos, nome da produtora, manchetes — a fonte que define a <em>personalidade</em> visual do site.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:2rem">
-      ${buildFontCards(DISPLAY_PRESETS, dispFam, 'applyDisplayPreset')}
-    </div>
+  // Atualiza subtítulo do cabeçalho do painel
+  const panelHeader = document.querySelector('#panel-tipografia .panel-header');
+  if (panelHeader) {
+    const dName = escHtml(_fontName(dispFam, DISPLAY_PRESETS));
+    const uName = escHtml(_fontName(uiFam, UI_PRESETS));
+    panelHeader.innerHTML = `
+      <span class="panel-title">Tipografia</span>
+      <span style="font-family:var(--mono);font-size:0.6rem;opacity:0.38;letter-spacing:0.03em;line-height:1">
+        display: ${dName} &nbsp;·&nbsp; interface: ${uName}
+      </span>`;
+  }
 
-    <div class="panel-header" style="padding-top:1.25rem;border-top:1px solid var(--border);border-bottom:none;padding-bottom:0;margin-bottom:0.6rem">
-      <span class="panel-title" style="font-size:14px">Interface</span>
+  const customHtml = _tyCustomOpen ? `
+    <div class="panel-header" style="padding-top:1.25rem;border-top:1px solid var(--border);border-bottom:none;padding-bottom:0;margin-bottom:0">
+      <span class="panel-title" style="font-size:14px">Personalizado</span>
+      <button class="btn btn-ghost btn-small" onclick="toggleTyCustom()" style="opacity:0.45;font-size:0.68rem;padding:0.2rem 0.5rem">fechar ✕</button>
     </div>
-    <p class="font-type-desc">Corpo de texto, botões, labels, navegação — deve ser <em>legível e neutro</em>, sem competir com o display.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:2rem">
-      ${buildFontCards(UI_PRESETS.map(p => ({...p, sample: 'produtora · cinema'})), uiFam, 'applyUiPreset')}
-    </div>
-
-    <div class="panel-header" style="padding-top:1.25rem;border-top:1px solid var(--border);border-bottom:none;padding-bottom:0"><span class="panel-title" style="font-size:14px">Personalizado</span></div>
-    <p class="font-type-desc" style="margin-top:0.4rem">Use qualquer fonte do Google Fonts ou outra URL externa.</p>
+    <p class="font-type-desc" style="margin-top:0.5rem">Use qualquer fonte do Google Fonts ou outra URL externa.</p>
     <div class="fields-grid">
       <div class="field">
         <label>Display — URL</label>
@@ -1306,7 +1308,39 @@ function renderTipografia() {
           <button class="btn btn-secondary btn-small" onclick="applyCustomFont('ui')">Aplicar</button>
         </div>
       </div>
+    </div>` : `
+    <div style="padding-top:1.25rem;border-top:1px solid var(--border)">
+      <button class="btn btn-secondary btn-small" onclick="toggleTyCustom()">+ Fonte personalizada</button>
+    </div>`;
+
+  document.getElementById('tipografiaForm').innerHTML = `
+    <style>
+      .font-preset-card{padding:0.9rem 1rem;border-radius:4px;cursor:pointer;border:1px solid var(--border);background:var(--bg-2);transition:border-color .15s,background .15s;position:relative;overflow:hidden}
+      .font-preset-card:hover{border-color:rgba(255,255,255,0.35)}
+      .font-preset-card.font-preset-active{border-color:var(--accent);background:rgba(201,168,76,0.07)}
+      .font-preset-sample{font-size:1.05rem;font-weight:300;line-height:1.2;margin-bottom:0.3rem;color:var(--white)}
+      .font-preset-name{font-size:0.58rem;letter-spacing:0.06em;opacity:0.4;text-transform:uppercase;font-family:var(--mono)}
+      .font-preset-tag{position:absolute;top:6px;right:6px;font-size:0.48rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:var(--black);padding:2px 5px;border-radius:2px;font-family:var(--mono)}
+      .font-type-desc{font-size:0.72rem;opacity:0.55;line-height:1.5;margin-bottom:0.85rem}
+    </style>
+
+    <div class="panel-header" style="margin-top:0;margin-bottom:0.6rem;border-bottom:none;padding-bottom:0">
+      <span class="panel-title" style="font-size:14px">Display</span>
     </div>
+    <p class="font-type-desc">Títulos, nome da produtora, manchetes — a fonte que define a <em>personalidade</em> visual do site.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:2rem">
+      ${buildFontCards(DISPLAY_PRESETS, dispFam, 'applyDisplayPreset')}
+    </div>
+
+    <div class="panel-header" style="padding-top:1.25rem;border-top:1px solid var(--border);border-bottom:none;padding-bottom:0;margin-bottom:0.6rem">
+      <span class="panel-title" style="font-size:14px">Interface</span>
+    </div>
+    <p class="font-type-desc">Corpo de texto, botões, labels, navegação — deve ser <em>legível e neutro</em>, sem competir com o display.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:2rem">
+      ${buildFontCards(UI_PRESETS.map(p => ({...p, sample: 'produtora · cinema'})), uiFam, 'applyUiPreset')}
+    </div>
+
+    ${customHtml}
 
     <div class="panel-header" style="margin-top:2rem;border-bottom:none;padding-bottom:0"><span class="panel-title" style="font-size:14px">Pré-visualização</span></div>
     <div style="border:1px solid var(--border);border-radius:6px;padding:2rem;margin-top:0.5rem">
@@ -1321,6 +1355,11 @@ function renderTipografia() {
   `;
 }
 
+function toggleTyCustom() {
+  _tyCustomOpen = !_tyCustomOpen;
+  renderTipografia();
+}
+
 function applyDisplayPreset(idx) {
   const p = DISPLAY_PRESETS[idx];
   if (!data.siteData) data.siteData = {};
@@ -1328,6 +1367,8 @@ function applyDisplayPreset(idx) {
   data.siteData.fontDisplayFamily = p.family;
   loadFontInAdmin(p.url);
   document.documentElement.style.setProperty('--font-display', p.family);
+  const uiFam = data.siteData.fontUiFamily || UI_PRESETS[0].family;
+  if (UI_PRESETS.some(q => q.family === uiFam)) _tyCustomOpen = false;
   renderTipografia();
 }
 
@@ -1338,6 +1379,8 @@ function applyUiPreset(idx) {
   data.siteData.fontUiFamily = p.family;
   loadFontInAdmin(p.url);
   document.documentElement.style.setProperty('--font-ui', p.family);
+  const dispFam = data.siteData.fontDisplayFamily || DISPLAY_PRESETS[0].family;
+  if (DISPLAY_PRESETS.some(q => q.family === dispFam)) _tyCustomOpen = false;
   renderTipografia();
 }
 
