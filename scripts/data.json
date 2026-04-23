@@ -19,11 +19,19 @@
         "url": "google.com"
       }
     ],
+<<<<<<< HEAD
     "fontDisplayUrl": "https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap",
     "fontDisplayFamily": "'Red Hat Mono', monospace",
     "fontUiUrl": "https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap",
     "fontUiFamily": "'Red Hat Mono', monospace",
     "theme": "dark"
+=======
+    "fontDisplayUrl": "https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;1,300&display=swap",
+    "fontDisplayFamily": "'Red Hat Display', sans-serif",
+    "fontUiUrl": "https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300;0,400;0,500;1,300&display=swap",
+    "fontUiFamily": "'Red Hat Text', sans-serif",
+    "theme": "light"
+>>>>>>> 0efe2b7cab4a75225a21852448a3d50f449f5a54
   },
   "films": [
     {
