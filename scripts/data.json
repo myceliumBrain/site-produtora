@@ -4,19 +4,7 @@
     "socialLinks": [
       {
         "label": "Instagram",
-        "url": "instagram.com"
-      },
-      {
-        "label": "X",
-        "url": "x.com"
-      },
-      {
-        "label": "github",
-        "url": "github.com"
-      },
-      {
-        "label": "google",
-        "url": "google.com"
+        "url": "https://www.instagram.com/pontosdefuga_/"
       }
     ],
     "fontDisplayUrl": "https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap",
