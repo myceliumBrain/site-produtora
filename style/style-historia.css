@@ -3,7 +3,7 @@
    Visual: zine digital · produtora independente · DIY artístico
 
    Estratégia: página editorial, quase um fanzine impresso.
-   Manifesto em tinta grande itálica, marcos com anos em burnt orange,
+   Manifesto em tinta grande itálica,
    membros com overlay quente nas fotos, parceiros em parchment.
    ================================================================ */
 
@@ -179,69 +179,6 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 
 
 /* ─────────────────────────────────────────────────────────────────
-   [8]  MARCOS
-        Timeline: anos em burnt orange grande, títulos em tinta,
-        textos em tinta suave. Bordas em areia. Hover: indent.
-   ───────────────────────────────────────────────────────────────── */
-
-.historia-marcos {
-  padding: 0 var(--pad-desk);
-  margin-bottom: 148px;
-}
-
-.historia-marcos__list {
-  display: flex;
-  flex-direction: column;
-}
-
-.historia-marco {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 0 64px;
-  padding: 44px 0;
-  border-bottom: 1px solid var(--border);
-  transition: padding-left 0.4s ease;
-}
-
-.historia-marco:first-child { border-top: none; }
-.historia-marco:last-child  { border-bottom: none; }
-.historia-marco:hover       { padding-left: 16px; }
-
-/* Ano: burnt orange, itálico — elemento mais chamativo da timeline */
-.historia-marco__year {
-  font-family: var(--font-display);
-  font-size: 34px;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--gold);
-  padding-top: 4px;
-  line-height: 1;
-}
-
-.historia-marco__title {
-  font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 300;
-  color: var(--black);
-  margin-bottom: 12px;
-  line-height: 1;
-}
-
-.historia-marco__text {
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 300;
-  line-height: 1.72;
-  color: rgba(28, 23, 20, 0.5);
-}
-
-.historia-marco__text em {
-  font-style: italic;
-  color: rgba(28, 23, 20, 0.72);
-}
-
-
-/* ─────────────────────────────────────────────────────────────────
    [9]  DIVISOR
    ───────────────────────────────────────────────────────────────── */
 
@@ -266,112 +203,6 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
   letter-spacing: -0.01em;
   color: rgba(28, 23, 20, 0.4);
   white-space: nowrap;
-}
-
-
-/* ─────────────────────────────────────────────────────────────────
-   [10]  TIME / MEMBROS
-         Fotos: overlay quente (burnt) em vez de preto frio.
-         Roles em burnt orange, nomes grandes em tinta itálica,
-         bios em tinta suave.
-   ───────────────────────────────────────────────────────────────── */
-
-.historia-team {
-  padding: 0 var(--pad-desk);
-  display: flex;
-  flex-direction: column;
-  gap: 120px;
-  margin-bottom: 148px;
-}
-
-.historia-team__line {
-  flex: 1;
-  height: 0;
-  border-top: 1px solid rgba(28, 23, 20, 0.25);
-}
-
-.historia-member {
-  display: grid;
-  grid-template-columns: minmax(200px, 320px) 1fr;
-  gap: 64px;
-  align-items: center;
-}
-
-.historia-member--reverse   { direction: rtl; }
-.historia-member--reverse > * { direction: ltr; }
-
-.historia-member__img-wrap {
-  position: relative;
-  aspect-ratio: 3 / 4;
-  max-height: 400px;
-  overflow: hidden;
-  background: var(--grey);
-}
-
-/* Fundo placeholder: substituído por parchment suave */
-.historia-member__img-bg {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--cream) 0%, var(--sand) 100%);
-}
-
-.historia-member__img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.historia-member:hover .historia-member__img { transform: scale(1.04); }
-
-.historia-member__img-wrap::after {
-  content: none;
-}
-
-.historia-member__info {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-width: 0;
-}
-
-/* Role: burnt orange maiúsculo */
-.historia-member__role {
-  font-size: 9px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 18px;
-  display: block;
-}
-
-/* Nome: itálico tinta grande */
-.historia-member__name {
-  font-family: var(--font-display);
-  font-size: clamp(36px, 4vw, 64px);
-  font-weight: 300;
-  font-style: italic;
-  line-height: 0.95;
-  color: var(--black);
-  margin-bottom: 32px;
-  letter-spacing: -0.02em;
-  overflow-wrap: break-word;
-}
-
-.historia-member__bio {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 300;
-  line-height: 1.75;
-  color: rgba(28, 23, 20, 0.52);
-  overflow-wrap: break-word;
-}
-
-.historia-member__bio em {
-  font-style: italic;
-  color: rgba(28, 23, 20, 0.75);
 }
 
 
@@ -502,20 +333,13 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 @media (max-width: 1024px) {
   .historia-festivais__grid { grid-template-columns: repeat(4, 1fr); }
   .historia-parceiros__grid { grid-template-columns: 1fr 1fr; }
-  .historia-member          { gap: 48px; }
 }
 
 @media (max-width: 768px) {
   .historia-page              { padding-top: 108px; padding-bottom: 96px; }
   .historia-manifesto         { padding: 0 var(--pad-mob); margin-bottom: 96px; grid-template-columns: 1fr; row-gap: 40px; }
   .historia-manifesto__title  { font-size: clamp(48px, 10vw, 80px); }
-  .historia-marcos            { padding: 0 var(--pad-mob); margin-bottom: 96px; }
-  .historia-marco             { grid-template-columns: 72px 1fr; gap: 0 24px; }
   .historia-divider           { padding: 0 var(--pad-mob); margin-bottom: 80px; }
-  .historia-team              { padding: 0 var(--pad-mob); gap: 80px; margin-bottom: 96px; }
-  .historia-member            { grid-template-columns: 1fr; gap: 32px; }
-  .historia-member--reverse   { direction: ltr; }
-  .historia-member__img-wrap  { aspect-ratio: 4 / 3; }
   .historia-festivais         { padding: 0 var(--pad-mob); }
   .historia-festivais__grid   { grid-template-columns: repeat(3, 1fr); }
   .historia-parceiros         { padding: 0 var(--pad-mob); }
@@ -537,13 +361,8 @@ footer                { background: var(--black); border-top-color: rgba(28,23,2
 
 /* Texto com rgba(28,23,20,x) hardcoded — inverte para claro */
 html[data-theme="dark"] .historia-manifesto__body p { color: rgba(240, 236, 228, 0.52); }
-html[data-theme="dark"] .historia-marco__text        { color: rgba(240, 236, 228, 0.5); }
-html[data-theme="dark"] .historia-marco__text em     { color: rgba(240, 236, 228, 0.72); }
 html[data-theme="dark"] .historia-divider span       { color: rgba(240, 236, 228, 0.4); }
 html[data-theme="dark"] .historia-divider__line      { border-top-color: rgba(240, 236, 228, 0.2); }
-html[data-theme="dark"] .historia-team__line         { border-top-color: rgba(240, 236, 228, 0.2); }
-html[data-theme="dark"] .historia-member__bio        { color: rgba(240, 236, 228, 0.52); }
-html[data-theme="dark"] .historia-member__bio em     { color: rgba(240, 236, 228, 0.75); }
 html[data-theme="dark"] .historia-festival           { border-color: rgba(240, 236, 228, 0.08); background: #1a1614; }
 html[data-theme="dark"] .historia-festival:hover     { background: #222018; }
 html[data-theme="dark"] .historia-festival__name     { color: rgba(240, 236, 228, 0.35); }

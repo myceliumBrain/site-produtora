@@ -409,8 +409,6 @@ function renderAll() {
   renderTipografia();
   renderPagVemai();
   renderFestivais();
-  renderMarcos();
-  renderTeam();
   renderParceiros();
   document.getElementById('saveBtn').disabled = false;
 }
@@ -453,7 +451,7 @@ function saveCard(type, i) {
   collectAll();
 
   // Re-renderiza o painel para refletir mudanças no header (título, ano, etc.)
-  const renderMap = { film: renderFilms, other: renderOtherProductions, upcoming: renderUpcoming, festival: renderFestivais, marco: renderMarcos, team: renderTeam };
+  const renderMap = { film: renderFilms, other: renderOtherProductions, upcoming: renderUpcoming, festival: renderFestivais };
   if (renderMap[type]) renderMap[type]();
 
   // Reabre o card e desabilita o botão salvar até haver nova alteração
@@ -479,7 +477,7 @@ function saveCard(type, i) {
 
 /* ══════════════════════════════════════════════════════════
    REORDER — ferramenta genérica de reordenação
-   Usada por: films, upcomingFilms, marcos, team
+   Usada por: films, upcomingFilms
 ══════════════════════════════════════════════════════════ */
 
 /**
@@ -784,12 +782,8 @@ function renderPagHistoria() {
     </div>
     <div class="panel-header" style="margin-top:2rem"><span class="panel-title" style="font-size:14px">Etiquetas das seções</span></div>
     <div class="fields-grid">
-      <div class="field"><label>Equipe PT</label><input id="h-teamEyebrowPt"      value="${esc(h.teamEyebrowPt||'')}"></div>
-      <div class="field"><label>Equipe EN</label><input id="h-teamEyebrowEn"      value="${esc(h.teamEyebrowEn||'')}"></div>
       <div class="field"><label>Festivais PT</label><input id="h-festivaisEyebrowPt" value="${esc(h.festivaisEyebrowPt||'')}"></div>
       <div class="field"><label>Festivais EN</label><input id="h-festivaisEyebrowEn" value="${esc(h.festivaisEyebrowEn||'')}"></div>
-      <div class="field"><label>Marcos PT</label><input id="h-marcosEyebrowPt"    value="${esc(h.marcosEyebrowPt||'')}"></div>
-      <div class="field"><label>Marcos EN</label><input id="h-marcosEyebrowEn"    value="${esc(h.marcosEyebrowEn||'')}"></div>
       <div class="field"><label>Parceiros PT</label><input id="h-parceirosEyebrowPt" value="${esc(h.parceirosEyebrowPt||'')}"></div>
       <div class="field"><label>Parceiros EN</label><input id="h-parceirosEyebrowEn" value="${esc(h.parceirosEyebrowEn||'')}"></div>
     </div>`;
@@ -920,111 +914,6 @@ function removeFestival(i) {
   data.historiaData.festivais.splice(i, 1);
   renderFestivais();
 }
-
-/* ══════════════════════════════════════════════════════════
-   MARCOS
-══════════════════════════════════════════════════════════ */
-function renderMarcos() {
-  const marcos = data.historiaData.marcos || [];
-  document.getElementById('marcosList').innerHTML = marcos.map((m, i) => `
-    <div class="card" id="marco-card-${i}">
-      <div class="card-header" onclick="toggleCard('marco-card-${i}')">
-        <div class="card-header-left">
-          ${reorderBtns(i, marcos.length,
-            `event.stopPropagation(); moveMarco(${i}, ${i-1})`,
-            `event.stopPropagation(); moveMarco(${i}, ${i+1})`
-          )}
-          <span class="card-num">${m.year||'----'}</span>
-          <span class="card-name">${m.title||'(sem título)'}</span>
-        </div>
-        <span class="card-chevron">▼</span>
-      </div>
-      <div class="card-body">
-        <div class="fields-grid">
-          <div class="field"><label>Ano</label><input data-marco="${i}" data-key="year" value="${esc(m.year)}"></div>
-          <div class="field"></div>
-          <div class="field"><label>Título PT</label><input data-marco="${i}" data-key="title"   value="${esc(m.title)}"></div>
-          <div class="field"><label>Título EN</label><input data-marco="${i}" data-key="titleEn" value="${esc(m.titleEn)}"></div>
-          <div class="field full"><label>Texto PT (aceita &lt;em&gt;)</label><textarea data-marco="${i}" data-key="text">${esc(m.text)}</textarea></div>
-          <div class="field full"><label>Texto EN (aceita &lt;em&gt;)</label><textarea data-marco="${i}" data-key="textEn">${esc(m.textEn)}</textarea></div>
-        </div>
-        <div class="card-actions">
-          <button class="btn btn-danger btn-small" onclick="removeMarco(${i})">Remover</button>
-          <button class="btn btn-primary btn-small" onclick="saveCard('marco',${i})">Salvar</button>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function moveMarco(fromIdx, toIdx) {
-  moveItem(data.historiaData.marcos, fromIdx, toIdx, renderMarcos);
-}
-
-function addMarco() {
-  data.historiaData.marcos.push({ year:'', title:'', titleEn:'', text:'', textEn:'' });
-  renderMarcos();
-  toggleCard(`marco-card-${data.historiaData.marcos.length - 1}`);
-}
-
-function removeMarco(i) {
-  if (!confirm('Remover este marco?')) return;
-  data.historiaData.marcos.splice(i, 1);
-  renderMarcos();
-}
-
-/* ══════════════════════════════════════════════════════════
-   TEAM
-══════════════════════════════════════════════════════════ */
-function renderTeam() {
-  const team = data.historiaData.team || [];
-  document.getElementById('teamList').innerHTML = team.map((m, i) => `
-    <div class="card" id="team-card-${i}">
-      <div class="card-header" onclick="toggleCard('team-card-${i}')">
-        <div class="card-header-left">
-          ${reorderBtns(i, team.length,
-            `event.stopPropagation(); moveTeam(${i}, ${i-1})`,
-            `event.stopPropagation(); moveTeam(${i}, ${i+1})`
-          )}
-          <span class="card-num">${String(i+1).padStart(2,'0')}</span>
-          <span class="card-name">${m.name||'(sem nome)'}</span>
-          <span class="card-meta">${m.role||''}</span>
-        </div>
-        <span class="card-chevron">▼</span>
-      </div>
-      <div class="card-body">
-        <div class="fields-grid">
-          <div class="field"><label>Nome</label><input data-team="${i}" data-key="name"   value="${esc(m.name)}"></div>
-          <div class="field"></div>
-          <div class="field"><label>Cargo PT</label><input data-team="${i}" data-key="role"   value="${esc(m.role)}"></div>
-          <div class="field"><label>Cargo EN</label><input data-team="${i}" data-key="roleEn" value="${esc(m.roleEn)}"></div>
-          ${imgField('team', i, 'img', 'Foto', m.img, 'recomendado 600 × 800 px · proporção 3:4 (desktop) · em mobile recorta automaticamente para 4:3 · max. 320 px de largura exibida')}
-          <div class="field full"><label>Bio PT (aceita &lt;em&gt;)</label><textarea data-team="${i}" data-key="bio">${esc(m.bio)}</textarea></div>
-          <div class="field full"><label>Bio EN (aceita &lt;em&gt;)</label><textarea data-team="${i}" data-key="bioEn">${esc(m.bioEn)}</textarea></div>
-        </div>
-        <div class="card-actions">
-          <button class="btn btn-danger btn-small" onclick="removeTeamMember(${i})">Remover</button>
-          <button class="btn btn-primary btn-small" onclick="saveCard('team',${i})">Salvar</button>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function moveTeam(fromIdx, toIdx) {
-  moveItem(data.historiaData.team, fromIdx, toIdx, renderTeam);
-}
-
-function addTeamMember() {
-  data.historiaData.team.push({ name:'', role:'', roleEn:'', img:'', bio:'', bioEn:'' });
-  renderTeam();
-  toggleCard(`team-card-${data.historiaData.team.length - 1}`);
-}
-
-function removeTeamMember(i) {
-  if (!confirm('Remover este membro?')) return;
-  data.historiaData.team.splice(i, 1);
-  renderTeam();
-}
-
 
 /* ══════════════════════════════════════════════════════════
    PARCEIROS
@@ -1517,20 +1406,10 @@ function collectAll() {
   // stripeItems são geridos diretamente em data.pagesData.index.stripeItems via add/removeStripeItem
   // socialLinks são geridos diretamente em data.siteData.socialLinks via add/remove/updateSocialLink
   if (!data.pagesData.historia) data.pagesData.historia = {};
-  ['teamEyebrowPt','teamEyebrowEn','festivaisEyebrowPt','festivaisEyebrowEn',
-   'marcosEyebrowPt','marcosEyebrowEn','parceirosEyebrowPt','parceirosEyebrowEn'].forEach(f => {
+  ['festivaisEyebrowPt','festivaisEyebrowEn',
+   'parceirosEyebrowPt','parceirosEyebrowEn'].forEach(f => {
     const el = document.getElementById('h-' + f);
     if (el) data.pagesData.historia[f] = el.value;
-  });
-  document.querySelectorAll('[data-marco]').forEach(el => {
-    const i = +el.dataset.marco, key = el.dataset.key;
-    if (!data.historiaData.marcos[i]) return;
-    data.historiaData.marcos[i][key] = el.value;
-  });
-  document.querySelectorAll('[data-team]').forEach(el => {
-    const i = +el.dataset.team, key = el.dataset.key;
-    if (!data.historiaData.team[i]) return;
-    data.historiaData.team[i][key] = el.value;
   });
   document.querySelectorAll('[data-parceiro]').forEach(el => {
     const i = +el.dataset.parceiro, key = el.dataset.key;

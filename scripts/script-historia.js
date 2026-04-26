@@ -43,34 +43,6 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
       ).join('') +
       '<div class="historia-festival historia-festival--filler"></div>'.repeat(festivaisFillerCount);
 
-    /* ── MARCOS ── */
-    document.querySelector('.historia-marcos__list').innerHTML =
-      d.marcos.map(m => `
-        <div class="historia-marco reveal">
-          <span class="historia-marco__year">${escHtml(m.year)}</span>
-          <div class="historia-marco__content">
-            <h4 class="historia-marco__title">${escHtml(lang === 'en' ? m.titleEn : m.title)}</h4>
-            <p class="historia-marco__text">${escHtml(lang === 'en' ? m.textEn : m.text)}</p>
-          </div>
-        </div>`
-      ).join('');
-
-    /* ── TIME ── */
-    document.querySelector('.historia-team').innerHTML =
-      d.team.map((m, i) => `
-        <div class="historia-member${i % 2 !== 0 ? ' historia-member--reverse' : ''} reveal">
-          <div class="historia-member__img-wrap">
-            <div class="historia-member__img-bg"></div>
-            <img src="${m.img}" alt="${escHtml(m.name)}" class="historia-member__img" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="historia-member__info">
-            <span class="historia-member__role">${escHtml(lang === 'en' ? m.roleEn : m.role)}</span>
-            <h3 class="historia-member__name">${escHtml(m.name)}</h3>
-            <p class="historia-member__bio">${escHtml(lang === 'en' ? m.bioEn : m.bio)}</p>
-          </div>
-        </div>`
-      ).join('');
-
     /* ── PARCEIROS ── */
     const parceiros = d.parceiros || [];
     document.querySelector('.historia-parceiros__grid').innerHTML =
@@ -131,9 +103,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         translation: {
           ...COMMON_I18N.pt,
           'nav.portfolio':          'Portfólio',
-          'historia.team.eyebrow':       (pagesData.historia && pagesData.historia.teamEyebrowPt)      || 'Quem faz acontecer',
           'historia.festivais.eyebrow':  (pagesData.historia && pagesData.historia.festivaisEyebrowPt) || 'Festivais',
-          'historia.marcos.eyebrow':     (pagesData.historia && pagesData.historia.marcosEyebrowPt)    || 'Marcos',
           'historia.parceiros.eyebrow': (pagesData.historia && pagesData.historia.parceirosEyebrowPt)  || 'Parceiros',
         }
       },
@@ -141,9 +111,7 @@ dataReady.then(() => { /* espera os dados do json serem carregados */
         translation: {
           ...COMMON_I18N.en,
           'nav.portfolio':          'Portfolio',
-          'historia.team.eyebrow':       (pagesData.historia && pagesData.historia.teamEyebrowEn)      || 'The team',
           'historia.festivais.eyebrow':  (pagesData.historia && pagesData.historia.festivaisEyebrowEn) || 'Film Festivals',
-          'historia.marcos.eyebrow':     (pagesData.historia && pagesData.historia.marcosEyebrowEn)    || 'Milestones',
           'historia.parceiros.eyebrow': (pagesData.historia && pagesData.historia.parceirosEyebrowEn)  || 'Partners',
         }
       }
